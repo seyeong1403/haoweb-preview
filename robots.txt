@@ -1,0 +1,3 @@
+# 검토 단계입니다. 공개 시 _site.json 의 domain 을 채우고 blockIndexing 을 false 로 바꾸세요.
+User-agent: *
+Disallow: /

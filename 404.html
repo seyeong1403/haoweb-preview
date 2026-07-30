@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>페이지를 찾을 수 없습니다 — 하오웹</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#060910">
+<link rel="icon" href="/haoweb-preview/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/haoweb-preview/images/common/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/haoweb-preview/images/common/apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+	/* 서버 설정에 따라 404 는 어떤 경로에서든 뜰 수 있으므로,
+	   사이트 CSS 에 기대지 않고 이 파일만으로 완결되게 둔다. */
+	*{box-sizing:border-box}
+	html,body{height:100%;margin:0}
+	body{background:#060910;color:#fff;word-break:keep-all;
+		font-family:Pretendard,-apple-system,"Malgun Gothic",sans-serif;
+		display:flex;align-items:center;justify-content:center;padding:32px}
+	.wrap{max-width:640px;width:100%;text-align:center}
+	.logo{display:inline-block;margin-bottom:44px}
+	.logo img{width:104px;height:auto;display:block}
+	.code{font-size:15px;letter-spacing:.14em;font-weight:600;color:#E83817;margin:0 0 18px}
+	h1{font-size:clamp(28px,4.4vw,44px);font-weight:600;line-height:1.35;letter-spacing:-0.035em;margin:0 0 20px}
+	.lead{font-size:16px;line-height:1.8;color:rgba(255,255,255,.58);margin:0 0 14px}
+	.url{display:inline-block;max-width:100%;overflow-wrap:anywhere;margin:0 0 34px;padding:10px 16px;
+		border:1px solid rgba(255,255,255,.14);border-radius:10px;
+		font-size:14px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.03)}
+	.url[hidden]{display:none}
+	.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+	.btns a{display:inline-block;padding:14px 26px;border-radius:100px;text-decoration:none;
+		font-size:15.5px;font-weight:600;border:1px solid rgba(255,255,255,.18);
+		color:rgba(255,255,255,.86);transition:all .3s ease}
+	.btns a:hover{border-color:rgba(255,255,255,.42);background:rgba(255,255,255,.05)}
+	.btns a.on{background:#E83817;border-color:#E83817;color:#fff}
+	.btns a.on:hover{filter:brightness(1.08)}
+	.hint{margin:32px 0 0;font-size:14px;line-height:1.75;color:rgba(255,255,255,.38)}
+</style>
+</head>
+<body>
+<main class="wrap">
+	<a class="logo" href="/haoweb-preview/kr/index.html"><img src="/haoweb-preview/images/common/haoweb-logo-light.png" alt="하오웹" width="104" height="58"></a>
+	<p class="code">404 NOT FOUND</p>
+	<h1>요청하신 페이지를 찾을 수 없습니다.</h1>
+	<p class="lead">주소가 바뀌었거나, 삭제되었거나, 잘못 입력되었을 수 있습니다.</p>
+	<p class="url" id="badUrl" hidden></p>
+	<div class="btns">
+		<a class="on" href="/haoweb-preview/kr/index.html">하오웹 홈</a>
+		<a href="/haoweb-preview/kr/website.html">홈페이지 제작</a>
+		<a href="/haoweb-preview/kr/inquiry.html">제작 문의</a>
+	</div>
+	<p class="hint">찾으시는 내용이 있다면 문의 페이지로 알려주세요. 확인 후 안내해 드리겠습니다.</p>
+</main>
+<script>
+	/* 어떤 주소에서 404 가 났는지 보여 준다 */
+	(function(){
+		var el = document.getElementById('badUrl');
+		var path = window.location.pathname + window.location.search;
+		if (path && path !== '/404.html') {
+			el.textContent = '요청한 주소 · ' + path;
+			el.hidden = false;
+		}
+	})();
+</script>
+</body>
+</html>

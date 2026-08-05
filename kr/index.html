@@ -360,6 +360,10 @@
 	.main-ai-list li{
 		will-change:auto !important;
 	}
+	/* What We Do 4항목은 커서를 올리면 그 항목으로 바뀐다. 눌러 볼 수 있다는 신호. */
+	.main-ai-list li{cursor:pointer;}
+	.main-ai-list li:focus-visible{outline:2px solid var(--main-color);outline-offset:6px;border-radius:50%;}
+	.main-ai-list li:focus:not(:focus-visible){outline:none;}
 	/* ===== 이미지 교차형 (hw-feat 의 이미지 버전) =====
 	   43페이지 전체에 <img> 가 한 장도 없어 텍스트만 반복되던 문제를 푼다.
 	   행이 바뀔 때마다 이미지가 좌/우로 교차하고, 스크롤 진입 시 가로로 열리며
@@ -1082,7 +1086,7 @@
 					<div class="main-con02-inner">
 						<div class="main-ai-list-con">
 							<ul class="main-ai-list" data-rolling-time="3000">
-								<li class="item01">
+								<li class="item01" tabindex="0" data-detail="website.html">
 									<div class="inner">
 										<div class="icon-box">
 											<svg class="hw-ico hw-ico--a1" width="36" height="36" viewBox="0 0 24.77 24.703" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1115,7 +1119,7 @@
 										<strong>신규제작</strong>
 									</div>
 								</li>
-								<li class="item02">
+								<li class="item02" tabindex="0" data-detail="renewal.html">
 									<div class="inner">
 										<div class="icon-box">
 											<svg class="hw-ico hw-ico--a2" width="36" height="36" viewBox="0 0 31.75 28.071" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1162,7 +1166,7 @@
 										<strong>리뉴얼</strong>
 									</div>
 								</li>
-								<li class="item03">
+								<li class="item03" tabindex="0" data-detail="search-ai.html">
 									<div class="inner">
 										<div class="icon-box">
 											<svg class="hw-ico hw-ico--a3" width="36" height="36" viewBox="0 0 38.2 38.218" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -1234,7 +1238,7 @@
 										<strong>AI 가시성</strong>
 									</div>
 								</li>
-								<li class="item04">
+								<li class="item04" tabindex="0" data-detail="global.html">
 									<div class="inner">
 										<div class="icon-box">
 											<svg class="hw-ico hw-ico--a4" width="36" height="36" viewBox="0 0 25.05 25.05" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

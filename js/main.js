@@ -205,6 +205,11 @@ $(document).ready(function  () {
 			});
 
 			showTxtCon(startNum);
+
+			/* Detail view 는 보이는 항목을 따라가야 한다.
+			   li 의 data-detail 이 없으면 원래 href 를 그대로 둔다. */
+			var detail = $mainAiItem.eq(startNum).data("detail");
+			if (detail) $mainCon02.find(".cm-main-btn").attr("href", detail);
 		}
 
 		function mainAiTime(){
@@ -219,6 +224,23 @@ $(document).ready(function  () {
 
 		if (ai_timer) clearInterval(ai_timer);
 		ai_timer = setInterval(mainAiTime, rollingSpeed);
+
+		/* 커서를 올리면 그 항목으로 바로 바뀌고 자동 넘김은 멈춘다.
+		   목록을 벗어나면 다시 돌기 시작한다. li 에 tabindex 를 줘서 키보드도 같다. */
+		function aiPause() { if (ai_timer) { clearInterval(ai_timer); ai_timer = null; } }
+		function aiResume() { aiPause(); ai_timer = setInterval(mainAiTime, rollingSpeed); }
+
+		$mainAiItem.on("mouseenter focus", function () {
+			aiPause();
+			var idx = $mainAiItem.index(this);
+			if (idx < 0 || idx === startNum) return;
+			startNum = idx;
+			mainAiPlay();
+		});
+		$mainAiList.on("mouseleave", aiResume);
+		$mainAiList.on("focusout", function (e) {
+			if (!e.relatedTarget || !$.contains(this, e.relatedTarget)) aiResume();
+		});
 	}
 
 	

@@ -852,8 +852,10 @@
 	/* ===== 서브 비주얼 배경 영상 =====
 	   .visual-img-inner 안에 넣어 원본의 scale(1.1)->scale(1) 인트로를 같이 탄다.
 	   못 읽으면 poster 와 인라인 배경 이미지가 그대로 남는다. */
-	#visual .visual-video{position:absolute;left:0;top:0;width:100%;height:100%;
-		object-fit:cover;display:block;border:0;pointer-events:none;}
+	/* 스크롤에 맞춰 12% 밀리므로, 위아래로 여유를 두지 않으면 가장자리가 드러난다 */
+	#visual .visual-video{position:absolute;left:0;top:-8%;width:100%;height:116%;
+		object-fit:cover;display:block;border:0;pointer-events:none;
+		will-change:transform;}
 	/* 흰 글씨(대형 영문 타이틀·브레드크럼)가 얹히므로 아래쪽을 눌러 준다 */
 	#visual .visual-img-con::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
 		background:linear-gradient(180deg,rgba(6,9,16,.34) 0%,rgba(6,9,16,.22) 42%,rgba(6,9,16,.78) 100%);}
@@ -1835,7 +1837,26 @@ $(document).ready(function  () {
 		window.addEventListener('resize', upd);
 	}
 
-	function boot(){ initHero(); initGlow(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initForms(); initProposalType(); }
+	/* 서브 비주얼도 메인 히어로와 같은 결로 움직인다. 글자는 제자리에 있고
+	   배경 영상만 스크롤보다 느리게 밀려 깊이가 생긴다.
+	   .visual-img-inner 의 CSS 인트로(scale 1.1->1.0)와 겹치지 않도록
+	   transform 은 <video> 쪽에만 건다. */
+	function initSubVisual(){
+		var sec = document.getElementById('visual');
+		if(!sec) return;
+		var v = sec.querySelector('.visual-video');
+		if(!v) return;
+		if(reduce || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+		gsap.registerPlugin(ScrollTrigger);
+		gsap.to(v, {
+			yPercent: 12, ease: 'none',
+			scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom top',
+			                 scrub: 0.5, invalidateOnRefresh: true }
+		});
+	}
+
+	function boot(){ initHero(); initSubVisual(); initGlow(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

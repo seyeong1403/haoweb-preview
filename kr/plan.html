@@ -15,13 +15,8 @@
 <meta property="og:description" content="베이직·프리미엄·엔터프라이즈 플랜의 범위를 비교합니다.">
 <meta name="viewport" content="width=device-width, initial-scale=1"><!-- 모바일사이트, 반응형사이트 제작시 사용 -->
 <meta name="format-detection" content="telephone=no"/><!-- ios 자동전화걸기 방지 -->
-<meta name="NaverBot" content="All"/>
-<meta name="NaverBot" content="INDEX,FOLLOW"/>
-<meta name="Yeti" content="All"/>
-<meta name="Yeti" content="INDEX,FOLLOW"/>
-<meta name="Googlebot" content="All" />
-<meta name="Googlebot" content="INDEX,FOLLOW" />
-<meta name="Robots" content="INDEX,FOLLOW">
+<!-- 색인 지시(robots/googlebot/naverbot/yeti)는 아래 SEO 블록에서 _site.json 의
+     blockIndexing 값으로 한 상태만 생성한다. 여기에 따로 적으면 지시가 충돌한다. -->
 <meta name="theme-color" content="#060910">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/common/favicon-32x32.png">
@@ -36,6 +31,9 @@
 <meta name="twitter:description" content="베이직·프리미엄·엔터프라이즈 플랜의 범위를 비교합니다.">
 <meta name="twitter:image" content="../images/common/haoweb-og.png">
 <meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="naverbot" content="noindex, nofollow">
+<meta name="yeti" content="noindex, nofollow">
 <!-- SEO:END -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -849,6 +847,15 @@
 	.hw-prep__links a:hover{color:var(--main-color);border-color:var(--main-color);}
 	@media (max-width:640px){ .hw-prep{padding:34px 26px;} .hw-prep p{font-size:16px;} }
 
+	/* 제작 플랜 2Depth 내부 그룹 라벨. 링크가 아니라 분류 표시라 클릭되지 않는다.
+	   스크린리더에는 aria-hidden 으로 감춰 링크 목록 구조를 흐리지 않는다. */
+	#gnb .gnb-2dep ul li.gnb-grp{pointer-events:none;}
+	#gnb .gnb-2dep ul li.gnb-grp span{display:block;padding:13px 15px 4px;
+		font-size:11px;font-weight:700;letter-spacing:.06em;color:#a5a5a5;line-height:1.3;}
+	#gnb .gnb-2dep ul li.gnb-grp:first-child span{padding-top:2px;}
+	#gnb.open .gnb-2dep ul li.gnb-grp span,
+	#gnb.each-menu .gnb-2dep ul li.gnb-grp span{color:rgba(255,255,255,.45);}
+
 	/* ===== 서브 비주얼 배경 영상 =====
 	   .visual-img-inner 안에 넣어 원본의 scale(1.1)->scale(1) 인트로를 같이 탄다.
 	   못 읽으면 poster 와 인라인 배경 이미지가 그대로 남는다. */
@@ -1036,10 +1043,14 @@
 						<a href="plan.html">제작 플랜</a>
 						<div class="gnb-2dep">
 							<ul>
+								<li class="gnb-grp" aria-hidden="true"><span>플랜</span></li>
 								<li><a href="plan.html"><span>제작 플랜</span></a></li>
+								<li class="gnb-grp" aria-hidden="true"><span>연계 제작</span></li>
 								<li><a href="graphic-design.html"><span>그래픽·편집디자인</span></a></li>
 								<li><a href="studio.html"><span>사진·영상 촬영</span></a></li>
+								<li class="gnb-grp" aria-hidden="true"><span>오픈 이후</span></li>
 								<li><a href="maintenance.html"><span>유지보수</span></a></li>
+								<li class="gnb-grp" aria-hidden="true"><span>제작 지원</span></li>
 								<li><a href="government.html"><span>정부지원사업</span></a></li>
 							</ul>
 						</div>
@@ -1159,7 +1170,7 @@
 		<div class="hwp-grid" data-scroll="fade-up">
 			<div class="hwp-card">
 				<span class="hwp-tag font-jost">Basic</span>
-				<h6>베이직</h6>
+				<h3>베이직</h3>
 				<p class="hwp-sub">정리된 자료가 있고, 필요한 구조를 정확하게 구축. 회사소개서와 사진 등 기본 자료를 가지고 있고, 일반적인 기업·서비스 홈페이지가 필요하며, 복잡한 기능은 없는 회사에 적합합니다.</p>
 				<div class="hwp-meta">
 					<span class="lab">규모</span>
@@ -1181,7 +1192,7 @@
 			</div>			<div class="hwp-card hwp-card--best">
 				<span class="hwp-badge">추천 구성</span>
 				<span class="hwp-tag font-jost">Premium</span>
-				<h6>프리미엄</h6>
+				<h3>프리미엄</h3>
 				<p class="hwp-sub">콘텐츠부터 함께 만들고, 업종에 맞는 구성이 필요. 콘텐츠가 충분히 정리되지 않았거나, 회사와 서비스 설명을 새로 만들어야 하거나, 업종에 맞는 차별화된 구성이 필요한 회사에 적합합니다.</p>
 				<div class="hwp-meta">
 					<span class="lab">규모</span>
@@ -1204,7 +1215,7 @@
 				<a href="free-proposal.html" class="hwp-btn">이 범위로 제안받기</a>
 			</div>			<div class="hwp-card">
 				<span class="hwp-tag font-jost">Enterprise</span>
-				<h6>엔터프라이즈</h6>
+				<h3>엔터프라이즈</h3>
 				<p class="hwp-sub">브랜드·콘텐츠·촬영과 확장 기능을 함께 정비. 서비스와 사업 영역이 많거나, 브랜드·콘텐츠·촬영을 함께 정리해야 하거나, 다국어·회원·외부 연동 같은 확장 기능이 필요한 회사에 적합합니다.</p>
 				<div class="hwp-meta">
 					<span class="lab">규모</span>

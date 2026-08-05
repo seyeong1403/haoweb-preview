@@ -134,7 +134,7 @@
 	.hwhero__eye{position:absolute;z-index:2;bottom:clamp(112px,15vh,150px);
 		right:max(var(--area-padding), calc((100% - var(--area-width)) / 2 + var(--area-padding)));
 		margin:0;text-align:right;
-		font-size:clamp(15px,1.7vw,23px);font-weight:500;line-height:1.55;
+		font-size:clamp(19px,2.5vw,34px);font-weight:500;line-height:1.5;
 		letter-spacing:-0.025em;word-spacing:-0.06em;color:rgba(255,255,255,.9);}
 	.hwhero__eye span{display:block;overflow:hidden;}
 	.hwhero__eye span > i{display:block;font-style:normal;transform:translateY(105%);
@@ -193,6 +193,16 @@
 		.hwhero__eye{max-width:66vw;}
 		.hwhero__bg::after{background:linear-gradient(180deg,rgba(6,9,16,.55) 0%,rgba(6,9,16,.35) 60%,rgba(6,9,16,.5) 100%);}
 	}
+	/* 배경 영상은 sticky 라 히어로를 벗어난 뒤에도 화면에 남고, 본문에 배경색이
+	   없으면 영상의 아래 경계선이 본문 위에 잘린 선으로 드러난다.
+	   본문을 불투명하게 만들어 영상 위로 덮이게 한다 — 영상은 히어로에서 끝나고
+	   본문이 커튼처럼 올라온다. position 이 없으면 배경이 sticky 영상 아래에 깔린다. */
+	#mainContent{position:relative;background-color:#060910;}
+	/* 덮이는 지점이 선으로 보이지 않게, 본문 바로 위 160px 을 배경색으로 녹인다.
+	   히어로 안쪽이 아니라 본문에 붙여야 첫 화면 하단이 어두워지지 않는다. */
+	#mainContent::before{content:"";position:absolute;left:0;right:0;top:-160px;height:160px;
+		pointer-events:none;background:linear-gradient(180deg,rgba(6,9,16,0) 0%,#060910 100%);}
+
 	@media (prefers-reduced-motion: reduce){
 		.hwhero__bgInner{opacity:1 !important;transform:none !important;}
 		.hwhero__scroll{opacity:1 !important;}
@@ -252,8 +262,17 @@
 	   스티키를 무력화하므로, 가로 클리핑은 유지(clip)하고 세로는 해제 */
 	#wrap.main-wrap,#wrap.sub-wrap{overflow:visible;}
 	html{overflow-x:hidden;}
-	/* 마우스 따라다니는 블롭 — 더 연하게 */
-	.mouse-default{opacity:.16 !important;}
+	/* 마우스 따라다니는 블롭 — 더 연하게, 더 작게.
+	   원본은 130rem 이라 화면 폭의 8할을 덮었다. top/left 는 -width/2 로 두어야
+	   커서 중앙에 온다(스크립트가 clientX/clientY 만큼 translate 한다). */
+	.mouse-default{opacity:.16 !important;
+		width:80rem;height:80rem;top:-40rem;left:-40rem;}
+	/* 메인은 히어로 영상을 가리려고 #mainContent 에 배경색을 줬다. 블롭은 z-index:-1
+	   이라 그 배경 아래로 깔려 사라지므로, 메인에서만 영상 위로 올린다.
+	   대신 그대로 두면 히어로 영상까지 붉게 물들이므로, 본문에 들어선 뒤에만 켠다
+	   (예전에도 히어로에서는 영상에 가려 보이지 않았다). */
+	.main-wrap .mouse-default{z-index:1;opacity:0 !important;transition:opacity .7s ease;}
+	.main-wrap .mouse-default.is-on{opacity:.16 !important;}
 	/* 상단 네비 항상 고정(원본은 모바일에서만 고정이었음) + 반투명 배경 */
 	#header{position:fixed !important;top:0 !important;}
 	#headerInnerWrap{background-color:rgba(6,9,16,.55);backdrop-filter:blur(14px);
@@ -341,6 +360,10 @@
 	.main-ai-list li{
 		will-change:auto !important;
 	}
+	/* What We Do 4항목은 커서를 올리면 그 항목으로 바뀐다. 눌러 볼 수 있다는 신호. */
+	.main-ai-list li{cursor:pointer;}
+	.main-ai-list li:focus-visible{outline:2px solid var(--main-color);outline-offset:6px;border-radius:50%;}
+	.main-ai-list li:focus:not(:focus-visible){outline:none;}
 	/* ===== 이미지 교차형 (hw-feat 의 이미지 버전) =====
 	   43페이지 전체에 <img> 가 한 장도 없어 텍스트만 반복되던 문제를 푼다.
 	   행이 바뀔 때마다 이미지가 좌/우로 교차하고, 스크롤 진입 시 가로로 열리며
@@ -825,6 +848,50 @@
 	.hw-prep__links a{font-size:16px;color:#fff;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.3);transition:all .3s ease;}
 	.hw-prep__links a:hover{color:var(--main-color);border-color:var(--main-color);}
 	@media (max-width:640px){ .hw-prep{padding:34px 26px;} .hw-prep p{font-size:16px;} }
+
+	/* ===== 제작 사례 그리드 =====
+	   예전 하오웹 홈페이지의 포트폴리오를 옮겨 온 것이다. 실린 이미지는 고객사
+	   로고 카드(460×280)라 화면 캡처가 아니다. 그래서 카드 위에 "화면"처럼
+	   보이는 장치는 두지 않고, 로고를 그대로 보여 준다. */
+	.hwpf{margin-top:54px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+	.hwpf__item{display:block;border-radius:16px;overflow:hidden;
+		background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+		transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease,background .4s ease;}
+	a.hwpf__item:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.28);
+		background:rgba(255,255,255,.06);}
+	/* height="280" 속성이 그대로 높이가 되어 aspect-ratio 를 눌러 버린다.
+	   height:auto 를 명시해야 비율이 먹는다. */
+	.hwpf__thumb{display:block;width:100%;height:auto;aspect-ratio:460/280;
+		object-fit:cover;background:#0d1017;}
+	.hwpf__body{padding:17px 18px 19px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+	.hwpf__name{font-size:16px;font-weight:600;color:#fff;line-height:1.4;}
+	a.hwpf__item:hover .hwpf__name{color:var(--main-color);}
+	.hwpf__go{flex:none;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.42);
+		font-family:Jost,sans-serif;}
+	a.hwpf__item:hover .hwpf__go{color:var(--main-color);}
+
+	/* 이미지가 없는 사례는 목록으로. 없는 화면을 지어내지 않는다. */
+	.hwpf-list{margin-top:34px;border-top:1px solid rgba(255,255,255,.12);}
+	.hwpf-list__row{display:flex;align-items:center;gap:18px;padding:18px 2px;
+		border-bottom:1px solid rgba(255,255,255,.08);}
+	.hwpf-list__cat{flex:none;width:132px;font-size:12px;letter-spacing:.1em;font-weight:700;
+		color:var(--main-color);font-family:Jost,sans-serif;}
+	.hwpf-list__name{font-size:16px;color:rgba(255,255,255,.86);}
+	a.hwpf-list__row:hover .hwpf-list__name{color:var(--main-color);}
+	.hwpf-list__go{margin-left:auto;flex:none;font-size:12px;letter-spacing:.06em;
+		color:rgba(255,255,255,.42);font-family:Jost,sans-serif;}
+	a.hwpf-list__row:hover .hwpf-list__go{color:var(--main-color);}
+
+	@media all and (max-width:1024px){ .hwpf{grid-template-columns:repeat(3,1fr);} }
+	@media all and (max-width:760px){
+		.hwpf{grid-template-columns:repeat(2,1fr);gap:14px;}
+		.hwpf__body{padding:13px 14px 15px;}
+		.hwpf__name{font-size:14px;}
+		.hwpf__go{display:none;}
+		.hwpf-list__row{flex-wrap:wrap;gap:6px 14px;}
+		.hwpf-list__cat{width:auto;}
+	}
+
 	/* 최종 CTA */
 	.hw-cta{padding:170px 0;text-align:center;}
 	.hw-cta h2{font-size:clamp(32px,4vw,56px);font-weight:600;color:#fff;line-height:1.35;margin-bottom:46px;}
@@ -1678,7 +1745,21 @@ $(document).ready(function  () {
 		});
 	}
 
-	function boot(){ initHero(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initForms(); initProposalType(); }
+	/* 마우스 블롭은 본문 구간에서만 켠다. 히어로에서 켜면 배경 영상이 붉게 물든다. */
+	function initGlow(){
+		var glow = document.querySelector('.main-wrap .mouse-default');
+		var main = document.getElementById('mainContent');
+		if(!glow || !main) return;
+		function upd(){
+			var on = main.getBoundingClientRect().top < window.innerHeight * 0.85;
+			if(on){ glow.classList.add('is-on'); } else { glow.classList.remove('is-on'); }
+		}
+		upd();
+		window.addEventListener('scroll', upd, { passive: true });
+		window.addEventListener('resize', upd);
+	}
+
+	function boot(){ initHero(); initGlow(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

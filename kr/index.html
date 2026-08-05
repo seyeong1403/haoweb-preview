@@ -848,6 +848,50 @@
 	.hw-prep__links a{font-size:16px;color:#fff;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.3);transition:all .3s ease;}
 	.hw-prep__links a:hover{color:var(--main-color);border-color:var(--main-color);}
 	@media (max-width:640px){ .hw-prep{padding:34px 26px;} .hw-prep p{font-size:16px;} }
+
+	/* ===== 제작 사례 그리드 =====
+	   예전 하오웹 홈페이지의 포트폴리오를 옮겨 온 것이다. 실린 이미지는 고객사
+	   로고 카드(460×280)라 화면 캡처가 아니다. 그래서 카드 위에 "화면"처럼
+	   보이는 장치는 두지 않고, 로고를 그대로 보여 준다. */
+	.hwpf{margin-top:54px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+	.hwpf__item{display:block;border-radius:16px;overflow:hidden;
+		background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+		transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease,background .4s ease;}
+	a.hwpf__item:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.28);
+		background:rgba(255,255,255,.06);}
+	/* height="280" 속성이 그대로 높이가 되어 aspect-ratio 를 눌러 버린다.
+	   height:auto 를 명시해야 비율이 먹는다. */
+	.hwpf__thumb{display:block;width:100%;height:auto;aspect-ratio:460/280;
+		object-fit:cover;background:#0d1017;}
+	.hwpf__body{padding:17px 18px 19px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+	.hwpf__name{font-size:16px;font-weight:600;color:#fff;line-height:1.4;}
+	a.hwpf__item:hover .hwpf__name{color:var(--main-color);}
+	.hwpf__go{flex:none;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.42);
+		font-family:Jost,sans-serif;}
+	a.hwpf__item:hover .hwpf__go{color:var(--main-color);}
+
+	/* 이미지가 없는 사례는 목록으로. 없는 화면을 지어내지 않는다. */
+	.hwpf-list{margin-top:34px;border-top:1px solid rgba(255,255,255,.12);}
+	.hwpf-list__row{display:flex;align-items:center;gap:18px;padding:18px 2px;
+		border-bottom:1px solid rgba(255,255,255,.08);}
+	.hwpf-list__cat{flex:none;width:132px;font-size:12px;letter-spacing:.1em;font-weight:700;
+		color:var(--main-color);font-family:Jost,sans-serif;}
+	.hwpf-list__name{font-size:16px;color:rgba(255,255,255,.86);}
+	a.hwpf-list__row:hover .hwpf-list__name{color:var(--main-color);}
+	.hwpf-list__go{margin-left:auto;flex:none;font-size:12px;letter-spacing:.06em;
+		color:rgba(255,255,255,.42);font-family:Jost,sans-serif;}
+	a.hwpf-list__row:hover .hwpf-list__go{color:var(--main-color);}
+
+	@media all and (max-width:1024px){ .hwpf{grid-template-columns:repeat(3,1fr);} }
+	@media all and (max-width:760px){
+		.hwpf{grid-template-columns:repeat(2,1fr);gap:14px;}
+		.hwpf__body{padding:13px 14px 15px;}
+		.hwpf__name{font-size:14px;}
+		.hwpf__go{display:none;}
+		.hwpf-list__row{flex-wrap:wrap;gap:6px 14px;}
+		.hwpf-list__cat{width:auto;}
+	}
+
 	/* 최종 CTA */
 	.hw-cta{padding:170px 0;text-align:center;}
 	.hw-cta h2{font-size:clamp(32px,4vw,56px);font-weight:600;color:#fff;line-height:1.35;margin-bottom:46px;}

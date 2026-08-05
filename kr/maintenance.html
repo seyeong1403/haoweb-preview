@@ -1756,9 +1756,17 @@ $(document).ready(function  () {
 	   배경 영상 위에 캡션이 얹힌다.
 	   서브타이틀 → 제목 순으로 줄마다 마스크 안에서 밀려 올라오고,
 	   스크롤하면 배경만 패럴랙스로 밀린다. */
-	function initHero(){
+	/* 히어로 등장은 window.load 를 기다리지 않는다.
+	   배경 영상은 faststart 라 0.25초면 첫 프레임이 준비되는데, load 는 폰트·이미지까지
+	   전부 기다린다. 그동안 .hwhero__bgInner 가 opacity:0 이라 영상이 재생 중인데도
+	   히어로가 어두운 상태로 남아 "영상이 늦게 뜨는" 것처럼 보였다.
+	   DOM 이 준비되면 바로 시작하고, 스크롤 모션만 GSAP 로드 후에 붙인다. */
+	var heroRevealed = false;
+	function revealHero(){
+		if(heroRevealed) return;
 		var hero = document.querySelector('.hwhero');
 		if(!hero) return;
+		heroRevealed = true;
 
 		/* 서브타이틀이 먼저, 이어서 제목 3줄 */
 		var eyes = hero.querySelectorAll('.hwhero__eye span > i');
@@ -1770,10 +1778,18 @@ $(document).ready(function  () {
 		for(var i=0;i<lines.length;i++){
 			lines[i].style.transitionDelay = (base + i * 0.13).toFixed(2) + 's';
 		}
-		/* 첫 프레임에 초기 상태를 그린 뒤 전환시켜야 애니메이션이 보인다 */
+		/* 첫 프레임에 초기 상태를 그린 뒤 전환시켜야 애니메이션이 보인다.
+		   rAF 가 돌지 않는 환경에서도 히어로가 검은 채로 남지 않도록 타이머로 한 번 더 건다. */
 		requestAnimationFrame(function(){
 			requestAnimationFrame(function(){ hero.classList.add('is-in'); });
 		});
+		setTimeout(function(){ hero.classList.add('is-in'); }, 120);
+	}
+
+	function initHero(){
+		revealHero();
+		var hero = document.querySelector('.hwhero');
+		if(!hero) return;
 
 		/* 배경은 섹션을 지나는 동안 천천히 밀린다.
 		   글자는 제자리에 있고 배경만 움직여 깊이가 생긴다. */
@@ -1821,6 +1837,10 @@ $(document).ready(function  () {
 			                 scrub: 0.5, invalidateOnRefresh: true }
 		});
 	}
+
+	/* 히어로 등장만 먼저 띄운다. 나머지는 레이아웃을 재야 해서 load 를 기다린다. */
+	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
+	else { revealHero(); }
 
 	function boot(){ initHero(); initSubVisual(); initGlow(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }

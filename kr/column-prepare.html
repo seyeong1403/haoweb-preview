@@ -849,6 +849,18 @@
 	.hw-prep__links a:hover{color:var(--main-color);border-color:var(--main-color);}
 	@media (max-width:640px){ .hw-prep{padding:34px 26px;} .hw-prep p{font-size:16px;} }
 
+	/* ===== 서브 비주얼 배경 영상 =====
+	   .visual-img-inner 안에 넣어 원본의 scale(1.1)->scale(1) 인트로를 같이 탄다.
+	   못 읽으면 poster 와 인라인 배경 이미지가 그대로 남는다. */
+	#visual .visual-video{position:absolute;left:0;top:0;width:100%;height:100%;
+		object-fit:cover;display:block;border:0;pointer-events:none;}
+	/* 흰 글씨(대형 영문 타이틀·브레드크럼)가 얹히므로 아래쪽을 눌러 준다 */
+	#visual .visual-img-con::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+		background:linear-gradient(180deg,rgba(6,9,16,.34) 0%,rgba(6,9,16,.22) 42%,rgba(6,9,16,.78) 100%);}
+	@media (prefers-reduced-motion: reduce){
+		#visual .visual-video{display:none;}
+	}
+
 	/* ===== 제작 사례 그리드 =====
 	   예전 하오웹 홈페이지의 포트폴리오를 옮겨 온 것이다. 실린 이미지는 고객사
 	   로고 카드(460×280)라 화면 캡처가 아니다. 그래서 카드 위에 "화면"처럼
@@ -1067,7 +1079,7 @@
 		<!-- visual -->
 		<section id="visual" class="sub-visual-ir">
 			<div class="visual-img-con">
-				<div class="visual-img-inner" style="background:#0b1020 url(../images/layout/sub_visual_ir.jpg) no-repeat 50% 0%"></div>
+				<div class="visual-img-inner" style="background:#0b1020 url(../images/layout/sv-insight.jpg) no-repeat 50% 0%"><video class="visual-video" autoplay muted loop playsinline preload="metadata" poster="../images/layout/sv-insight.jpg"><source src="../images/layout/sv-insight.mp4" type="video/mp4"></video></div>
 			</div>
 			<div class="area-box visual-txt-con">
 				<div class="table-cell-layout">

@@ -17,7 +17,7 @@
 <meta name="format-detection" content="telephone=no"/><!-- ios 자동전화걸기 방지 -->
 <!-- 색인 지시(robots/googlebot/naverbot/yeti)는 아래 SEO 블록에서 _site.json 의
      blockIndexing 값으로 한 상태만 생성한다. 여기에 따로 적으면 지시가 충돌한다. -->
-<meta name="theme-color" content="#060910">
+<meta name="theme-color" content="#070A10">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/common/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../images/common/favicon-16x16.png">
@@ -73,7 +73,7 @@
 
 </head>
 <style>
-	body {background: #060910;}
+	body {background: #070A10;}
 	/* 한국어 전용: 헤더 언어 토글 숨김(7메뉴와 겹침 방지) */
 		/* ===== 한글 폰트 프리텐다드 통일 ===== */
 	:root{
@@ -97,7 +97,7 @@
 	/* main.css 의 #mainVisual{overflow:hidden; height:121.5rem} 을 덮어쓴다.
 	   - overflow:hidden 이면 안쪽 sticky 가 죽는다(클리핑은 .hwhero__bg 가 맡는다)
 	   - 고정 높이면 캡션·설명 분량에 맞춰 늘어나지 않는다 */
-	#mainVisual{position:relative;background:#060910;
+	#mainVisual{position:relative;background:#070A10;
 		overflow:visible;height:auto;}
 
 	/* 배경 영상 — 로드되며 1.08배에서 제자리로, 스크롤에는 패럴랙스
@@ -195,11 +195,11 @@
 	   없으면 영상의 아래 경계선이 본문 위에 잘린 선으로 드러난다.
 	   본문을 불투명하게 만들어 영상 위로 덮이게 한다 — 영상은 히어로에서 끝나고
 	   본문이 커튼처럼 올라온다. position 이 없으면 배경이 sticky 영상 아래에 깔린다. */
-	#mainContent{position:relative;background-color:#060910;}
+	#mainContent{position:relative;background-color:#070A10;}
 	/* 덮이는 지점이 선으로 보이지 않게, 본문 바로 위 160px 을 배경색으로 녹인다.
 	   히어로 안쪽이 아니라 본문에 붙여야 첫 화면 하단이 어두워지지 않는다. */
 	#mainContent::before{content:"";position:absolute;left:0;right:0;top:-160px;height:160px;
-		pointer-events:none;background:linear-gradient(180deg,rgba(6,9,16,0) 0%,#060910 100%);}
+		pointer-events:none;background:linear-gradient(180deg,rgba(6,9,16,0) 0%,#070A10 100%);}
 
 	@media (prefers-reduced-motion: reduce){
 		.hwhero__bgInner{opacity:1 !important;transform:none !important;}
@@ -240,30 +240,30 @@
 	   원본이 이미 어두운 무채색이라 필터는 최소만 건다. */
 	/* 실크 배경은 다크 장면일 때만. 칼럼이 라이트 장면(편집형)으로 갈 때는
 	   배경 이미지가 글을 읽는 데 방해가 되므로 걷어낸다. */
-	#mainContent5.scene-dark{position:relative;background:#060910 !important;}
+	#mainContent5.scene-dark{position:relative;background:#070A10 !important;}
 	#mainContent5.scene-dark::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/col-bg.jpg) center/cover no-repeat;
 		filter:brightness(.92) contrast(1.02);opacity:.8;}
 	/* 위·아래 가장자리는 배경색으로 완전히 스며들게 — 섹션 경계에서 이미지가 잘려 보이지 않게 */
 	#mainContent5.scene-dark::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.2) 22%,rgba(6,9,16,.12) 55%,#060910 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.2) 22%,rgba(6,9,16,.12) 55%,#070A10 100%);}
 	#mainContent5 .main-con05{position:relative;z-index:1;}
 	/* WORK(사례 준비중) — 배경 이미지 없음. 칼럼과 연속으로 이미지가 깔리지 않게 비워 둔다 */
 
 	/* 메인 실사 배경 2곳 — AI 가시성(어둠 속 노트북, 미니멀) · 최종 CTA(키보드 손, 풀블리드) */
-	#hwVisibility{position:relative;background:#060910;}
+	#hwVisibility{position:relative;background:#070A10;}
 	#hwVisibility::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/visibility-bg.jpg) center/cover no-repeat;
 		filter:grayscale(.35) contrast(1.04) brightness(.85);opacity:.6;}
 	#hwVisibility::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.2) 24%,rgba(6,9,16,.12) 50%,#060910 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.2) 24%,rgba(6,9,16,.12) 50%,#070A10 100%);}
 	#hwVisibility .area{position:relative;z-index:1;}
 	.hw-cta{position:relative;overflow:hidden;}
 	.hw-cta::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/kb-dark.jpg) center/cover no-repeat;
 		filter:grayscale(.25) contrast(1.05) brightness(.58);}
 	.hw-cta::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.45) 65%,#060910 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.45) 65%,#070A10 100%);}
 	.hw-cta .area{position:relative;z-index:1;}
 
 	/* 인덱스 + 우측 이미지 2단 — hw-idx 오른쪽 여백을 섹션을 아우르는 사진으로 채운다 */
@@ -287,14 +287,14 @@
 	   같은 이미지가 인접 섹션에 반복되면 안 된다(2026-08-06 세영).
 	   페이지의 이미지 배경 비율은 20~30%(비주얼 영상 + 본문 1곳 + CTA)를 지킨다.
 	   가장자리 페이드 필수. --silk: 메인 칼럼과 같은 실크 / --night: 야간 도로 실사 */
-	.hw-psec--silk, .hw-psec--night{position:relative;background:#060910;}
+	.hw-psec--silk, .hw-psec--night{position:relative;background:#070A10;}
 	.hw-psec--silk::before, .hw-psec--night::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/col-bg.jpg) center/cover no-repeat;
 		filter:brightness(.9) contrast(1.02);opacity:.5;}
 	.hw-psec--night::before{background-image:url(../images/photo/sec-night.jpg);
 		filter:grayscale(.3) brightness(.85) contrast(1.04);opacity:.55;}
 	.hw-psec--silk::after, .hw-psec--night::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#060910 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#070A10 100%);}
 	.hw-psec--silk > .area, .hw-psec--night > .area{position:relative;z-index:1;}
 
 	/* ===== 섹션 리듬 =====
@@ -377,7 +377,7 @@
 	.hwt3__col--hao li::before{background:var(--main-color);}
 	/* 흐름 연결 — 칼럼 경계 중앙의 작은 화살촉 */
 	.hwt3__col + .hwt3__col::after{content:"";position:absolute;left:-5px;top:46%;width:9px;height:9px;
-		border-top:1.5px solid var(--main-color);border-right:1.5px solid var(--main-color);transform:rotate(45deg);background:#060910;}
+		border-top:1.5px solid var(--main-color);border-right:1.5px solid var(--main-color);transform:rotate(45deg);background:#070A10;}
 	.hwt3__ease{margin:36px 0 0;font-size:15px;line-height:1.75;color:rgba(255,255,255,.55);max-width:860px;}
 	.hwt3__links{margin:16px 0 0;font-size:14.5px;line-height:1.8;color:rgba(255,255,255,.45);max-width:860px;}
 	.hwt3__links a{color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:color .25s,border-color .25s;}
@@ -455,7 +455,7 @@
 	.hw-scard:hover .hw-scard__go i{transform:translateX(6px);}
 	/* 우측 스크롤 힌트 페이드 */
 	.hw-scope::after{content:"";position:absolute;right:0;top:0;bottom:26px;width:84px;pointer-events:none;
-		background:linear-gradient(90deg,rgba(6,9,16,0),#060910);}
+		background:linear-gradient(90deg,rgba(6,9,16,0),#070A10);}
 	/* 등장 스태거(엔진 대신 자체 IntersectionObserver로 .is-rev 부여) */
 	.hw-scope.is-ready .hw-scard{opacity:0;transform:translateY(30px);
 		transition:opacity .7s ease,transform .8s cubic-bezier(.16,1,.3,1);}
@@ -921,7 +921,7 @@
 		.hw-h2 .hwsp{opacity:1 !important;transform:none !important;transition:none !important;}
 	}
 	/* ===== 서브페이지 공통 컴포넌트 ===== */
-	.sub-wrap #content{background:#060910;}
+	.sub-wrap #content{background:#070A10;}
 	.hw-psec{padding:130px 0;position:relative;}
 	.hw-psec--line{border-top:1px solid rgba(255,255,255,.1);}
 	.hw-psec .area{max-width:var(--area-width);margin:0 auto;padding:0 var(--area-padding);}
@@ -1265,6 +1265,8 @@
 	   ══════════════════════════════════════════════════════════════ */
 	:root{
 		/* 원시값 */
+		/* 배경은 이 두 가지만 사용한다 */
+		--black-bg:#070A10; --gray-bg:#10141B;
 		--ink-900:#070A10; --ink-850:#080B12; --ink-800:#0D1119; --ink-750:#10151E;
 		--ink-700:#141922; --ink-650:#171C25; --ink-600:#1B212C;
 		--paper-0:#FFFFFF; --paper-100:#F7F7F5; --paper-200:#F3F3F0; --paper-300:#ECEDE9;
@@ -1291,7 +1293,7 @@
 
 	/* ── 장면 정의 ── */
 	.scene-dark{
-		--bg:var(--ink-900); --bg-2:var(--ink-800);
+		--bg:var(--black-bg); --bg-2:var(--ink-800);
 		--card:var(--ink-700); --card-2:var(--ink-650); --card-hi:var(--ink-600);
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
 		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
@@ -1301,7 +1303,7 @@
 	/* 한 단계 밝은 다크. 밝은 회색 배경은 쓰지 않는다 —
 	   장면 리듬은 '거의 검정 ↔ 어두운 회색' 두 단계로 만든다. */
 	.scene-soft{
-		--bg:#10141B; --bg-2:#151A22;
+		--bg:var(--gray-bg); --bg-2:#151A22;
 		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
 		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
@@ -1312,7 +1314,7 @@
 	   따뜻한 기가 아주 약하게 도는 짙은 차콜로 두고, 그 위에 밝은 종이 패널을
 	   올려 장면 전환을 만든다. 레드는 번호와 도형에만 남는다. */
 	.scene-ink{
-		--bg:#12141A; --bg-2:#171A21;
+		--bg:var(--gray-bg); --bg-2:#151A22;
 		--card:#fff; --card-2:#F3F3F0; --card-hi:#fff;
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.86);
 		--tx-3:rgba(255,255,255,.74); --tx-4:rgba(255,255,255,.62);
@@ -1422,7 +1424,7 @@
 	.scene-soft .hw-psec--line,.scene-soft .hw-psec{border-top-color:var(--line);}
 
 	/* 칼럼처럼 편집형 콘텐츠가 오는 자리는 한 단계 더 밝게 */
-	.scene-soft.is-white{--bg:#141922;--card:#1B2029;}
+	/* 배경색은 블랙과 다크그레이 두 가지만 쓴다. 별도 톤을 만들지 않는다 */
 
 	/* 4축 원형 — 라이트 장면에서는 유리 원과 궤도의 명도를 뒤집는다 */
 	.scene-soft .main-ai-list li{background-color:rgba(255,255,255,.10);}
@@ -1549,6 +1551,45 @@
 		.hwdoc__grid{grid-template-columns:1fr;}
 		.hwdoc__paper{padding:20px 18px 24px;}
 	}
+
+	/* ══ 서브페이지 톤 ══
+	   메인만 리듬이 있고 서브 43개가 전부 검정인 상태를 없앤다.
+	   조각을 하나씩 고치지 않고 구조로 준다 — 서브는 #content 아래
+	   .hw-psec 들이 순서대로 오고 마지막에 .hw-cta 가 온다.
+	   Hero(다크) → 첫 섹션(다크, 문제 인식) → 본문(한 단계 밝은 다크) → CTA(다크).
+	   덩어리로 묶어 전환하므로 잘게 교차하지 않는다. */
+	/* 기본은 블랙. 다크그레이는 몇 자리에만 준다 —
+	   블랙·회색이 규칙적으로 번갈아 나오면 패턴이 눈에 보인다. */
+	#content > .hw-psec{
+		--bg:var(--black-bg); --bg-2:#0D1119;
+		--card:var(--ink-700); --card-2:var(--ink-650); --card-hi:var(--ink-600);
+		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
+		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
+		--line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.26);
+		--accent:var(--main-color);
+		background:var(--bg);
+	}
+	/* 2번째와 5·6번째만 다크그레이 — 간격이 고르지 않아 교차로 읽히지 않는다 */
+	#content > .hw-psec:nth-of-type(2),
+	#content > .hw-psec:nth-of-type(5),
+	#content > .hw-psec:nth-of-type(6){
+		--bg:var(--gray-bg); --bg-2:#151A22;
+		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
+		background:var(--bg);
+	}
+	/* 본문 덩어리 안에서는 섹션 구분선을 지운다 — 배경이 이미 같은 면이다 */
+	#content > .hw-psec.hw-psec--line{border-top-color:transparent;}
+	#content > .hw-psec:first-of-type + .hw-psec{border-top-color:var(--line);}
+	/* 배경 이미지가 깔린 섹션은 원래 톤을 지킨다 */
+	#content > .hw-psec--silk,#content > .hw-psec--night{--bg:var(--black-bg);background:var(--black-bg);}
+	/* 최종 CTA 는 다시 가장 어둡게 — 문의로 떨어지는 지점 */
+	#content > .hw-cta,.hw-cta{--bg:var(--black-bg);background:var(--black-bg);}
+
+	/* 본문 덩어리의 카드가 배경에 묻히지 않도록 표면을 한 단계 올린다 */
+	#content > .hw-psec .hwb__item,
+	#content > .hw-psec .hwf > div,
+	#content > .hw-psec .hw-feat > li,
+	#content > .hw-psec .hws__item{background:var(--card);border-color:var(--line);}
 
 	/* ── 카드 높이 정책 ──
 	   텍스트만 있는 카드는 내용 높이에 맞춘다. 큰 높이는 인포그래픽·이미지·

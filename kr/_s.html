@@ -5,19 +5,19 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>공지사항 — 하오웹</title>
+<title>홈페이지 제작센터 — 하오웹</title>
 <meta name="Title" content="하오웹">
 <meta name="Subject" content="하오웹 홈페이지 제작·리뉴얼">
 <meta name="Keywords" content="하오웹, HAOWEB, 홈페이지 제작, 홈페이지 리뉴얼, 기업 홈페이지, 병원 홈페이지, 프랜차이즈, 쇼핑몰, 랜딩페이지, SEO, AEO, GEO, AI 가시성, 콘텐츠 제작, 글로벌 홈페이지, 반응형 웹, 웹디자인, 웹에이전시">
-<meta name="Description" content="하오웹의 공지사항입니다.">
+<meta name="Description" content="목적에 맞는 홈페이지 유형을 고르면 필요한 페이지·콘텐츠·기능·플랜까지 비교할 수 있습니다.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="공지사항 — 하오웹">
-<meta property="og:description" content="하오웹의 공지사항입니다.">
+<meta property="og:title" content="홈페이지 제작센터 — 하오웹">
+<meta property="og:description" content="목적에 맞는 홈페이지 유형을 고르면 필요한 페이지·콘텐츠·기능·플랜까지 비교할 수 있습니다.">
 <meta name="viewport" content="width=device-width, initial-scale=1"><!-- 모바일사이트, 반응형사이트 제작시 사용 -->
 <meta name="format-detection" content="telephone=no"/><!-- ios 자동전화걸기 방지 -->
 <!-- 색인 지시(robots/googlebot/naverbot/yeti)는 아래 SEO 블록에서 _site.json 의
      blockIndexing 값으로 한 상태만 생성한다. 여기에 따로 적으면 지시가 충돌한다. -->
-<meta name="theme-color" content="#070A10">
+<meta name="theme-color" content="#060910">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/common/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../images/common/favicon-16x16.png">
@@ -27,8 +27,8 @@
 <meta property="og:site_name" content="하오웹">
 <meta property="og:image" content="../images/common/haoweb-og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="공지사항 — 하오웹">
-<meta name="twitter:description" content="하오웹의 공지사항입니다.">
+<meta name="twitter:title" content="홈페이지 제작센터 — 하오웹">
+<meta name="twitter:description" content="목적에 맞는 홈페이지 유형을 고르면 필요한 페이지·콘텐츠·기능·플랜까지 비교할 수 있습니다.">
 <meta name="twitter:image" content="../images/common/haoweb-og.png">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
@@ -71,9 +71,9 @@
 
 
 
-</head>
+<style>[data-scroll]{opacity:1!important;transform:none!important}#visual{display:none!important}</style></head>
 <style>
-	body {background: #070A10;}
+	body {background: #060910;}
 	/* 한국어 전용: 헤더 언어 토글 숨김(7메뉴와 겹침 방지) */
 		/* ===== 한글 폰트 프리텐다드 통일 ===== */
 	:root{
@@ -97,7 +97,7 @@
 	/* main.css 의 #mainVisual{overflow:hidden; height:121.5rem} 을 덮어쓴다.
 	   - overflow:hidden 이면 안쪽 sticky 가 죽는다(클리핑은 .hwhero__bg 가 맡는다)
 	   - 고정 높이면 캡션·설명 분량에 맞춰 늘어나지 않는다 */
-	#mainVisual{position:relative;background:#070A10;
+	#mainVisual{position:relative;background:#060910;
 		overflow:visible;height:auto;}
 
 	/* 배경 영상 — 로드되며 1.08배에서 제자리로, 스크롤에는 패럴랙스
@@ -195,11 +195,11 @@
 	   없으면 영상의 아래 경계선이 본문 위에 잘린 선으로 드러난다.
 	   본문을 불투명하게 만들어 영상 위로 덮이게 한다 — 영상은 히어로에서 끝나고
 	   본문이 커튼처럼 올라온다. position 이 없으면 배경이 sticky 영상 아래에 깔린다. */
-	#mainContent{position:relative;background-color:#070A10;}
+	#mainContent{position:relative;background-color:#060910;}
 	/* 덮이는 지점이 선으로 보이지 않게, 본문 바로 위 160px 을 배경색으로 녹인다.
 	   히어로 안쪽이 아니라 본문에 붙여야 첫 화면 하단이 어두워지지 않는다. */
 	#mainContent::before{content:"";position:absolute;left:0;right:0;top:-160px;height:160px;
-		pointer-events:none;background:linear-gradient(180deg,rgba(6,9,16,0) 0%,#070A10 100%);}
+		pointer-events:none;background:linear-gradient(180deg,rgba(6,9,16,0) 0%,#060910 100%);}
 
 	@media (prefers-reduced-motion: reduce){
 		.hwhero__bgInner{opacity:1 !important;transform:none !important;}
@@ -240,30 +240,30 @@
 	   원본이 이미 어두운 무채색이라 필터는 최소만 건다. */
 	/* 실크 배경은 다크 장면일 때만. 칼럼이 라이트 장면(편집형)으로 갈 때는
 	   배경 이미지가 글을 읽는 데 방해가 되므로 걷어낸다. */
-	#mainContent5.scene-dark{position:relative;background:#070A10 !important;}
+	#mainContent5.scene-dark{position:relative;background:#060910 !important;}
 	#mainContent5.scene-dark::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/col-bg.jpg) center/cover no-repeat;
 		filter:brightness(.92) contrast(1.02);opacity:.8;}
 	/* 위·아래 가장자리는 배경색으로 완전히 스며들게 — 섹션 경계에서 이미지가 잘려 보이지 않게 */
 	#mainContent5.scene-dark::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.2) 22%,rgba(6,9,16,.12) 55%,#070A10 100%);}
+		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.2) 22%,rgba(6,9,16,.12) 55%,#060910 100%);}
 	#mainContent5 .main-con05{position:relative;z-index:1;}
 	/* WORK(사례 준비중) — 배경 이미지 없음. 칼럼과 연속으로 이미지가 깔리지 않게 비워 둔다 */
 
 	/* 메인 실사 배경 2곳 — AI 가시성(어둠 속 노트북, 미니멀) · 최종 CTA(키보드 손, 풀블리드) */
-	#hwVisibility{position:relative;background:#070A10;}
+	#hwVisibility{position:relative;background:#060910;}
 	#hwVisibility::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/visibility-bg.jpg) center/cover no-repeat;
 		filter:grayscale(.35) contrast(1.04) brightness(.85);opacity:.6;}
 	#hwVisibility::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.2) 24%,rgba(6,9,16,.12) 50%,#070A10 100%);}
+		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.2) 24%,rgba(6,9,16,.12) 50%,#060910 100%);}
 	#hwVisibility .area{position:relative;z-index:1;}
 	.hw-cta{position:relative;overflow:hidden;}
 	.hw-cta::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/kb-dark.jpg) center/cover no-repeat;
 		filter:grayscale(.25) contrast(1.05) brightness(.58);}
 	.hw-cta::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.45) 65%,#070A10 100%);}
+		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.45) 65%,#060910 100%);}
 	.hw-cta .area{position:relative;z-index:1;}
 
 	/* 인덱스 + 우측 이미지 2단 — hw-idx 오른쪽 여백을 섹션을 아우르는 사진으로 채운다 */
@@ -287,14 +287,14 @@
 	   같은 이미지가 인접 섹션에 반복되면 안 된다(2026-08-06 세영).
 	   페이지의 이미지 배경 비율은 20~30%(비주얼 영상 + 본문 1곳 + CTA)를 지킨다.
 	   가장자리 페이드 필수. --silk: 메인 칼럼과 같은 실크 / --night: 야간 도로 실사 */
-	.hw-psec--silk, .hw-psec--night{position:relative;background:#070A10;}
+	.hw-psec--silk, .hw-psec--night{position:relative;background:#060910;}
 	.hw-psec--silk::before, .hw-psec--night::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/col-bg.jpg) center/cover no-repeat;
 		filter:brightness(.9) contrast(1.02);opacity:.5;}
 	.hw-psec--night::before{background-image:url(../images/photo/sec-night.jpg);
 		filter:grayscale(.3) brightness(.85) contrast(1.04);opacity:.55;}
 	.hw-psec--silk::after, .hw-psec--night::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#070A10 100%);}
+		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#060910 100%);}
 	.hw-psec--silk > .area, .hw-psec--night > .area{position:relative;z-index:1;}
 
 	/* ===== 섹션 리듬 =====
@@ -377,7 +377,7 @@
 	.hwt3__col--hao li::before{background:var(--main-color);}
 	/* 흐름 연결 — 칼럼 경계 중앙의 작은 화살촉 */
 	.hwt3__col + .hwt3__col::after{content:"";position:absolute;left:-5px;top:46%;width:9px;height:9px;
-		border-top:1.5px solid var(--main-color);border-right:1.5px solid var(--main-color);transform:rotate(45deg);background:#070A10;}
+		border-top:1.5px solid var(--main-color);border-right:1.5px solid var(--main-color);transform:rotate(45deg);background:#060910;}
 	.hwt3__ease{margin:36px 0 0;font-size:15px;line-height:1.75;color:rgba(255,255,255,.55);max-width:860px;}
 	.hwt3__links{margin:16px 0 0;font-size:14.5px;line-height:1.8;color:rgba(255,255,255,.45);max-width:860px;}
 	.hwt3__links a{color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:color .25s,border-color .25s;}
@@ -455,7 +455,7 @@
 	.hw-scard:hover .hw-scard__go i{transform:translateX(6px);}
 	/* 우측 스크롤 힌트 페이드 */
 	.hw-scope::after{content:"";position:absolute;right:0;top:0;bottom:26px;width:84px;pointer-events:none;
-		background:linear-gradient(90deg,rgba(6,9,16,0),#070A10);}
+		background:linear-gradient(90deg,rgba(6,9,16,0),#060910);}
 	/* 등장 스태거(엔진 대신 자체 IntersectionObserver로 .is-rev 부여) */
 	.hw-scope.is-ready .hw-scard{opacity:0;transform:translateY(30px);
 		transition:opacity .7s ease,transform .8s cubic-bezier(.16,1,.3,1);}
@@ -921,7 +921,7 @@
 		.hw-h2 .hwsp{opacity:1 !important;transform:none !important;transition:none !important;}
 	}
 	/* ===== 서브페이지 공통 컴포넌트 ===== */
-	.sub-wrap #content{background:#070A10;}
+	.sub-wrap #content{background:#060910;}
 	.hw-psec{padding:130px 0;position:relative;}
 	.hw-psec--line{border-top:1px solid rgba(255,255,255,.1);}
 	.hw-psec .area{max-width:var(--area-width);margin:0 auto;padding:0 var(--area-padding);}
@@ -1265,8 +1265,6 @@
 	   ══════════════════════════════════════════════════════════════ */
 	:root{
 		/* 원시값 */
-		/* 배경은 이 두 가지만 사용한다 */
-		--black-bg:#070A10; --gray-bg:#10141B;
 		--ink-900:#070A10; --ink-850:#080B12; --ink-800:#0D1119; --ink-750:#10151E;
 		--ink-700:#141922; --ink-650:#171C25; --ink-600:#1B212C;
 		--paper-0:#FFFFFF; --paper-100:#F7F7F5; --paper-200:#F3F3F0; --paper-300:#ECEDE9;
@@ -1293,7 +1291,7 @@
 
 	/* ── 장면 정의 ── */
 	.scene-dark{
-		--bg:var(--black-bg); --bg-2:var(--ink-800);
+		--bg:var(--ink-900); --bg-2:var(--ink-800);
 		--card:var(--ink-700); --card-2:var(--ink-650); --card-hi:var(--ink-600);
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
 		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
@@ -1303,7 +1301,7 @@
 	/* 한 단계 밝은 다크. 밝은 회색 배경은 쓰지 않는다 —
 	   장면 리듬은 '거의 검정 ↔ 어두운 회색' 두 단계로 만든다. */
 	.scene-soft{
-		--bg:var(--gray-bg); --bg-2:#151A22;
+		--bg:#10141B; --bg-2:#151A22;
 		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
 		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
@@ -1314,7 +1312,7 @@
 	   따뜻한 기가 아주 약하게 도는 짙은 차콜로 두고, 그 위에 밝은 종이 패널을
 	   올려 장면 전환을 만든다. 레드는 번호와 도형에만 남는다. */
 	.scene-ink{
-		--bg:var(--gray-bg); --bg-2:#151A22;
+		--bg:#12141A; --bg-2:#171A21;
 		--card:#fff; --card-2:#F3F3F0; --card-hi:#fff;
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.86);
 		--tx-3:rgba(255,255,255,.74); --tx-4:rgba(255,255,255,.62);
@@ -1424,7 +1422,7 @@
 	.scene-soft .hw-psec--line,.scene-soft .hw-psec{border-top-color:var(--line);}
 
 	/* 칼럼처럼 편집형 콘텐츠가 오는 자리는 한 단계 더 밝게 */
-	/* 배경색은 블랙과 다크그레이 두 가지만 쓴다. 별도 톤을 만들지 않는다 */
+	.scene-soft.is-white{--bg:#141922;--card:#1B2029;}
 
 	/* 4축 원형 — 라이트 장면에서는 유리 원과 궤도의 명도를 뒤집는다 */
 	.scene-soft .main-ai-list li{background-color:rgba(255,255,255,.10);}
@@ -1558,32 +1556,27 @@
 	   .hw-psec 들이 순서대로 오고 마지막에 .hw-cta 가 온다.
 	   Hero(다크) → 첫 섹션(다크, 문제 인식) → 본문(한 단계 밝은 다크) → CTA(다크).
 	   덩어리로 묶어 전환하므로 잘게 교차하지 않는다. */
-	/* 기본은 블랙. 다크그레이는 몇 자리에만 준다 —
-	   블랙·회색이 규칙적으로 번갈아 나오면 패턴이 눈에 보인다. */
 	#content > .hw-psec{
-		--bg:var(--black-bg); --bg-2:#0D1119;
-		--card:var(--ink-700); --card-2:var(--ink-650); --card-hi:var(--ink-600);
+		--bg:#10141B; --bg-2:#151A22;
+		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
 		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
 		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
 		--line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.26);
 		--accent:var(--main-color);
 		background:var(--bg);
 	}
-	/* 2번째와 5·6번째만 다크그레이 — 간격이 고르지 않아 교차로 읽히지 않는다 */
-	#content > .hw-psec:nth-of-type(2),
-	#content > .hw-psec:nth-of-type(5),
-	#content > .hw-psec:nth-of-type(6){
-		--bg:var(--gray-bg); --bg-2:#151A22;
-		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
+	/* 첫 섹션은 서브 비주얼과 이어지는 도입부라 배경색을 유지한다 */
+	#content > .hw-psec:first-of-type{
+		--bg:var(--ink-900); --card:var(--ink-700); --card-2:var(--ink-650);
 		background:var(--bg);
 	}
 	/* 본문 덩어리 안에서는 섹션 구분선을 지운다 — 배경이 이미 같은 면이다 */
 	#content > .hw-psec.hw-psec--line{border-top-color:transparent;}
 	#content > .hw-psec:first-of-type + .hw-psec{border-top-color:var(--line);}
 	/* 배경 이미지가 깔린 섹션은 원래 톤을 지킨다 */
-	#content > .hw-psec--silk,#content > .hw-psec--night{--bg:var(--black-bg);background:var(--black-bg);}
+	#content > .hw-psec--silk,#content > .hw-psec--night{--bg:var(--ink-900);background:var(--ink-900);}
 	/* 최종 CTA 는 다시 가장 어둡게 — 문의로 떨어지는 지점 */
-	#content > .hw-cta,.hw-cta{--bg:var(--black-bg);background:var(--black-bg);}
+	#content > .hw-cta,.hw-cta{--bg:var(--ink-900);background:var(--ink-900);}
 
 	/* 본문 덩어리의 카드가 배경에 묻히지 않도록 표면을 한 단계 올린다 */
 	#content > .hw-psec .hwb__item,
@@ -1744,21 +1737,21 @@
 	</header>
 	<div id="container">
 		<!-- visual -->
-		<section id="visual" class="sub-visual-company">
+		<section id="visual" class="sub-visual-product">
 			<div class="visual-img-con">
-				<div class="visual-img-inner" style="background:#0b1020 url(../images/layout/sv-support.jpg) no-repeat 50% 0%"><video class="visual-video" muted loop playsinline preload="none" poster="../images/layout/sv-support.jpg"><source src="../images/layout/sv-support.mp4" type="video/mp4"></video></div>
+				<div class="visual-img-inner" style="background:#0b1020 url(../images/layout/sv-make.jpg) no-repeat 50% 0%"><video class="visual-video" muted loop playsinline preload="none" poster="../images/layout/sv-make.jpg"><source src="../images/layout/sv-make.mp4" type="video/mp4"></video></div>
 			</div>
 			<div class="area-box visual-txt-con">
 				<div class="table-cell-layout">
 					<div class="visual-txt-container">
-						<p class="visual-tit font-jost trans400">Notice</p>
-						<p class="visual-sub-txt font-jost">Announcements</p>
+						<p class="visual-tit font-jost trans400">Website</p>
+						<p class="visual-sub-txt font-jost">Structure that customers understand</p>
 						<div class="visual-con-bottom">
 							<div class="location">
 								<ul>
 									<li><i class="xi-network-home"></i></li>
-									<li class="font-jost">Support</li>
-									<li>공지사항</li>
+									<li class="font-jost">Website</li>
+									<li>홈페이지 제작센터</li>
 								</ul>
 							</div>
 							<aside id="topMenu04" class="">
@@ -1766,7 +1759,7 @@
 									<div class="cm-top-menu clearfix">
 										<div class="menu-location location1 cm-drop-menu-box-JS cm-fill-btn" data-drop-event="click">
 											<button class="cur-location cm-drop-open-btn-JS">
-												<span class="txt">고객지원</span>
+												<span class="txt">홈페이지 제작</span>
 												<i class="xi-angle-down-min arrow"></i>
 												<span class="cm-fill"></span>
 											</button>
@@ -1782,16 +1775,22 @@
 										</div>
 										<div class="menu-location location2 cm-drop-menu-box-JS cm-fill-btn" data-drop-event="click">
 											<button class="cur-location cm-drop-open-btn-JS">
-												<span class="txt">공지사항</span>
+												<span class="txt">홈페이지 제작센터</span>
 												<i class="xi-angle-down-min arrow"></i>
 												<span class="cm-fill"></span>
 											</button>
 											<ul class="location-menu-con cm-drop-list-JS">
-												<li><a href="free-proposal.html"><span>무료 시안·제안</span></a></li>
-												<li><a href="inquiry.html"><span>제작 문의</span></a></li>
-												<li><a href="faq.html"><span>FAQ</span></a></li>
-												<li><a href="notice.html"><span>공지사항</span></a></li>
-												<li><a href="about.html"><span>회사소개</span></a></li>
+												<li><a href="website.html"><span>홈페이지 제작센터</span></a></li>
+												<li><a href="company.html"><span>기업 홈페이지</span></a></li>
+												<li><a href="hospital.html"><span>병원 홈페이지</span></a></li>
+												<li><a href="franchise.html"><span>프랜차이즈 홈페이지</span></a></li>
+												<li><a href="shop.html"><span>쇼핑몰</span></a></li>
+												<li><a href="lawyer.html"><span>전문가·법률 홈페이지</span></a></li>
+												<li><a href="landing.html"><span>랜딩페이지</span></a></li>
+												<li><a href="app.html"><span>앱 제작</span></a></li>
+												<li><a href="content-production.html"><span>홈페이지 콘텐츠 제작</span></a></li>
+												<li><a href="process.html"><span>제작 과정</span></a></li>
+												<li><a href="price-guide.html"><span>제작비 안내</span></a></li>
 											</ul>
 										</div>
 									</div>
@@ -1807,31 +1806,168 @@
 			<section id="content" class="wide">
 <article class="hw-psec">
 	<div class="area">
-		<span class="hw-eye" data-scroll="fade-up">Notice</span>
-		<h1 class="hw-h2" data-scroll="fade-up">서비스와 운영 안내를, <br class="m-br"><span class="r">한곳에</span> 정리합니다.</h1>
-		<p class="hw-lead" data-scroll="fade-up">서비스 변경, 점검, 운영 관련 주요 안내를 이 페이지에 정리합니다. 공지가 등록되기 전에는 자주 묻는 질문과 제작 문의를 이용해 주세요.</p>
+		<span class="hw-eye" data-scroll="fade-up">Website</span>
+		<h1 class="hw-h2" data-scroll="fade-up">어떤 홈페이지가 <br class="m-br"><span class="r">필요하신가요?</span></h1>
+		<p class="hw-lead" data-scroll="fade-up">홈페이지가 없거나 새 사업을 시작한 고객을 위한 페이지입니다. 목적에 맞는 유형을 고르면, 필요한 페이지와 콘텐츠·기능·플랜까지 비교해 볼 수 있습니다.</p>
+		<div class="hw-actions" data-scroll="fade-up">
+			<a href="free-proposal.html" class="on">무료 시안·제안받기</a>
+			<a href="inquiry.html">제작 문의</a>
+		</div>
+	</div>
+</article>
+
+<article class="hw-psec hw-psec--line" id="types">
+	<div class="area">
+		<span class="hw-eye" data-scroll="fade-up">유형 선택 · 비교</span>
+		<h2 class="hw-h2" data-scroll="fade-up">목적이 다르면, <br class="m-br">필요한 <span class="r">구조가 다릅니다.</span></h2>
+		<p class="hw-lead" data-scroll="fade-up">목적별로 필요한 페이지·핵심 기능·신뢰를 만드는 정보와, 방문자가 확인하는 순서를 함께 정리했습니다. 유형을 눌러 자세히 확인하세요.</p>
+		<div class="hws">
+			<div class="hws__aside">
+				<span class="hws__count"><b class="font-jost">01</b> / <i class="font-jost" style="font-style:normal">00</i></span>
+				<p class="hws__now"></p>
+				<div class="hws__bar"><span></span></div>
+			</div>
+			<div class="hws__list">
+				<article class="hws__item">
+					<span class="hws__k">거래처 문의</span>
+					<h3><a href="company.html">기업 소개·영업</a></h3>
+					<p>사업 분야·기술과 제품·설비와 인증·납품 실적을 거래처가 확인하는 순서로. 필요한 페이지는 사업 분야·기술·제품·실적, 핵심 기능은 자료 다운로드·문의 폼, 신뢰를 만드는 정보는 설비·인증·납품 실적입니다.</p>
+					<ul><li>사업 분야</li><li>기술·제품</li><li>설비·인증</li><li>프로젝트</li><li>문의</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">예약·상담</span>
+					<h3><a href="hospital.html">병원 예약·상담</a></h3>
+					<p>진료과목·의료진·진료 방식을 환자가 확인하고 예약으로 이어지게. 필요한 페이지는 진료과목·의료진·진료 안내, 핵심 기능은 예약·상담 신청, 신뢰를 만드는 정보는 의료진·진료 방식입니다.</p>
+					<ul><li>진료과목</li><li>의료진</li><li>진료 안내</li><li>예약·상담</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">상담 신청</span>
+					<h3><a href="lawyer.html">전문 서비스 상담</a></h3>
+					<p>업무 분야·진행 절차·전문 정보를 상담으로 잇습니다. 필요한 페이지는 업무 분야·절차·안내, 핵심 기능은 상담 폼, 신뢰를 만드는 정보는 전문 분야·업무 사례입니다.</p>
+					<ul><li>업무 분야</li><li>진행 절차</li><li>전문 정보</li><li>상담</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">상품 구매</span>
+					<h3><a href="shop.html">상품 판매</a></h3>
+					<p>상품 탐색·상세·구매 흐름을 만듭니다. 필요한 페이지는 카테고리·상품 상세, 핵심 기능은 장바구니·결제·회원, 신뢰를 만드는 정보는 상품 정보·구매 안내입니다.</p>
+					<ul><li>상품 탐색</li><li>상품 상세</li><li>장바구니</li><li>결제</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">가맹 문의</span>
+					<h3><a href="franchise.html">프랜차이즈·가맹 모집</a></h3>
+					<p>브랜드 소개·매장·가맹 안내를 문의로 잇습니다. 필요한 페이지는 브랜드·매장·창업 안내, 핵심 기능은 가맹 상담 폼, 신뢰를 만드는 정보는 브랜드·매장 정보입니다.</p>
+					<ul><li>브랜드</li><li>경쟁력</li><li>매장</li><li>창업 안내</li><li>가맹 문의</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">전환</span>
+					<h3><a href="landing.html">광고 랜딩페이지</a></h3>
+					<p>광고 유입·핵심 제안·전환 폼으로 이어지는 단일 페이지. 핵심 기능은 전환 폼·기본 추적, 신뢰를 만드는 정보는 핵심 제안·근거입니다.</p>
+					<ul><li>광고 유입</li><li>핵심 제안</li><li>근거</li><li>전환 폼</li></ul>
+				</article>
+				<article class="hws__item">
+					<span class="hws__k">서비스 이용</span>
+					<h3><a href="app.html">웹앱·하이브리드 앱</a></h3>
+					<p>서비스 흐름·사용자 기능·웹 연결을 설계합니다. 필요한 페이지는 주요 기능 화면, 핵심 기능은 회원·알림 등 협의, 신뢰를 만드는 정보는 서비스 안내입니다.</p>
+					<ul><li>서비스 흐름</li><li>사용자 기능</li><li>알림·회원</li><li>웹 연결</li></ul>
+				</article>
+				<article class="hws__item" id="public-sector">
+					<span class="hws__k">정보 접근·신뢰</span>
+					<h3>공공기관·협회</h3>
+					<p>기관·협회를 처음 접하는 방문자 기준으로 기관 소개·사업과 정책 안내·공지와 자료실·문의 구조를 정리하고, 정보 접근성과 신뢰 표기를 함께 설계합니다. (정부지원사업 활용 안내는 <a href="government.html" style="color:var(--main-color)">정부지원사업</a>에서 별도로 다룹니다.)</p>
+					<ul><li>기관 소개</li><li>사업·정책 안내</li><li>공지·자료실</li><li>정보 접근성</li><li>문의</li></ul>
+				</article>
+			</div>
+		</div>
+		<p class="hw-note">목록에 없는 업종도 같은 방식으로 제작합니다 — 고객이 확인하는 정보를 조사하고, 그 순서로 구조를 설계합니다. 필요한 페이지와 기능은 상담에서 회사 상황에 맞게 조정하며, 제작 플랜은 범위를 정한 뒤 결정합니다.</p>
+		<div class="hw-rel">
+			<a href="process.html">제작 과정</a><a href="plan.html">제작 플랜</a><a href="price-guide.html">제작비 결정 기준</a>
+		</div>
+	</div>
+</article>
+
+<article class="hw-psec hw-psec--line hw-psec--night">
+	<div class="area">
+		<span class="hw-eye" data-scroll="fade-up">콘텐츠 지원</span>
+		<h2 class="hw-h2" data-scroll="fade-up">자료가 부족해도 <br class="m-br"><span class="r">시작할 수 있습니다.</span></h2>
+		<p class="hw-lead" data-scroll="fade-up">홈페이지에 들어갈 내용이 없어서 미루고 있다면, 그 내용부터 함께 만듭니다.</p>
+		<div class="hw-idxm" data-scroll="fade-up">
+			<nav class="hw-idx">
+				<a href="content-production.html"><span class="n font-jost">01</span><span class="t">원고·콘텐츠</span><span class="go">→</span></a>
+				<a href="studio.html"><span class="n font-jost">02</span><span class="t">기업·제품·공간 촬영</span><span class="go">→</span></a>
+				<a href="graphic-design.html"><span class="n font-jost">03</span><span class="t">그래픽·편집디자인</span><span class="go">→</span></a>
+			</nav>
+			<figure class="hw-idxm__media"><img src="../images/photo/idx-website.jpg" alt=""></figure>
+		</div>
+		<p class="hw-note">원고·콘텐츠는 핵심 문장과 페이지별 원고를 기획·작성하고, 촬영은 홈페이지에 실제로 쓰일 장면을 계획해 진행하며, 그래픽·편집디자인은 로고 정비·카탈로그·상세페이지를 다룹니다.</p>
 	</div>
 </article>
 
 <article class="hw-psec hw-psec--line">
 	<div class="area">
-		<span class="hw-eye" data-scroll="fade-up">Notice in preparation · 공지사항 준비중</span>
-		<h2 class="hw-h2" data-scroll="fade-up">공지사항을 <br class="m-br"><span class="r">준비하고 있습니다.</span></h2>
-		<p class="hw-lead" data-scroll="fade-up">서비스와 운영 관련 주요 안내부터 순차적으로 등록합니다. 공지 등록 전에는 FAQ와 제작 문의를 이용해 주세요.</p>
-		<div class="hw-actions" data-scroll="fade-up">
-			<a href="faq.html" class="on">자주 묻는 질문</a>
-			<a href="inquiry.html">제작 문의</a>
+		<span class="hw-eye" data-scroll="fade-up">검색·AI 대응</span>
+		<h2 class="hw-h2" data-scroll="fade-up">기본으로 반영하는 것과, <br class="m-br"><span class="r">별도로 협의하는 것.</span></h2>
+		<p class="hw-lead" data-scroll="fade-up">기본적인 검색·AI 대응 구조는 홈페이지 제작 과정에 반영하며, 콘텐츠 전략과 지속 운영은 별도 범위로 협의합니다.</p>
+		<div class="hwc">
+			<div class="hwc__col hwc__col--on">
+				<span class="hwc__cap">제작에 기본 포함</span>
+				<ul class="hwc__list">
+					<li>페이지 계층과 메뉴 구조</li>
+					<li>의미 있는 URL·페이지 제목과 설명</li>
+					<li>서비스별 정보구조와 기본 내부 링크</li>
+					<li>고객 질문을 고려한 콘텐츠 구성</li>
+					<li>모바일·접근성의 기본 구조</li>
+				</ul>
+			</div>
+			<div class="hwc__col">
+				<span class="hwc__cap">별도 확장 서비스</span>
+				<ul class="hwc__list">
+					<li>기존 홈페이지 전체 진단</li>
+					<li>검색·AI 대응 콘텐츠 전략</li>
+					<li>FAQ·사례·칼럼 등 운영형 콘텐츠 주제 기획과 전문 콘텐츠 작성</li>
+					<li>구조화 데이터 검토·기존 URL 이관 관리</li>
+					<li>지속적인 콘텐츠 발행과 정기 점검</li>
+				</ul>
+			</div>
+		</div>
+		<p class="hw-note">왼쪽은 제작에 기본 포함, 오른쪽은 별도 확장 서비스입니다. 하오웹은 검색 순위나 AI 노출을 보장하지 않습니다. <a href="search-ai.html" style="color:var(--main-color)">검색·AI 대응 자세히</a></p>
+	</div>
+</article>
+
+<article class="hw-psec hw-psec--line">
+	<div class="area">
+		<span class="hw-eye" data-scroll="fade-up">플랜과 과정</span>
+		<h2 class="hw-h2" data-scroll="fade-up">필요한 범위만큼 <br class="m-br"><span class="r">선택하세요.</span></h2>
+		<div class="hw-trio" data-scroll="fade-up">
+			<div><span class="n font-jost">Basic</span><h3>베이직</h3><p>정리된 자료가 있고, 필요한 구조를 정확하게 구축합니다.</p></div>
+			<div><span class="n font-jost">Premium</span><h3>프리미엄</h3><p>원고와 콘텐츠 기획부터 함께 제작합니다.</p></div>
+			<div><span class="n font-jost">Enterprise</span><h3>엔터프라이즈</h3><p>브랜드·촬영·편집디자인까지 하나의 기준으로 정비합니다.</p></div>
+		</div>
+		<p class="hw-note">범위를 정하기 어렵다면, 업종과 제작 목적을 바탕으로 필요한 구조와 제작 범위를 먼저 검토합니다. 제작 과정은 상담부터 오픈 이후 운영까지 여덟 단계로 진행합니다.</p>
+		<div class="hw-rel">
+			<a href="plan.html">제작 플랜</a><a href="process.html">제작 과정</a><a href="free-proposal.html">무료 시안·제안받기</a>
+		</div>
+	</div>
+</article>
+
+<article class="hw-psec hw-psec--line">
+	<div class="area">
+		<span class="hw-eye" data-scroll="fade-up">자주 묻는 질문</span>
+		<h2 class="hw-h2" data-scroll="fade-up">시작 전에 <br class="m-br"><span class="r">궁금한 것들.</span></h2>
+		<div class="hw-faq" data-scroll="fade-up">
+			<details><summary>자료가 거의 없는데 시작할 수 있나요?</summary><div class="a">현재 보유한 자료를 먼저 확인한 뒤, 부족한 원고·사진·그래픽의 제작 범위를 함께 정합니다.</div></details>
+			<details><summary>제작비는 얼마인가요?</summary><div class="a">페이지 수·기능·콘텐츠와 촬영 범위에 따라 달라집니다. 무엇으로 정해지는지는 <a href="price-guide.html">제작비 결정 기준</a>에 공개되어 있으며, 상담에서 범위를 정한 뒤 정확히 안내드립니다.</div></details>
+			<details><summary>기간은 얼마나 걸리나요?</summary><div class="a">자료 준비 상태와 제작 범위에 따라 다릅니다. 상담에서 범위를 정한 뒤 예상 일정을 안내드립니다.</div></details>
 		</div>
 	</div>
 </article>
 
 <section class="hw-cta">
 	<div class="area">
-		<span class="main-sub-tit font-jost" data-scroll="fade-up" style="display:block;margin-bottom:20px;">Notice</span>
-		<h2 data-scroll="fade-up">개별 문의는 공지보다 <br class="m-br">제작 문의가 빠릅니다.</h2>
+		<span class="main-sub-tit font-jost" data-scroll="fade-up" style="display:block;margin-bottom:20px;">Start</span>
+		<h2 data-scroll="fade-up">우리 회사에 맞는 유형이, <br class="m-br">보이시나요?</h2>
 		<div class="btns" data-scroll="fade-up">
-			<a href="inquiry.html" class="on">제작 문의 →</a>
-			<a href="faq.html">자주 묻는 질문</a>
+			<a href="free-proposal.html" class="on">무료 시안·제안받기 →</a>
+			<a href="inquiry.html">제작 문의</a>
 		</div>
 	</div>
 </section>
@@ -1904,8 +2040,8 @@ $(document).ready(function  () {
 </script></div>
 <!-- //wrap -->
 <script>
-	dep1 = 7,
-	dep2 = 4;
+	dep1 = 1,
+	dep2 = 1;
 </script>
 	<script type="text/javascript" src="../js/vendor/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="../js/plugin/slick.js"></script>

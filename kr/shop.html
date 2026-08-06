@@ -1625,6 +1625,59 @@
 		.hwmap__kids > li span{font-size:15px;padding:6px 11px;}
 	}
 
+	/* ══════════════════════════════════════════════════════════════
+	   한글 조판
+	   크기는 이미 범위 안이라, 여기서 품질을 가르는 것은 조판이다.
+	   한글은 라틴과 달리 글자폭이 일정하고 어절 단위로 읽히므로
+	   ① 큰 글자일수록 자간을 좁히고 어절 간격은 살짝 벌린다
+	   ② 제목은 줄 길이를 고르게 나눠 고아 어절을 없앤다
+	   ③ 본문은 자간을 거의 건드리지 않는다 — 좁히면 오히려 읽기 어렵다
+	   ══════════════════════════════════════════════════════════════ */
+
+	/* ① 디스플레이 — 자간은 좁게, 어절 간격은 살짝 넓게.
+	   한글은 -0.03em 이하로 좁히면 받침이 붙어 보인다. */
+	.hwhero__title{letter-spacing:-0.045em;}
+	.main-tit,.hw-h2,#visual .visual-tit{
+		letter-spacing:-0.032em;word-spacing:0.02em;}
+
+	/* ② 제목 줄 나누기 — 마지막 줄에 한 어절만 남는 것을 막는다.
+	   지원하지 않는 브라우저는 기존대로 흐른다(점진적 향상). */
+	.main-tit,.hw-h2,.hwv-title,.hwb__item h3,.hws__item h3,.hw-feat h3,
+	.hwp__rt,.hwt3__ttl,.hwdoc__grid b{text-wrap:balance;}
+	.hw-lead,.hw-note,.main-txt02{text-wrap:pretty;}
+
+	/* ③ 본문 — 자간은 건드리지 않는다. 대신 행간으로 읽기 리듬을 준다. */
+	.hw-lead{letter-spacing:-0.005em;}
+	.main-txt02,.hwv-body,.hwb__item p,.hws__item p{letter-spacing:-0.005em;}
+	.hw-note{letter-spacing:0;}
+
+	/* 강조 어절 — 색만 바꾸면 굵기가 달라 보여 선이 끊긴다.
+	   같은 굵기를 유지하고 색으로만 구분한다. */
+	.main-tit .r,.hw-h2 .r,.hw-h2 span[style*="main-color"]{font-weight:inherit;}
+
+	/* 숫자는 자리를 고정해 목록에서 세로로 정렬되게 한다 */
+	.hwmap__kids > li i,.hwdoc__grid .n,.hwv-no,.hws__item .n,
+	.main-con03-list .no,.main-con07-list .no{font-variant-numeric:tabular-nums;}
+
+	/* 라틴 표기(Jost)는 한글과 크기 인상이 달라 소폭 보정한다.
+	   단 대형 레터링은 제외한다 — 여기에 양수 자간이 들어가면 글자가 흩어진다. */
+	.font-jost:not(.hwhero__title):not(.main-tit):not(.visual-tit){letter-spacing:0.02em;}
+	.main-sub-tit.font-jost,.hw-eye{letter-spacing:0.06em;}
+	.hwhero__title.font-jost{letter-spacing:-0.045em;}
+
+	/* 제목 읽기 폭 — 한 줄이 1300px 를 넘어가면 시선이 되돌아오지 못한다.
+	   2~3줄로 떨어지게 폭을 제한하고, balance 가 줄을 고르게 나눈다. */
+	.main-tit,.hw-h2{max-width:24ch;}   /* 한글 약 13자/줄 */
+	@media all and (max-width:768px){ .main-tit,.hw-h2{max-width:none;} }
+
+	/* 브리핑 §5 — 브랜드명만 압도적으로 크고 정작 약속이 작아 보이던 균형을 잡는다.
+	   HAOWEB 을 약 12% 낮추고, 실제 H1 인 가치 문장은 42~52px 대를 유지한다. */
+	.hwhero__title{font-size:clamp(52px,12.8vw,188px);}
+
+	@media all and (max-width:768px){
+		.main-tit,.hw-h2{letter-spacing:-0.028em;}
+	}
+
 	/* ── 카드 높이 정책 ──
 	   텍스트만 있는 카드는 내용 높이에 맞춘다. 큰 높이는 인포그래픽·이미지·
 	   문서 미리보기·인터랙션이 들어있는 카드에만 허용한다. */

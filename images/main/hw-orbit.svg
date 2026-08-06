@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 454 454" width="454" height="454" aria-hidden="true">
+  <!-- What We Do 4축을 잇는 점선 궤도. 원본 템플릿의 PNG 를 대체하는 하오웹 자체 자산. -->
+  <circle cx="227" cy="227" r="217" fill="none" stroke="#ffffff" stroke-opacity="0.26"
+          stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 8"/>
+  <g fill="none" stroke="#9a9ca1" stroke-opacity="0.9" stroke-width="1.9"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M -4.5,-5.5 L 0.5,0 L -4.5,5.5" transform="translate(227,10)"/>
+    <path d="M -4.5,-5.5 L 0.5,0 L -4.5,5.5" transform="translate(444,227) rotate(90)"/>
+    <path d="M -4.5,-5.5 L 0.5,0 L -4.5,5.5" transform="translate(227,444) rotate(180)"/>
+    <path d="M -4.5,-5.5 L 0.5,0 L -4.5,5.5" transform="translate(10,227) rotate(270)"/>
+  </g>
+</svg>

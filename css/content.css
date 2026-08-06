@@ -52,10 +52,8 @@
 .industry-slogan-con .inner .en-tit {display: block; font-size: 1.6rem; font-weight: 700; color: var(--main-color); letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 1rem;}
 .industry-slogan-con .inner .tit {display:inline-block; position: relative; text-align:center; font-size: 5.3rem; font-weight: 700; color: #fff; letter-spacing: -0.05em; line-height: 1.396; }
 .industry-slogan-con .inner .tit em {position: relative; color: #000; font-size: 5.3rem; font-weight: 700; letter-spacing: -0.05em; line-height:1.396; }
-.industry-slogan-con .inner .tit em:first-of-type:before {display: block; content:""; position:absolute; left: 0; top: 0; margin-top: -5rem; margin-left: -8.5rem; width: 10rem; height: 8.6rem; 
-background: url(../images/content/deco_left.png) no-repeat; background-size:cover;}
-.industry-slogan-con .inner .tit em:last-of-type:after {display: block; content:""; position:absolute; right: 0; top: 0; margin-top: 3rem; margin-right:-8.5rem; width: 10rem; height: 8.6rem; 
-background: url(../images/content/deco_right.png) no-repeat; background-size:cover;}
+
+
 .industry-slogan-con .inner .tit span {color: #000; background: linear-gradient(150deg, #27AAE1 -10%, #3F3BD5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
 
 .industry-con-tit {font-size: 4rem; font-weight: 700; letter-spacing: -0.05em; color: #000; line-height: 1.3; padding-bottom: 2.5rem;}

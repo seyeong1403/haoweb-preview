@@ -235,8 +235,8 @@
 	.hw-idx a:hover .go{color:var(--main-color);transform:translateX(6px);}
 	.hw-idx a:hover .n{color:var(--main-color);}
 
-	/* 칼럼 섹션 — 핀텔 잔여 배경(main_pr_bg.png) 대체.
-	   핀텔 원본과 같은 결의 '어두운 실크 웨이브'(무채색·은은한 광택)로 교체.
+	/* 칼럼 섹션 배경.
+	   '어두운 실크 웨이브'(무채색·은은한 광택) 톤으로 맞춘다.
 	   원본이 이미 어두운 무채색이라 필터는 최소만 건다. */
 	#mainContent5{position:relative;background:#060910 !important;}
 	#mainContent5::before{content:"";position:absolute;inset:0;z-index:0;
@@ -296,7 +296,7 @@
 	.hw-psec--silk > .area, .hw-psec--night > .area{position:relative;z-index:1;}
 
 	/* ===== 섹션 리듬 통일 =====
-	   핀텔 원본은 섹션마다 상하 여백이 제각각(180~360px)이라 리듬이 어긋난다.
+	   도입 당시 섹션마다 상하 여백이 제각각(180~360px)이라 리듬이 어긋났다.
 	   메인·서브 모든 섹션을 140px(모바일 100px) 하나로 맞춘다. */
 	#mainContent1,#mainContent2,#mainContent3,#mainContent5,#mainContent7{padding:140px 0 !important;}
 	#mainContent1 .main-con01{padding-top:0 !important;padding-bottom:0 !important;}
@@ -2407,7 +2407,7 @@ $(document).ready(function  () {
 	}
 
 	/* 마우스 블롭은 본문 구간에서만 켠다. 히어로에서 켜면 배경 영상이 붉게 물든다. */
-	/* 원본(핀텔) waypoint 리빌 보강 — .main-con03/.main-con07 카드가 스크롤 방향·
+	/* waypoint 리빌 보강 — .main-con03/.main-con07 카드가 스크롤 방향·
 	   라이브러리 상태에 따라 숨은 채 남는 문제. IntersectionObserver 로 확실하게
 	   animated 를 붙인다(붙이기만 하고 제거하지 않음 — 사라짐 방지). */
 	function initLegacyReveal(){

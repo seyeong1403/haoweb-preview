@@ -1261,7 +1261,7 @@
 	   장면(scene) 토큰 — 다크 한 톤으로 흐르던 페이지에 리듬을 만든다.
 	   세 층으로 나눈다: 원시값 → 장면 의미값 → 컴포넌트가 참조.
 	   컴포넌트는 --bg / --card / --tx-1..4 / --line 만 보면 되므로,
-	   섹션에 .scene-dark | .scene-light | .scene-ink 만 붙이면 톤이 바뀐다.
+	   섹션에 .scene-dark | .scene-soft | .scene-ink 만 붙이면 톤이 바뀐다.
 	   ══════════════════════════════════════════════════════════════ */
 	:root{
 		/* 원시값 */
@@ -1298,13 +1298,15 @@
 		--line:rgba(255,255,255,.15); --line-2:rgba(255,255,255,.26);
 		--accent:var(--main-color);
 	}
-	.scene-light{
-		--bg:var(--paper-200); --bg-2:var(--paper-100);
-		--card:var(--paper-0); --card-2:var(--paper-300); --card-hi:var(--paper-0);
-		--tx-1:var(--slate-900); --tx-2:var(--slate-600);
-		--tx-3:var(--slate-500); --tx-4:#767B84;
-		--line:rgba(17,19,24,.13); --line-2:rgba(17,19,24,.24);
-		--accent:var(--red-600);
+	/* 한 단계 밝은 다크. 밝은 회색 배경은 쓰지 않는다 —
+	   장면 리듬은 '거의 검정 ↔ 어두운 회색' 두 단계로 만든다. */
+	.scene-soft{
+		--bg:#10141B; --bg-2:#151A22;
+		--card:#181D26; --card-2:#1D2330; --card-hi:#222836;
+		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
+		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
+		--line:rgba(255,255,255,.14); --line-2:rgba(255,255,255,.26);
+		--accent:var(--main-color);
 	}
 	/* 제안서 장면 — 붉은 배경은 면적이 넓어 너무 강했다.
 	   따뜻한 기가 아주 약하게 도는 짙은 차콜로 두고, 그 위에 밝은 종이 패널을
@@ -1317,20 +1319,20 @@
 		--line:rgba(255,255,255,.16); --line-2:rgba(255,255,255,.28);
 		--accent:var(--main-color);
 	}
-	.scene-dark,.scene-light,.scene-ink{background:var(--bg);color:var(--tx-2);}
+	.scene-dark,.scene-soft,.scene-ink{background:var(--bg);color:var(--tx-2);}
 
 	/* ── 공통 타이포를 토큰에 연결 ── */
-	.scene-light .main-tit-box .main-sub-tit,
-	.scene-light .main-sub-tit{color:var(--accent);}
-	.scene-light .main-tit-box .main-tit,
-	.scene-light .main-tit,
-	.scene-light h2,.scene-light h3,.scene-light h4{color:var(--tx-1);}
-	.scene-light .main-tit-box .main-txt01,
-	.scene-light .main-txt01{color:var(--tx-1);}
-	.scene-light .main-tit-box .main-txt02,
-	.scene-light .main-txt02,
-	.scene-light .hw-lead,.scene-light p{color:var(--tx-2);}
-	.scene-light .hw-note{color:var(--tx-4);}
+	.scene-soft .main-tit-box .main-sub-tit,
+	.scene-soft .main-sub-tit{color:var(--accent);}
+	.scene-soft .main-tit-box .main-tit,
+	.scene-soft .main-tit,
+	.scene-soft h2,.scene-soft h3,.scene-soft h4{color:var(--tx-1);}
+	.scene-soft .main-tit-box .main-txt01,
+	.scene-soft .main-txt01{color:var(--tx-1);}
+	.scene-soft .main-tit-box .main-txt02,
+	.scene-soft .main-txt02,
+	.scene-soft .hw-lead,.scene-soft p{color:var(--tx-2);}
+	.scene-soft .hw-note{color:var(--tx-4);}
 
 	/* ── 라이트 장면에서 흰 글씨로 남아 안 보이던 것들 ──
 	   원본이 다크 전용으로 #fff 를 박아 둔 컴포넌트를 장면 토큰에 연결한다. */
@@ -1339,38 +1341,33 @@
 	   흰 배경이 차오르고 글자가 검게 바뀐다. 라이트에서는 이 관계를 그대로 뒤집는다.
 	   — 평상시: 검정 테두리·검정 글씨·검정 점
 	   — 호버:   검정이 차오르고 글자는 흰색 */
-	.scene-light .cm-main-btn:before{border-color:var(--slate-900);}
-	.scene-light .cm-main-btn .txt{color:var(--slate-900);}
-	.scene-light .cm-main-btn .icon{background:var(--slate-900);}
-	.scene-light .cm-main-btn .hover-icon{background:#fff;}
-	.scene-light .cm-main-btn:hover .txt{color:#fff;}
 	/* 칼럼 목록 */
-	.scene-light .main-news-list{border-top-color:var(--slate-900);}
-	.scene-light .main-news-list li{border-bottom-color:var(--line);}
-	.scene-light .main-news-list li a .tit strong{color:var(--tx-1);}
-	.scene-light .main-news-list li a .tit p,
-	.scene-light .main-news-list li a .txt{color:var(--tx-2);}
-	.scene-light .main-news-list li a .date{color:var(--tx-4);}
-	.scene-light .main-news-list li a .arrow,
-	.scene-light .main-news-list li a i{color:var(--tx-3);}
-	.scene-light .main-news-list li a:hover .tit strong{color:var(--accent);}
+	.scene-soft .main-news-list{border-top-color:rgba(255,255,255,.85);}
+	.scene-soft .main-news-list li{border-bottom-color:var(--line);}
+	.scene-soft .main-news-list li a .tit strong{color:var(--tx-1);}
+	.scene-soft .main-news-list li a .tit p,
+	.scene-soft .main-news-list li a .txt{color:var(--tx-2);}
+	.scene-soft .main-news-list li a .date{color:var(--tx-4);}
+	.scene-soft .main-news-list li a .arrow,
+	.scene-soft .main-news-list li a i{color:var(--tx-3);}
+	.scene-soft .main-news-list li a:hover .tit strong{color:var(--accent);}
 	/* 구성 미리보기 결과의 권장 페이지 목록 */
-	.scene-light .hwp__pages li{border-bottom-color:var(--line);color:var(--tx-2);}
-	.scene-light .hwp__pages li span{color:var(--tx-1);}
-	.scene-light .hwp__pages li i{color:var(--accent);}
-	.scene-light .hwp__rline{background:var(--line);}
+	.scene-soft .hwp__pages li{border-bottom-color:var(--line);color:var(--tx-2);}
+	.scene-soft .hwp__pages li span{color:var(--tx-1);}
+	.scene-soft .hwp__pages li i{color:var(--accent);}
+	.scene-soft .hwp__rline{background:var(--line);}
 	/* 업종 카드는 사진 위 흰 글씨 — 그대로 두되 가독을 위해 어두운 오버레이만 보강 */
-	.scene-light .hw-scard__bg::after{background:linear-gradient(180deg,rgba(10,12,16,.30),rgba(10,12,16,.72));}
+	.scene-soft .hw-scard__bg::after{background:linear-gradient(180deg,rgba(10,12,16,.30),rgba(10,12,16,.72));}
 
 	/* 다크용 반투명 흰 배경(rgba(255,255,255,.03~.08))은 라이트 장면에서
 	   회색 띠로 보인다. 라이트에서는 표면을 투명하게 두거나 종이색으로 바꾼다. */
-	.scene-light [class*="__sub"],
-	.scene-light .hwp__rt,
-	.scene-light .hwv-body,
-	.scene-light .hwp__result > p{background:transparent;}
-	.scene-light .hwp__result{background:transparent;}
-	.scene-light .hw-h2 .r,.scene-light .main-tit .r,
-	.scene-light .r{color:var(--accent);}
+	.scene-soft [class*="__sub"],
+	.scene-soft .hwp__rt,
+	.scene-soft .hwv-body,
+	.scene-soft .hwp__result > p{background:transparent;}
+	.scene-soft .hwp__result{background:transparent;}
+	.scene-soft .hw-h2 .r,.scene-soft .main-tit .r,
+	.scene-soft .r{color:var(--accent);}
 
 	/* 크기 — 본문과 안내 문구가 실제보다 작게 느껴지던 문제 */
 	.hw-lead{font-size:var(--fz-lead);line-height:1.68;max-width:72ch;}
@@ -1383,9 +1380,7 @@
 	.scene-dark .hw-note{color:rgba(255,255,255,.62);}
 	.scene-dark .main-tit-box .main-txt02{color:rgba(255,255,255,.78);}
 	/* 단계 카드의 해시태그가 흰색 30%라 거의 보이지 않았다 */
-	.scene-dark .main-con03-list .tags span,
-	.scene-dark .main-con07-list .tags span,
-	.main-con03-list .tags span,.main-con07-list .tags span{color:rgba(255,255,255,.62);}
+	.hash-box span{color:rgba(255,255,255,.62) !important;}
 
 	/* ── 섹션 리듬 ── */
 	.hw-sec{padding:var(--pad-normal) 0;}
@@ -1397,51 +1392,51 @@
 	   회색 배경 위에 흰 카드를 띄우면 경계는 약한데 덩어리만 커져 붕 떠 보인다.
 	   카드 바탕은 배경색과 같이 두고, 구분은 얇은 선 하나로만 한다.
 	   흰 면은 인포그래픽처럼 대비가 정보인 곳에서만 쓴다. */
-	.scene-light .hwp,.scene-light .hwp__result,
-	.scene-light .hwpf__item,
-	.scene-light .main-news-list > li{
+	.scene-soft .hwp,.scene-soft .hwp__result,
+	.scene-soft .hwpf__item,
+	.scene-soft .main-news-list > li{
 		background:transparent;border-color:var(--line);box-shadow:none;}
-	.scene-light .main-news-list > li{border-radius:0;}
-	.scene-light .hwp__pill span{border-color:var(--line-2);color:var(--tx-2);background:var(--card);}
-	.scene-light .hwp__pill input:checked + span{background:var(--accent);border-color:var(--accent);color:#fff;}
-	.scene-light .hwp__legend{color:var(--tx-4);}
-	.scene-light .hwp__rk,.scene-light .hwp__rt{color:var(--tx-1);}
-	.scene-light .hwp__sub,.scene-light .hwp__pages li{color:var(--tx-2);}
-	.scene-light .hwp__pages li{border-color:var(--line);}
-	.scene-light .hwp__conv{background:var(--red-050);border-color:rgba(232,56,23,.28);}
-	.scene-light .hwp__conv b{color:var(--red-600);}
-	.scene-light .hwp__conv p{color:var(--slate-600);}
-	.scene-light .hwp__cta{background:var(--accent);color:#fff;}
-	.scene-light .hwp__acts a:not(.hwp__cta){color:var(--tx-2);border-bottom-color:var(--line-2);}
-	.scene-light .hwpf__name{color:var(--tx-1);}
-	.scene-light .hwpf__go{color:var(--tx-4);}
-	.scene-light a.hwpf__item:hover .hwpf__name{color:var(--accent);}
-	.scene-light .hwpf-list{border-top-color:var(--line);}
-	.scene-light .hwpf-list__row{border-bottom-color:var(--line);}
-	.scene-light .hwpf-list__name{color:var(--tx-2);}
-	.scene-light .hwpf-list__cat{color:var(--accent);}
+	.scene-soft .main-news-list > li{border-radius:0;}
+	.scene-soft .hwp__pill span{border-color:var(--line-2);color:var(--tx-2);background:transparent;}
+	.scene-soft .hwp__pill input:checked + span{background:var(--accent);border-color:var(--accent);color:#fff;}
+	.scene-soft .hwp__legend{color:var(--tx-4);}
+	.scene-soft .hwp__rk,.scene-soft .hwp__rt{color:var(--tx-1);}
+	.scene-soft .hwp__sub,.scene-soft .hwp__pages li{color:var(--tx-2);}
+	.scene-soft .hwp__pages li{border-color:var(--line);}
+	.scene-soft .hwp__conv{background:rgba(232,56,23,.10);border-color:rgba(232,56,23,.38);}
+	.scene-soft .hwp__conv b{color:var(--main-color);}
+	.scene-soft .hwp__conv p{color:var(--tx-2);}
+	.scene-soft .hwp__cta{background:var(--accent);color:#fff;}
+	.scene-soft .hwp__acts a:not(.hwp__cta){color:var(--tx-2);border-bottom-color:var(--line-2);}
+	.scene-soft .hwpf__name{color:var(--tx-1);}
+	.scene-soft .hwpf__go{color:var(--tx-4);}
+	.scene-soft a.hwpf__item:hover .hwpf__name{color:var(--accent);}
+	.scene-soft .hwpf-list{border-top-color:var(--line);}
+	.scene-soft .hwpf-list__row{border-bottom-color:var(--line);}
+	.scene-soft .hwpf-list__name{color:var(--tx-2);}
+	.scene-soft .hwpf-list__cat{color:var(--accent);}
 
 	/* 라이트 장면 링크·구분선 */
-	.scene-light .hw-rel a,.scene-light .hw-idx a{color:var(--tx-2);border-color:var(--line);}
-	.scene-light .hw-rel a:hover,.scene-light .hw-idx a:hover{color:var(--accent);border-color:var(--accent);}
-	.scene-light .hw-psec--line,.scene-light .hw-psec{border-top-color:var(--line);}
+	.scene-soft .hw-rel a,.scene-soft .hw-idx a{color:var(--tx-2);border-color:var(--line);}
+	.scene-soft .hw-rel a:hover,.scene-soft .hw-idx a:hover{color:var(--accent);border-color:var(--accent);}
+	.scene-soft .hw-psec--line,.scene-soft .hw-psec{border-top-color:var(--line);}
 
 	/* 칼럼처럼 편집형 콘텐츠가 오는 자리는 한 단계 더 밝게 */
-	.scene-light.is-white{--bg:var(--paper-100);--card:var(--paper-0);}
+	.scene-soft.is-white{--bg:#141922;--card:#1B2029;}
 
 	/* 4축 원형 — 라이트 장면에서는 유리 원과 궤도의 명도를 뒤집는다 */
-	.scene-light .main-ai-list li{background-color:rgba(17,19,24,.05);backdrop-filter:none;}
-	.scene-light .main-ai-list li strong{color:var(--tx-1);}
-	.scene-light .main-ai-list li .hw-ico{color:var(--slate-600);}
-	.scene-light .main-ai-list li.on{background-color:var(--accent);}
-	.scene-light .main-ai-list li.on strong,.scene-light .main-ai-list li.on .hw-ico{color:#fff;}
-	.scene-light .main-ai-list li:hover .hw-ico{color:var(--accent);}
-	.scene-light .main-ai-list:before{filter:invert(1) brightness(.45);opacity:.55;}
-	.scene-light .main-ai-list-con:before{background-color:rgba(17,19,24,.035);backdrop-filter:none;}
-	.scene-light .main-ai-list-con .inner-txt .tit{color:var(--tx-1);}
-	.scene-light .main-ai-list-con .inner-txt span{color:var(--tx-4);}
-	.scene-light .hw-fit li{color:var(--tx-2);}
-	.scene-light .hw-fit li:before{background:var(--accent);}
+	.scene-soft .main-ai-list li{background-color:rgba(255,255,255,.10);}
+	.scene-soft .main-ai-list li strong{color:var(--tx-1);}
+	.scene-soft .main-ai-list li .hw-ico{color:rgba(255,255,255,.78);}
+	.scene-soft .main-ai-list li.on{background-color:var(--accent);}
+	.scene-soft .main-ai-list li.on strong,.scene-soft .main-ai-list li.on .hw-ico{color:#fff;}
+	.scene-soft .main-ai-list li:hover .hw-ico{color:var(--accent);}
+	
+	
+	.scene-soft .main-ai-list-con .inner-txt .tit{color:var(--tx-1);}
+	.scene-soft .main-ai-list-con .inner-txt span{color:var(--tx-4);}
+	.scene-soft .hw-fit li{color:var(--tx-2);}
+	.scene-soft .hw-fit li:before{background:var(--accent);}
 
 	/* 레드 장면 — 제안서 패널이 밝게 떠야 한다 */
 	.scene-ink .hwp__cta{background:#fff;color:var(--red-600);}
@@ -1452,59 +1447,59 @@
 	   세 칸 표가 아니라 왼쪽(흩어진 자료) → 가운데(정리) → 오른쪽(결과)로
 	   밀도와 정돈감이 올라가는 것이 보여야 한다. 큰 화살표는 쓰지 않고
 	   얇은 연결선과 단계별 표면 차이로 흐름을 만든다. */
-	.scene-light .hwt3__flow{display:grid;grid-template-columns:1fr 1.15fr 1fr;
+	.scene-soft .hwt3__flow{display:grid;grid-template-columns:1fr 1.15fr 1fr;
 		gap:0;align-items:stretch;margin-top:52px;position:relative;}
-	.scene-light .hwt3__col{position:relative;padding:34px 30px 32px;border-radius:16px;
+	.scene-soft .hwt3__col{position:relative;padding:34px 30px 32px;border-radius:16px;
 		border:1px solid var(--line);background:var(--card);}
 	/* 왼쪽: 아직 정리되지 않은 느낌 — 살짝 작고 낮은 대비 */
-	.scene-light .hwt3__col--from{background:transparent;border-style:dashed;
-		border-color:rgba(17,19,24,.20);margin:14px 0;}
-	.scene-light .hwt3__col--from ul li{color:var(--tx-3);}
+	.scene-soft .hwt3__col--from{background:transparent;border-style:dashed;
+		border-color:rgba(255,255,255,.22);margin:14px 0;}
+	.scene-soft .hwt3__col--from ul li{color:var(--tx-3);}
 	/* 가운데: 시각적 중심 */
-	.scene-light .hwt3__col--hao{background:var(--slate-900);border-color:var(--slate-900);
-		box-shadow:0 18px 46px rgba(17,19,24,.18);z-index:2;}
-	.scene-light .hwt3__col--hao .k{color:#fff;}
-	.scene-light .hwt3__col--hao .hwt3__ttl{color:#fff;}
-	.scene-light .hwt3__col--hao ul li{color:rgba(255,255,255,.86);}
-	.scene-light .hwt3__col--hao ul li::before{background:var(--main-color);}
+	.scene-soft .hwt3__col--hao{background:#F5F5F2;border-color:#F5F5F2;
+		box-shadow:0 18px 46px rgba(0,0,0,.42);z-index:2;}
+	.scene-soft .hwt3__col--hao .k{color:#6E737B;}
+	.scene-soft .hwt3__col--hao .hwt3__ttl{color:#111318;}
+	.scene-soft .hwt3__col--hao ul li{color:#41454D;}
+	.scene-soft .hwt3__col--hao ul li::before{background:var(--main-color);}
 	/* 오른쪽: 가장 정돈된 결과 */
-	.scene-light .hwt3__col--to{background:#fff;box-shadow:0 12px 34px rgba(17,19,24,.10);margin:14px 0;}
+	.scene-soft .hwt3__col--to{background:var(--card-2);box-shadow:none;margin:14px 0;}
 
 	/* 칸을 잇는 얇은 선 — 흐름만 암시한다 */
-	.scene-light .hwt3__flow::before{content:"";position:absolute;left:8%;right:8%;top:50%;
-		height:1px;background:linear-gradient(90deg,rgba(17,19,24,.10),rgba(232,56,23,.5),rgba(17,19,24,.14));
+	.scene-soft .hwt3__flow::before{content:"";position:absolute;left:8%;right:8%;top:50%;
+		height:1px;background:linear-gradient(90deg,rgba(255,255,255,.12),rgba(232,56,23,.6),rgba(255,255,255,.16));
 		z-index:0;}
-	.scene-light .hwt3__col{margin-inline:0;}
-	.scene-light .hwt3__col--hao{margin-inline:-10px;}
+	.scene-soft .hwt3__col{margin-inline:0;}
+	.scene-soft .hwt3__col--hao{margin-inline:-10px;}
 
-	.scene-light .hwt3__col .k{display:block;font-size:11.5px;letter-spacing:.14em;font-weight:700;
+	.scene-soft .hwt3__col .k{display:block;font-size:11.5px;letter-spacing:.14em;font-weight:700;
 		color:var(--tx-4);margin-bottom:8px;}
-	.scene-light .hwt3__ttl{display:block;font-size:17px;font-weight:700;color:var(--tx-1);
+	.scene-soft .hwt3__ttl{display:block;font-size:17px;font-weight:700;color:var(--tx-1);
 		letter-spacing:-.02em;margin-bottom:18px;}
-	.scene-light .hwt3__col ul{display:flex;flex-direction:column;gap:11px;}
-	.scene-light .hwt3__col ul li{position:relative;padding-left:15px;font-size:15.5px;
+	.scene-soft .hwt3__col ul{display:flex;flex-direction:column;gap:11px;}
+	.scene-soft .hwt3__col ul li{position:relative;padding-left:15px;font-size:15.5px;
 		line-height:1.55;color:var(--tx-2);}
-	.scene-light .hwt3__col ul li::before{content:"";position:absolute;left:0;top:.62em;
-		width:5px;height:5px;border-radius:50%;background:rgba(17,19,24,.28);}
+	.scene-soft .hwt3__col ul li::before{content:"";position:absolute;left:0;top:.62em;
+		width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.32);}
 	/* 가운데 패널은 어두운 표면이라 글자를 다시 밝게 되돌린다.
 	   위의 일반 규칙과 특이도가 같아 순서상 여기서 확정해야 한다. */
-	.scene-light .hwt3__flow .hwt3__col--hao .hwt3__ttl{color:#fff;}
-	.scene-light .hwt3__flow .hwt3__col--hao ul li{color:rgba(255,255,255,.88);}
-	.scene-light .hwt3__flow .hwt3__col--hao ul li::before{background:var(--main-color);}
-	.scene-light .hwt3__flow .hwt3__col--hao .k{color:rgba(255,255,255,.62);}
-	.scene-light .hwt3__ease{margin-top:34px;font-size:var(--fz-body);line-height:1.75;
+	.scene-soft .hwt3__flow .hwt3__col--hao .hwt3__ttl{color:#111318;}
+	.scene-soft .hwt3__flow .hwt3__col--hao ul li{color:#41454D;}
+	.scene-soft .hwt3__flow .hwt3__col--hao ul li::before{background:var(--main-color);}
+	.scene-soft .hwt3__flow .hwt3__col--hao .k{color:#6E737B;}
+	.scene-soft .hwt3__ease{margin-top:34px;font-size:var(--fz-body);line-height:1.75;
 		color:var(--tx-2);max-width:70ch;}
-	.scene-light .hwt3__links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 26px;}
-	.scene-light .hwt3__links a{font-size:15.5px;color:var(--tx-1);font-weight:600;
+	.scene-soft .hwt3__links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 26px;}
+	.scene-soft .hwt3__links a{font-size:15.5px;color:var(--tx-1);font-weight:600;
 		padding-bottom:3px;border-bottom:1px solid var(--line-2);transition:all .3s ease;}
-	.scene-light .hwt3__links a:hover{color:var(--accent);border-color:var(--accent);}
+	.scene-soft .hwt3__links a:hover{color:var(--accent);border-color:var(--accent);}
 
 	@media all and (max-width:1024px){
-		.scene-light .hwt3__flow{grid-template-columns:1fr;gap:14px;}
-		.scene-light .hwt3__flow::before{left:50%;right:auto;top:6%;bottom:6%;width:1px;height:auto;
-			background:linear-gradient(180deg,rgba(17,19,24,.10),rgba(232,56,23,.5),rgba(17,19,24,.14));}
-		.scene-light .hwt3__col,.scene-light .hwt3__col--hao{margin:0;}
-		.scene-light .hwt3__col{padding:26px 22px;}
+		.scene-soft .hwt3__flow{grid-template-columns:1fr;gap:14px;}
+		.scene-soft .hwt3__flow::before{left:50%;right:auto;top:6%;bottom:6%;width:1px;height:auto;
+			background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(232,56,23,.6),rgba(255,255,255,.16));}
+		.scene-soft .hwt3__col,.scene-soft .hwt3__col--hao{margin:0;}
+		.scene-soft .hwt3__col{padding:26px 22px;}
 	}
 
 	/* ══ FREE PROPOSAL — 제안서를 펼쳐 본 듯한 문서 레이아웃 ══

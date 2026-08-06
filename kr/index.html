@@ -238,12 +238,14 @@
 	/* 칼럼 섹션 배경.
 	   '어두운 실크 웨이브'(무채색·은은한 광택) 톤으로 맞춘다.
 	   원본이 이미 어두운 무채색이라 필터는 최소만 건다. */
-	#mainContent5{position:relative;background:#060910 !important;}
-	#mainContent5::before{content:"";position:absolute;inset:0;z-index:0;
+	/* 실크 배경은 다크 장면일 때만. 칼럼이 라이트 장면(편집형)으로 갈 때는
+	   배경 이미지가 글을 읽는 데 방해가 되므로 걷어낸다. */
+	#mainContent5.scene-dark{position:relative;background:#060910 !important;}
+	#mainContent5.scene-dark::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/col-bg.jpg) center/cover no-repeat;
 		filter:brightness(.92) contrast(1.02);opacity:.8;}
 	/* 위·아래 가장자리는 배경색으로 완전히 스며들게 — 섹션 경계에서 이미지가 잘려 보이지 않게 */
-	#mainContent5::after{content:"";position:absolute;inset:0;z-index:0;
+	#mainContent5.scene-dark::after{content:"";position:absolute;inset:0;z-index:0;
 		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.2) 22%,rgba(6,9,16,.12) 55%,#060910 100%);}
 	#mainContent5 .main-con05{position:relative;z-index:1;}
 	/* WORK(사례 준비중) — 배경 이미지 없음. 칼럼과 연속으로 이미지가 깔리지 않게 비워 둔다 */
@@ -295,16 +297,17 @@
 		background:linear-gradient(180deg,#060910 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#060910 100%);}
 	.hw-psec--silk > .area, .hw-psec--night > .area{position:relative;z-index:1;}
 
-	/* ===== 섹션 리듬 통일 =====
+	/* ===== 섹션 리듬 =====
 	   도입 당시 섹션마다 상하 여백이 제각각(180~360px)이라 리듬이 어긋났다.
-	   메인·서브 모든 섹션을 140px(모바일 100px) 하나로 맞춘다. */
-	#mainContent1,#mainContent2,#mainContent3,#mainContent5,#mainContent7{padding:140px 0 !important;}
+	   그렇다고 전부 같은 값으로 맞추면 섹션의 역할 차이가 사라진다.
+	   기본값을 주되, 브랜드 장면(is-brand)과 연속 콘텐츠(is-tight)는 달리 준다. */
+	#mainContent1,#mainContent2,#mainContent3,#mainContent5,#mainContent7{padding:var(--pad-normal) 0 !important;}
+	#mainContent1.is-brand{padding:var(--pad-brand) 0 !important;}
+	.is-tight{padding:var(--pad-tight) 0 !important;}
 	#mainContent1 .main-con01{padding-top:0 !important;padding-bottom:0 !important;}
 	#mainContent5 .main-con05{padding:0 !important;}
-	.hw-psec{padding:140px 0 !important;}
+	.hw-psec{padding:var(--pad-normal) 0 !important;}
 	@media (max-width:1024px){
-		#mainContent1,#mainContent2,#mainContent3,#mainContent5,#mainContent7{padding:100px 0 !important;}
-		.hw-psec{padding:100px 0 !important;}
 	}
 
 	/* ===== 설득 기획 ① · 내 홈페이지 구성 미리보기 ===== */
@@ -1250,6 +1253,269 @@
 		.hw-plan{padding:34px 26px;}
 		.hw-lead{font-size:17px;margin-bottom:38px;}
 	}
+
+	/* ══════════════════════════════════════════════════════════════
+	   장면(scene) 토큰 — 다크 한 톤으로 흐르던 페이지에 리듬을 만든다.
+	   세 층으로 나눈다: 원시값 → 장면 의미값 → 컴포넌트가 참조.
+	   컴포넌트는 --bg / --card / --tx-1..4 / --line 만 보면 되므로,
+	   섹션에 .scene-dark | .scene-light | .scene-red 만 붙이면 톤이 바뀐다.
+	   ══════════════════════════════════════════════════════════════ */
+	:root{
+		/* 원시값 */
+		--ink-900:#070A10; --ink-850:#080B12; --ink-800:#0D1119; --ink-750:#10151E;
+		--ink-700:#141922; --ink-650:#171C25; --ink-600:#1B212C;
+		--paper-0:#FFFFFF; --paper-100:#F7F7F5; --paper-200:#F3F3F0; --paper-300:#ECEDE9;
+		--slate-900:#111318; --slate-600:#41454D; --slate-500:#5D626B;
+		--red-500:#E83817; --red-600:#C42B0D; --red-050:#FBE9E5;
+
+		/* 타이포 스케일 — 화면 폭에 따라 자연스럽게 */
+		--fz-hero:clamp(34px,3.5vw,52px);
+		--fz-h2:clamp(30px,3.3vw,56px);
+		--fz-h1sub:clamp(34px,3.6vw,60px);
+		--fz-lead:clamp(17px,1.3vw,20px);
+		--fz-body:clamp(16px,1.05vw,18px);
+		--fz-cardt:clamp(20px,1.5vw,28px);
+		--fz-cardb:clamp(15px,1.02vw,17px);
+		--fz-btn:16px;
+		--fz-note:14.5px;
+
+		/* 섹션 리듬 — 모든 섹션에 같은 패딩을 주지 않는다 */
+		--pad-brand:clamp(96px,9vw,180px);
+		--pad-normal:clamp(72px,6.4vw,130px);
+		--pad-tight:clamp(56px,4.8vw,100px);
+		--pad-cta:clamp(48px,4.2vw,90px);
+	}
+
+	/* ── 장면 정의 ── */
+	.scene-dark{
+		--bg:var(--ink-900); --bg-2:var(--ink-800);
+		--card:var(--ink-700); --card-2:var(--ink-650); --card-hi:var(--ink-600);
+		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.84);
+		--tx-3:rgba(255,255,255,.70); --tx-4:rgba(255,255,255,.58);
+		--line:rgba(255,255,255,.15); --line-2:rgba(255,255,255,.26);
+		--accent:var(--main-color);
+	}
+	.scene-light{
+		--bg:var(--paper-200); --bg-2:var(--paper-100);
+		--card:var(--paper-0); --card-2:var(--paper-300); --card-hi:var(--paper-0);
+		--tx-1:var(--slate-900); --tx-2:var(--slate-600);
+		--tx-3:var(--slate-500); --tx-4:#767B84;
+		--line:rgba(17,19,24,.13); --line-2:rgba(17,19,24,.24);
+		--accent:var(--red-600);
+	}
+	.scene-red{
+		--bg:var(--red-500); --bg-2:var(--red-600);
+		--card:rgba(255,255,255,.97); --card-2:rgba(255,255,255,.90); --card-hi:#fff;
+		--tx-1:#fff; --tx-2:rgba(255,255,255,.92);
+		--tx-3:rgba(255,255,255,.82); --tx-4:rgba(255,255,255,.72);
+		--line:rgba(255,255,255,.30); --line-2:rgba(255,255,255,.48);
+		--accent:#fff;
+	}
+	.scene-dark,.scene-light,.scene-red{background:var(--bg);color:var(--tx-2);}
+
+	/* ── 공통 타이포를 토큰에 연결 ── */
+	.scene-light .main-tit-box .main-sub-tit,
+	.scene-light .main-sub-tit,
+	.scene-red .main-sub-tit{color:var(--accent);}
+	.scene-light .main-tit-box .main-tit,
+	.scene-light .main-tit,
+	.scene-light h2,.scene-light h3,.scene-light h4,
+	.scene-red .main-tit,.scene-red h2,.scene-red h3{color:var(--tx-1);}
+	.scene-light .main-tit-box .main-txt01,
+	.scene-light .main-txt01{color:var(--tx-1);}
+	.scene-light .main-tit-box .main-txt02,
+	.scene-light .main-txt02,
+	.scene-light .hw-lead,.scene-light p,
+	.scene-red .hw-lead,.scene-red p{color:var(--tx-2);}
+	.scene-light .hw-note,.scene-red .hw-note{color:var(--tx-4);}
+	.scene-light .hw-h2 .r,.scene-light .main-tit .r,
+	.scene-light .r{color:var(--accent);}
+
+	/* 크기 — 본문과 안내 문구가 실제보다 작게 느껴지던 문제 */
+	.hw-lead{font-size:var(--fz-lead);line-height:1.68;max-width:72ch;}
+	.hw-note{font-size:var(--fz-note);line-height:1.7;max-width:78ch;}
+	.main-tit-box .main-tit,.hw-sec .main-tit{font-size:var(--fz-h2);line-height:1.24;}
+	.main-tit-box .main-txt02{font-size:var(--fz-body);line-height:1.7;}
+
+	/* 다크 장면 본문 명도 상향 — 흰색 40%대 본문을 없앤다 */
+	.scene-dark .hw-lead{color:rgba(255,255,255,.82);}
+	.scene-dark .hw-note{color:rgba(255,255,255,.62);}
+	.scene-dark .main-tit-box .main-txt02{color:rgba(255,255,255,.78);}
+
+	/* ── 섹션 리듬 ── */
+	.hw-sec{padding:var(--pad-normal) 0;}
+	.hw-sec.is-brand{padding:var(--pad-brand) 0;}
+	.hw-sec.is-tight{padding:var(--pad-tight) 0;}
+	.hw-cta{padding:var(--pad-brand) 0;}
+
+	/* ── 라이트 장면의 카드 계열 ── */
+	.scene-light .hwp,.scene-light .hwp__result,
+	.scene-light .hwpf__item,.scene-light .hw-scard,
+	.scene-light .hwt3__col,.scene-light .main-news-list > li{
+		background:var(--card);border-color:var(--line);
+		box-shadow:0 1px 2px rgba(17,19,24,.04),0 10px 30px rgba(17,19,24,.05);}
+	.scene-light .hwp__pill span{border-color:var(--line-2);color:var(--tx-2);background:var(--card);}
+	.scene-light .hwp__pill input:checked + span{background:var(--accent);border-color:var(--accent);color:#fff;}
+	.scene-light .hwp__legend{color:var(--tx-4);}
+	.scene-light .hwp__rk,.scene-light .hwp__rt{color:var(--tx-1);}
+	.scene-light .hwp__sub,.scene-light .hwp__pages li{color:var(--tx-2);}
+	.scene-light .hwp__pages li{border-color:var(--line);}
+	.scene-light .hwp__conv{background:var(--red-050);border-color:rgba(232,56,23,.28);}
+	.scene-light .hwp__conv b{color:var(--red-600);}
+	.scene-light .hwp__conv p{color:var(--slate-600);}
+	.scene-light .hwp__cta{background:var(--accent);color:#fff;}
+	.scene-light .hwp__acts a:not(.hwp__cta){color:var(--tx-2);border-bottom-color:var(--line-2);}
+	.scene-light .hwpf__name{color:var(--tx-1);}
+	.scene-light .hwpf__go{color:var(--tx-4);}
+	.scene-light a.hwpf__item:hover .hwpf__name{color:var(--accent);}
+	.scene-light .hwpf-list{border-top-color:var(--line);}
+	.scene-light .hwpf-list__row{border-bottom-color:var(--line);}
+	.scene-light .hwpf-list__name{color:var(--tx-2);}
+	.scene-light .hwpf-list__cat{color:var(--accent);}
+
+	/* 라이트 장면 링크·구분선 */
+	.scene-light .hw-rel a,.scene-light .hw-idx a{color:var(--tx-2);border-color:var(--line);}
+	.scene-light .hw-rel a:hover,.scene-light .hw-idx a:hover{color:var(--accent);border-color:var(--accent);}
+	.scene-light .hw-psec--line,.scene-light .hw-psec{border-top-color:var(--line);}
+
+	/* 칼럼처럼 편집형 콘텐츠가 오는 자리는 한 단계 더 밝게 */
+	.scene-light.is-white{--bg:var(--paper-100);--card:var(--paper-0);}
+
+	/* 4축 원형 — 라이트 장면에서는 유리 원과 궤도의 명도를 뒤집는다 */
+	.scene-light .main-ai-list li{background-color:rgba(17,19,24,.05);backdrop-filter:none;}
+	.scene-light .main-ai-list li strong{color:var(--tx-1);}
+	.scene-light .main-ai-list li .hw-ico{color:var(--slate-600);}
+	.scene-light .main-ai-list li.on{background-color:var(--accent);}
+	.scene-light .main-ai-list li.on strong,.scene-light .main-ai-list li.on .hw-ico{color:#fff;}
+	.scene-light .main-ai-list li:hover .hw-ico{color:var(--accent);}
+	.scene-light .main-ai-list:before{filter:invert(1) brightness(.45);opacity:.55;}
+	.scene-light .main-ai-list-con:before{background-color:rgba(17,19,24,.035);backdrop-filter:none;}
+	.scene-light .main-ai-list-con .inner-txt .tit{color:var(--tx-1);}
+	.scene-light .main-ai-list-con .inner-txt span{color:var(--tx-4);}
+	.scene-light .hw-fit li{color:var(--tx-2);}
+	.scene-light .hw-fit li:before{background:var(--accent);}
+
+	/* 레드 장면 — 제안서 패널이 밝게 떠야 한다 */
+	.scene-red .hwp__cta{background:#fff;color:var(--red-600);}
+	.scene-red .hwp__acts a:not(.hwp__cta){color:#fff;border-bottom-color:rgba(255,255,255,.5);}
+	.scene-red .hwp__acts a:not(.hwp__cta):hover{border-bottom-color:#fff;}
+
+	/* ══ SCOPE — 자료가 홈페이지가 되는 변환 인포그래픽 ══
+	   세 칸 표가 아니라 왼쪽(흩어진 자료) → 가운데(정리) → 오른쪽(결과)로
+	   밀도와 정돈감이 올라가는 것이 보여야 한다. 큰 화살표는 쓰지 않고
+	   얇은 연결선과 단계별 표면 차이로 흐름을 만든다. */
+	.scene-light .hwt3__flow{display:grid;grid-template-columns:1fr 1.15fr 1fr;
+		gap:0;align-items:stretch;margin-top:52px;position:relative;}
+	.scene-light .hwt3__col{position:relative;padding:34px 30px 32px;border-radius:16px;
+		border:1px solid var(--line);background:var(--card);}
+	/* 왼쪽: 아직 정리되지 않은 느낌 — 살짝 작고 낮은 대비 */
+	.scene-light .hwt3__col--from{background:transparent;border-style:dashed;
+		border-color:rgba(17,19,24,.20);margin:14px 0;}
+	.scene-light .hwt3__col--from ul li{color:var(--tx-3);}
+	/* 가운데: 시각적 중심 */
+	.scene-light .hwt3__col--hao{background:var(--slate-900);border-color:var(--slate-900);
+		box-shadow:0 18px 46px rgba(17,19,24,.18);z-index:2;}
+	.scene-light .hwt3__col--hao .k{color:#fff;}
+	.scene-light .hwt3__col--hao .hwt3__ttl{color:#fff;}
+	.scene-light .hwt3__col--hao ul li{color:rgba(255,255,255,.86);}
+	.scene-light .hwt3__col--hao ul li::before{background:var(--main-color);}
+	/* 오른쪽: 가장 정돈된 결과 */
+	.scene-light .hwt3__col--to{background:#fff;box-shadow:0 12px 34px rgba(17,19,24,.10);margin:14px 0;}
+
+	/* 칸을 잇는 얇은 선 — 흐름만 암시한다 */
+	.scene-light .hwt3__flow::before{content:"";position:absolute;left:8%;right:8%;top:50%;
+		height:1px;background:linear-gradient(90deg,rgba(17,19,24,.10),rgba(232,56,23,.5),rgba(17,19,24,.14));
+		z-index:0;}
+	.scene-light .hwt3__col{margin-inline:0;}
+	.scene-light .hwt3__col--hao{margin-inline:-10px;}
+
+	.scene-light .hwt3__col .k{display:block;font-size:11.5px;letter-spacing:.14em;font-weight:700;
+		color:var(--tx-4);margin-bottom:8px;}
+	.scene-light .hwt3__ttl{display:block;font-size:17px;font-weight:700;color:var(--tx-1);
+		letter-spacing:-.02em;margin-bottom:18px;}
+	.scene-light .hwt3__col ul{display:flex;flex-direction:column;gap:11px;}
+	.scene-light .hwt3__col ul li{position:relative;padding-left:15px;font-size:15.5px;
+		line-height:1.55;color:var(--tx-2);}
+	.scene-light .hwt3__col ul li::before{content:"";position:absolute;left:0;top:.62em;
+		width:5px;height:5px;border-radius:50%;background:rgba(17,19,24,.28);}
+	/* 가운데 패널은 어두운 표면이라 글자를 다시 밝게 되돌린다.
+	   위의 일반 규칙과 특이도가 같아 순서상 여기서 확정해야 한다. */
+	.scene-light .hwt3__flow .hwt3__col--hao .hwt3__ttl{color:#fff;}
+	.scene-light .hwt3__flow .hwt3__col--hao ul li{color:rgba(255,255,255,.88);}
+	.scene-light .hwt3__flow .hwt3__col--hao ul li::before{background:var(--main-color);}
+	.scene-light .hwt3__flow .hwt3__col--hao .k{color:rgba(255,255,255,.62);}
+	.scene-light .hwt3__ease{margin-top:34px;font-size:var(--fz-body);line-height:1.75;
+		color:var(--tx-2);max-width:70ch;}
+	.scene-light .hwt3__links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 26px;}
+	.scene-light .hwt3__links a{font-size:15.5px;color:var(--tx-1);font-weight:600;
+		padding-bottom:3px;border-bottom:1px solid var(--line-2);transition:all .3s ease;}
+	.scene-light .hwt3__links a:hover{color:var(--accent);border-color:var(--accent);}
+
+	@media all and (max-width:1024px){
+		.scene-light .hwt3__flow{grid-template-columns:1fr;gap:14px;}
+		.scene-light .hwt3__flow::before{left:50%;right:auto;top:6%;bottom:6%;width:1px;height:auto;
+			background:linear-gradient(180deg,rgba(17,19,24,.10),rgba(232,56,23,.5),rgba(17,19,24,.14));}
+		.scene-light .hwt3__col,.scene-light .hwt3__col--hao{margin:0;}
+		.scene-light .hwt3__col{padding:26px 22px;}
+	}
+
+	/* ══ FREE PROPOSAL — 제안서를 펼쳐 본 듯한 문서 레이아웃 ══
+	   레드 장면 위에 밝은 종이 패널을 올려 장면 전환을 만든다.
+	   7개를 세로로 쌓지 않고 2열 문서 모듈로 배치한다. */
+	.hwdoc{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:clamp(32px,4vw,72px);align-items:start;}
+	.hwdoc__say .main-sub-tit{color:rgba(255,255,255,.9);}
+	.hwdoc__say .main-tit{color:#fff;}
+	.hwdoc__say .hw-lead{color:rgba(255,255,255,.92);max-width:34ch;}
+	.hwdoc__say .hwp__acts{margin-top:34px;}
+	.hwdoc__say .hw-note{color:rgba(255,255,255,.78);margin-top:26px;max-width:40ch;}
+
+	.hwdoc__paper{background:#fff;border-radius:18px;padding:26px 26px 30px;
+		box-shadow:0 26px 70px rgba(0,0,0,.24);}
+	.hwdoc__top{display:flex;align-items:center;gap:7px;padding-bottom:16px;margin-bottom:20px;
+		border-bottom:1px solid rgba(17,19,24,.10);}
+	.hwdoc__top span{font-size:11px;letter-spacing:.14em;font-weight:700;color:#9aa0a8;margin-right:auto;}
+	.hwdoc__top i{width:7px;height:7px;border-radius:50%;background:rgba(17,19,24,.13);}
+	.hwdoc__grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+	.hwdoc__grid > li{position:relative;border:1px solid rgba(17,19,24,.11);border-radius:12px;
+		padding:16px 16px 14px;background:#FCFCFB;display:flex;flex-direction:column;}
+	.hwdoc__grid > li.wide{grid-column:1 / -1;}
+	.hwdoc__grid .n{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--main-color);}
+	.hwdoc__grid b{display:block;font-size:15px;font-weight:700;color:#111318;
+		letter-spacing:-.02em;margin:4px 0 3px;line-height:1.35;}
+	.hwdoc__grid em{font-style:normal;font-size:13px;line-height:1.5;color:#5D626B;}
+	/* 각 항목의 성격을 암시하는 아주 작은 도형. 장식이 아니라 무엇이 담기는지의 힌트다 */
+	.hwdoc .fig{display:flex;gap:4px;align-items:flex-end;margin-top:12px;height:22px;}
+	.hwdoc .fig i{background:rgba(17,19,24,.13);border-radius:2px;}
+	.hwdoc .fig--map i{width:14px;height:6px;}
+	.hwdoc .fig--map i:first-child{width:26px;background:rgba(232,56,23,.55);}
+	.hwdoc .fig--msg i{height:6px;} .hwdoc .fig--msg i:first-child{width:52px;background:rgba(232,56,23,.55);} .hwdoc .fig--msg i:last-child{width:32px;}
+	.hwdoc .fig--wire i{width:16px;} .hwdoc .fig--wire i:nth-child(1){height:20px;background:rgba(232,56,23,.5);} .hwdoc .fig--wire i:nth-child(2){height:13px;} .hwdoc .fig--wire i:nth-child(3){height:9px;}
+	.hwdoc .fig--flow i{width:8px;height:8px;border-radius:50%;} .hwdoc .fig--flow i:last-child{background:rgba(232,56,23,.6);}
+	.hwdoc .fig--chk i{width:18px;height:6px;} .hwdoc .fig--chk i:nth-child(2){background:rgba(232,56,23,.5);}
+	.hwdoc .fig--tab i{width:20px;height:6px;} .hwdoc .fig--tab i:nth-child(3){width:12px;background:rgba(232,56,23,.5);}
+	.hwdoc .fig--pub i{width:12px;height:6px;} .hwdoc .fig--pub i:nth-child(1){width:30px;background:rgba(232,56,23,.5);}
+
+	@media all and (max-width:1024px){
+		.hwdoc{grid-template-columns:1fr;gap:34px;}
+		.hwdoc__say .hw-lead,.hwdoc__say .hw-note{max-width:none;}
+	}
+	@media all and (max-width:640px){
+		.hwdoc__grid{grid-template-columns:1fr;}
+		.hwdoc__paper{padding:20px 18px 24px;}
+	}
+
+	/* ── 카드 높이 정책 ──
+	   텍스트만 있는 카드는 내용 높이에 맞춘다. 큰 높이는 인포그래픽·이미지·
+	   문서 미리보기·인터랙션이 들어있는 카드에만 허용한다. */
+	.hwb__item,.hwf > div,.hw-feat > li,.hwv-card,.hwp-card,.hw-plan{min-height:0;}
+
+	@media all and (max-width:768px){
+		.hw-sec{padding:clamp(56px,12vw,84px) 0;}
+		.hw-sec.is-brand{padding:clamp(72px,15vw,110px) 0;}
+		.hw-cta{padding:clamp(64px,14vw,96px) 0;}
+		.hw-lead{font-size:16.5px;}
+		.hw-note{font-size:14px;}
+	}
 </style>
 <body>
 <!-- accessibility -->
@@ -1435,7 +1701,7 @@
 		<!-- ****************** 메인컨텐츠 ********************** -->
 		<section id="mainContent">
 			<!-- ****************** 메인컨텐츠 1 (About HAOWEB) ********************** -->
-			<article id="mainContent1">
+			<article id="mainContent1" class="scene-dark is-brand">
 				<div class="main-con01">
 					<span class="main-sub-tit font-jost">About HAOWEB</span>
 					<div class="main-con01-txt pc-ver">
@@ -1451,7 +1717,7 @@
 				</div>
 			</article>
 			<!-- ****************** 메인컨텐츠 2 (Full-Stack AI) ********************** -->
-			<article id="mainContent2">
+			<article id="mainContent2" class="scene-light">
 				<div class="main-con02 area">
 					<div class="main-con02-inner">
 						<div class="main-ai-list-con">
@@ -1741,7 +2007,7 @@
 				</div>
 			</article>
 			<!-- ****************** 내 홈페이지 구성 미리보기 (설득 기획 ①) ********************** -->
-			<article id="hwPick" class="hw-sec">
+			<article id="hwPick" class="hw-sec scene-light">
 				<div class="area">
 					<span class="main-sub-tit font-jost" data-scroll="fade-up">SITE PREVIEW</span>
 					<h2 class="main-tit" data-scroll="fade-up">우리 회사에는 어떤 <br class="m-br">홈페이지가 필요할까요?</h2>
@@ -1814,7 +2080,7 @@
 				</div>
 			</article>
 			<!-- ****************** 메인컨텐츠 3 ********************** -->
-			<article id="mainContent3">
+			<article id="mainContent3" class="scene-dark">
 				<div class="main-con03 area">
 					<div class="left-con" data-scroll="fade-right">
 						<div class="main-tit-box">
@@ -2138,7 +2404,7 @@
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 A (AI 가시성) ********************** -->
-			<article id="hwVisibility" class="hw-sec">
+			<article id="hwVisibility" class="hw-sec scene-dark">
 				<div class="area">
 					<div class="hwv-head">
 						<span class="main-sub-tit font-jost" data-scroll="fade-up">AI VISIBILITY</span>
@@ -2175,7 +2441,7 @@
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 B (제작 범위) ********************** -->
-			<article id="hwScope" class="hw-sec">
+			<article id="hwScope" class="hw-sec scene-light">
 				<div class="area">
 					<span class="main-sub-tit font-jost" data-scroll="fade-up">SCOPE</span>
 					<h2 class="main-tit" data-scroll="fade-up">정리되지 않은 자료가 <br class="m-br"><span style="color:var(--main-color)">문의로 이어지는 홈페이지</span>가 되기까지.</h2>
@@ -2183,41 +2449,39 @@
 					<!-- 설득 기획 ③ · 고객 자료가 홈페이지로 바뀌는 과정 (섹션 주제로 승격) -->
 					<div class="hwt3 hwt3--first" data-scroll="fade-up">
 						<div class="hwt3__flow">
-							<div class="hwt3__col">
-								<span class="k font-jost">FROM — 고객이 가진 자료</span>
+							<div class="hwt3__col hwt3__col--from">
+								<span class="k font-jost">FROM</span>
+								<b class="hwt3__ttl">고객이 가진 자료</b>
 								<ul>
 									<li>기존 홈페이지</li>
-									<li>회사소개서·카탈로그·PPT</li>
-									<li>제품·현장 사진, 기존 홍보물</li>
-									<li>정리되지 않은 메모</li>
-									<li>담당자 인터뷰</li>
+									<li>회사소개서·PPT</li>
+									<li>사진·홍보물</li>
+									<li>메모와 담당자 인터뷰</li>
 								</ul>
 							</div>
 							<div class="hwt3__col hwt3__col--hao">
-								<span class="k font-jost">HAOWEB — 정리하는 것</span>
+								<span class="k font-jost">HAOWEB</span>
+								<b class="hwt3__ttl">하오웹이 정리하는 것</b>
 								<ul>
-									<li>사업과 고객의 핵심</li>
-									<li>회사·서비스의 정보 구조</li>
-									<li>페이지별 원고</li>
-									<li>필요한 사진과 그래픽</li>
-									<li>검색·AI가 이해하는 정보 관계</li>
-									<li>문의하기까지의 흐름</li>
+									<li>핵심 메시지</li>
+									<li>사이트맵과 페이지 원고</li>
+									<li>사진과 그래픽 방향</li>
+									<li>문의까지의 흐름</li>
 								</ul>
 							</div>
-							<div class="hwt3__col">
-								<span class="k font-jost">TO — 홈페이지에 나타나는 것</span>
+							<div class="hwt3__col hwt3__col--to">
+								<span class="k font-jost">TO</span>
+								<b class="hwt3__ttl">홈페이지에 나타나는 결과</b>
 								<ul>
 									<li>명확한 첫 화면</li>
 									<li>이해하기 쉬운 서비스 설명</li>
 									<li>신뢰할 수 있는 근거</li>
-									<li>제품·서비스·사례·FAQ 연결</li>
-									<li>필요한 경우 운영형 콘텐츠</li>
-									<li>견적·상담·예약 동선</li>
+									<li>상담·견적·예약 동선</li>
 								</ul>
 							</div>
 						</div>
-						<p class="hwt3__ease">고객이 모든 원고와 페이지 구성을 완성해서 전달할 필요는 없습니다. 기존 자료와 담당자 인터뷰를 바탕으로 홈페이지에 필요한 구조와 원고를 함께 정리하고, 사실과 전문 정보는 고객의 확인을 거쳐 최종 반영합니다. 실제 제작 범위는 플랜과 계약에 따라 정해집니다.</p>
-						<p class="hwt3__links">원고와 자료 정리는 <a href="content-production.html">홈페이지 콘텐츠 제작</a>, 시각 자료는 <a href="graphic-design.html">그래픽·편집디자인</a>과 <a href="studio.html">사진·영상 촬영</a>, 칼럼·FAQ·사례는 <a href="ai-content.html">AI 활용 전문 콘텐츠</a>에서 만듭니다. 오픈 이후의 발행·갱신은 <a href="content-operation.html">콘텐츠 운영</a>, 제공 콘텐츠 등록과 기능 관리는 <a href="maintenance.html">유지보수</a>로 이어지며, 전체 흐름은 <a href="process.html">제작 과정</a>에서 확인할 수 있습니다.</p>
+						<p class="hwt3__ease">모든 원고와 페이지 구성을 완성해서 전달할 필요는 없습니다. 기존 자료와 인터뷰를 바탕으로 홈페이지에 필요한 구조와 콘텐츠를 함께 정리합니다.</p>
+						<p class="hwt3__links"><a href="content-production.html">홈페이지 콘텐츠 제작</a><a href="graphic-design.html">그래픽·촬영</a><a href="process.html">제작 과정 보기</a></p>
 					</div>
 
 					<!-- 업종별 필요한 구조 — 자료 변환 흐름의 하위 영역으로 유지 -->
@@ -2235,7 +2499,7 @@
 				</div>
 			</article>
 			<!-- ****************** 메인컨텐츠 5 (PR) ********************** -->
-			<article id="mainContent5">
+			<article id="mainContent5" class="scene-light is-white">
 				<div class="main-con05">
 					<div class="main-con05-con area">
 						<div class="left-con" data-scroll="fade-up">
@@ -2282,7 +2546,7 @@
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 F (사례) ********************** -->
-			<article id="hwWork" class="hw-sec">
+			<article id="hwWork" class="hw-sec scene-light">
 				<div class="area">
 					<span class="main-sub-tit font-jost" data-scroll="fade-up">WORK</span>
 					<h2 class="main-tit" data-scroll="fade-up">프로젝트와 <br class="m-br">고객의 이야기.</h2>
@@ -2313,7 +2577,7 @@
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 C (제작 플랜) ********************** -->
-			<article id="hwPlan" class="hw-sec">
+			<article id="hwPlan" class="hw-sec scene-dark">
 				<div class="area">
 					<span class="main-sub-tit font-jost" data-scroll="fade-up">PLAN</span>
 					<h2 class="main-tit" data-scroll="fade-up">필요한 범위만큼.</h2>
@@ -2389,32 +2653,46 @@
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 D (무료 시안·제안) ********************** -->
-			<article id="hwProposal" class="hw-sec">
+			<article id="hwProposal" class="hw-sec scene-red">
 				<div class="area">
-					<span class="main-sub-tit font-jost" data-scroll="fade-up">FREE PROPOSAL</span>
-					<h2 class="main-tit" data-scroll="fade-up">말로만 설명하지 <br class="m-br">않습니다.</h2>
-					<p class="hw-lead" data-scroll="fade-up">사업과 고객을 검토한 뒤 홈페이지에 필요한 구조와 첫 화면 방향을 눈으로 확인할 수 있도록 제안합니다. 신규 제작과 리뉴얼 모두 신청할 수 있습니다.</p>
-					<div class="hw-doc" data-scroll="fade-up">
-						<p class="dh font-jost">HAOWEB · 무료 제안서에 담기는 것</p>
-						<ol>
-							<li><div><b>권장 사이트맵</b><em>필요한 페이지와 확인 순서</em></div></li>
-							<li><div><b>핵심 메시지 방향</b><em>첫 화면에서 전달할 메시지와 근거</em></div></li>
-							<li><div><b>메인 첫 화면 방향 시안 1종</b><em>디자인 방향을 눈으로 확인</em></div></li>
-							<li><div><b>CTA와 문의 흐름</b><em>상담으로 이어지는 경로</em></div></li>
-							<li><div><b>검색·AI 개선 방향</b><em>SEO·AEO·GEO 기준</em></div></li>
-							<li><div><b>제작 플랜과 견적 방향</b><em>범위 기준의 예상 견적</em></div></li>
-							<li><div><b>필요한 경우 운영형 콘텐츠 방향</b><em>칼럼·FAQ·사례·가이드의 주제와 발행 방향</em></div></li>
-						</ol>
+					<div class="hwdoc">
+						<div class="hwdoc__say">
+							<span class="main-sub-tit font-jost" data-scroll="fade-up">FREE PROPOSAL</span>
+							<h2 class="main-tit" data-scroll="fade-up">말로만 설명하지 <br class="m-br">않습니다.</h2>
+							<p class="hw-lead" data-scroll="fade-up">사업과 고객을 검토한 뒤, 홈페이지에 필요한 구조와 첫 화면 방향을 문서로 정리해 드립니다.</p>
+							<div class="hwp__acts" data-scroll="fade-up">
+								<a class="hwp__cta" href="free-proposal.html#apply">무료 시안·제안 신청 →</a>
+								<div class="hwp__sub"><a href="free-proposal.html#preview">제안서 구성 자세히 보기</a></div>
+							</div>
+							<p class="hw-note">방향과 시안을 확인하는 단계로, 실제 제작 계약과 동일하지 않습니다. 신청 내용을 확인한 뒤 진행 가능 여부와 일정을 안내합니다.</p>
+						</div>
+
+						<!-- 제안서를 펼쳐 본 듯한 문서 모듈. 실제 고객사 제안서처럼 보이지 않도록
+						     상호·수치 없이 항목 구조만 보여 준다. -->
+						<div class="hwdoc__paper" data-scroll="fade-up" aria-label="무료 제안서 구성 미리보기">
+							<div class="hwdoc__top"><span class="font-jost">HAOWEB · PROPOSAL</span><i></i><i></i><i></i></div>
+							<ol class="hwdoc__grid">
+								<li><span class="n font-jost">01</span><b>권장 사이트맵</b><em>필요한 페이지와 확인 순서</em>
+									<span class="fig fig--map"><i></i><i></i><i></i><i></i><i></i></span></li>
+								<li><span class="n font-jost">02</span><b>핵심 메시지 방향</b><em>첫 화면에서 전달할 메시지와 근거</em>
+									<span class="fig fig--msg"><i></i><i></i></span></li>
+								<li><span class="n font-jost">03</span><b>메인 첫 화면 방향 시안 1종</b><em>디자인 방향을 눈으로 확인</em>
+									<span class="fig fig--wire"><i></i><i></i><i></i></span></li>
+								<li><span class="n font-jost">04</span><b>CTA와 문의 흐름</b><em>상담으로 이어지는 경로</em>
+									<span class="fig fig--flow"><i></i><i></i><i></i></span></li>
+								<li><span class="n font-jost">05</span><b>검색·AI 개선 방향</b><em>SEO·AEO·GEO 기준</em>
+									<span class="fig fig--chk"><i></i><i></i><i></i></span></li>
+								<li><span class="n font-jost">06</span><b>제작 플랜과 견적 방향</b><em>범위 기준의 예상 견적</em>
+									<span class="fig fig--tab"><i></i><i></i><i></i></span></li>
+								<li class="wide"><span class="n font-jost">07</span><b>필요한 경우 운영형 콘텐츠 방향</b><em>칼럼·FAQ·사례·가이드의 주제와 발행 방향</em>
+									<span class="fig fig--pub"><i></i><i></i><i></i><i></i></span></li>
+							</ol>
+						</div>
 					</div>
-					<div class="hwp__acts" data-scroll="fade-up" style="margin-top:34px;">
-						<a class="hwp__cta" href="free-proposal.html#apply">무료 시안·제안 신청 →</a>
-						<div class="hwp__sub"><a href="free-proposal.html#preview">제안서 구성 자세히 보기</a></div>
-					</div>
-					<p class="hw-note">무료 제안은 방향과 시안을 확인하는 단계로, 실제 제작 계약과 동일하지 않습니다. 신청 내용을 확인한 뒤 진행 가능 여부와 일정을 안내합니다.</p>
 				</div>
 			</article>
 			<!-- ****************** 메인컨텐츠 7 (Support) ********************** -->
-			<article id="mainContent7">
+			<article id="mainContent7" class="scene-dark">
 				<div class="main-con07 area">
 					<div class="left-con" data-scroll="fade-right">
 						<div class="main-tit-box">
@@ -2613,7 +2891,7 @@
 		</section>
 	</div>
 		<!-- ****************** 추가섹션 E (최종 CTA) ********************** -->
-		<section class="hw-cta">
+		<section class="hw-cta scene-dark">
 			<div class="area">
 				<span class="main-sub-tit font-jost" data-scroll="fade-up" style="display:block;margin-bottom:20px;">GET STARTED</span>
 				<h2 data-scroll="fade-up">지금 상황에 맞게 <br class="m-br">시작하세요.</h2>

@@ -1591,6 +1591,40 @@
 	#content > .hw-psec .hw-feat > li,
 	#content > .hw-psec .hws__item{background:var(--card);border-color:var(--line);}
 
+	/* ══ 구성 미리보기 결과 — 미니 사이트맵 ══
+	   선택 결과를 번호 목록이 아니라 페이지 구조로 보여 준다.
+	   첫 화면에서 하위 페이지가 갈라지고 마지막이 문의로 모인다.
+	   한 단계만 그려 한눈에 읽히게 하고, 모바일에서는 세로 목록이 된다. */
+	.hwmap{margin:0 0 22px;}
+	.hwmap__root{display:inline-flex;align-items:center;gap:9px;padding:9px 16px;
+		border-radius:8px;background:var(--main-color);color:#fff;
+		font-size:14.5px;font-weight:700;letter-spacing:-.01em;}
+	.hwmap__kids{list-style:none;margin:0;padding:0 0 0 22px;position:relative;}
+	/* 첫 화면에서 내려오는 세로 줄기 */
+	.hwmap__kids::before{content:"";position:absolute;left:0;top:-6px;bottom:22px;
+		width:1px;background:var(--line-2);}
+	.hwmap__kids > li{position:relative;display:flex;align-items:center;gap:12px;
+		padding:10px 0 10px 20px;}
+	/* 줄기에서 각 페이지로 뻗는 가지 */
+	.hwmap__kids > li::before{content:"";position:absolute;left:0;top:50%;
+		width:14px;height:1px;background:var(--line-2);}
+	.hwmap__kids > li i{font-style:normal;font-size:11.5px;font-weight:700;
+		letter-spacing:.06em;color:var(--tx-4);flex:none;font-family:Jost,sans-serif;}
+	.hwmap__kids > li span{font-size:16px;color:var(--tx-2);letter-spacing:-.01em;
+		padding:7px 13px;border:1px solid var(--line);border-radius:7px;
+		background:var(--card);flex:1;}
+	/* 마지막은 전환 지점이라 강조한다 */
+	.hwmap__kids > li.is-goal span{border-color:var(--main-color);color:var(--tx-1);
+		background:rgba(232,56,23,.10);font-weight:600;}
+	.hwmap__kids > li.is-goal::before{background:var(--main-color);}
+
+	@media all and (max-width:640px){
+		.hwmap__kids{padding-left:16px;}
+		.hwmap__kids > li{padding-left:14px;gap:9px;}
+		.hwmap__kids > li::before{width:10px;}
+		.hwmap__kids > li span{font-size:15px;padding:6px 11px;}
+	}
+
 	/* ── 카드 높이 정책 ──
 	   텍스트만 있는 카드는 내용 높이에 맞춘다. 큰 높이는 인포그래픽·이미지·
 	   문서 미리보기·인터랙션이 들어있는 카드에만 허용한다. */
@@ -2456,9 +2490,16 @@ $(document).ready(function  () {
 			html += '<p class="hwp__rk font-jost">RECOMMENDED STRUCTURE</p>';
 			html += '<h3 class="hwp__rt">귀사에는 이런 홈페이지 구조가 적합합니다.</h3>';
 			html += '<p class="hwp__rline">' + esc(ind.line) + ' ' + esc(goal.conv) + '</p>';
-			html += '<ol class="hwp__pages">' + pages.map(function(p, idx){
-				return '<li><i class="font-jost">' + ('0' + (idx + 1)).slice(-2) + '</i><span>' + esc(p) + '</span></li>';
-			}).join('') + '</ol>';
+			/* 권장 구성을 번호 목록이 아니라 미니 사이트맵으로 보여 준다.
+			   첫 화면에서 하위 페이지가 갈라지고, 마지막이 문의로 모이는 형태.
+			   복잡한 트리는 오히려 읽기 어려우므로 한 단계만 그린다. */
+			html += '<div class="hwmap"><div class="hwmap__root"><span>첫 화면</span></div>' +
+				'<ol class="hwmap__kids">' + pages.map(function(p, idx){
+					var last = (idx === pages.length - 1);
+					return '<li' + (last ? ' class="is-goal"' : '') + '>' +
+						'<i class="font-jost">' + ('0' + (idx + 1)).slice(-2) + '</i>' +
+						'<span>' + esc(p) + '</span></li>';
+				}).join('') + '</ol></div>';
 			html += '<div class="hwp__conv"><b>문의 전환 포인트</b><p>' + esc(goal.emph) + '</p></div>';
 			if(goal.ops){
 				var hint = R.opsHint[i] || R.opsHint['default'];

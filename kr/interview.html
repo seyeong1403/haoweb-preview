@@ -302,7 +302,10 @@
 	   그렇다고 전부 같은 값으로 맞추면 섹션의 역할 차이가 사라진다.
 	   기본값을 주되, 브랜드 장면(is-brand)과 연속 콘텐츠(is-tight)는 달리 준다. */
 	#mainContent1,#mainContent2,#mainContent3,#mainContent5,#mainContent7{padding:var(--pad-normal) 0 !important;}
-	#mainContent1.is-brand{padding:var(--pad-brand) 0 !important;}
+	/* 히어로 직후 첫 섹션. 스크롤이 시작되는 지점이라 여기가 좁으면
+	   아래 전체가 좁게 읽힌다. 다른 섹션보다 확실히 크게 연다. */
+	#mainContent1.is-brand{padding:var(--pad-lead) 0 !important;}
+	#content > .hw-psec:first-of-type{padding-top:var(--pad-lead);}
 	.is-tight{padding:var(--pad-tight) 0 !important;}
 	#mainContent1 .main-con01{padding-top:0 !important;padding-bottom:0 !important;}
 	#mainContent5 .main-con05{padding:0 !important;}
@@ -1285,10 +1288,17 @@
 		--fz-note:14.5px;
 
 		/* 섹션 리듬 — 모든 섹션에 같은 패딩을 주지 않는다 */
-		--pad-brand:clamp(96px,9vw,180px);
-		--pad-normal:clamp(72px,6.4vw,130px);
-		--pad-tight:clamp(56px,4.8vw,100px);
-		--pad-cta:clamp(48px,4.2vw,90px);
+		/* 섹션 여백.
+		   vw 계수가 낮아 1440px 에서 상한에 닿지 못하고 설계값의 70% 만
+		   나오고 있었다(--pad-normal 은 130px 을 쓰려면 뷰포트가 2031px 이어야 했다).
+		   1440 기준으로 상한이 그대로 나오도록 계수를 맞춘다. */
+		--pad-brand:clamp(96px,12.5vw,180px);   /* 1440 → 180px (이전 127px) */
+		--pad-normal:clamp(72px,9vw,130px);     /* 1440 → 130px (이전  90px) */
+		--pad-tight:clamp(56px,6.9vw,100px);    /* 1440 → 100px (이전  69px) */
+		--pad-cta:clamp(48px,6.2vw,90px);       /* 1440 →  90px (이전  60px) */
+		/* 히어로 직후 첫 섹션만 크게 연다. 두산로보틱스 .section-cases 의
+		   상하 220px 을 이식한 값 — 스크롤 시작 지점의 호흡을 만든다. */
+		--pad-lead:clamp(120px,15.3vw,220px);
 	}
 
 	/* ── 장면 정의 ── */

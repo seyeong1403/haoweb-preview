@@ -244,39 +244,39 @@ $(document).ready(function  () {
 	}
 
 	
+	/* triggerOnce 상태에서 up 방향으로 첫 발화하면 removeClass 만 하고 끝나
+	   콘텐츠가 영영 숨는 버그(하오웹 수정) — 방향과 무관하게 표시만 한다. */
 	$('.main-con03').waypoint(function(direction) {
-		if (direction === "down") {
-			$('.main-con03').addClass('animated');
-		}else if ( direction === "up") {
-			$('.main-con03').removeClass('animated');
-		}
+		$('.main-con03').addClass('animated');
 	},{
 		triggerOnce: true,
 		offset: mainAiOffset
 	});
-		
+
 	$('.main-con04-box').waypoint(function(direction) {
-		if (direction === "down") {
-			$('.main-con04-box').addClass('animated');
-		}else if ( direction === "up") {
-			$('.main-con04-box').removeClass('animated');
-		}
+		$('.main-con04-box').addClass('animated');
 	},{
 		triggerOnce: true,
 		offset: mainAiOffset
 	});
-		
+
 	$('.main-con07').waypoint(function(direction) {
-		if (direction === "down") {
-			$('.main-con07').addClass('animated');
-		}else if ( direction === "up") {
-			$('.main-con07').removeClass('animated');
-		}
+		$('.main-con07').addClass('animated');
 	},{
 		triggerOnce: true,
 		offset: mainAiOffset
 	});
-	
+
+	/* 하오웹 보정 — 이미지·영상 로드로 문서 높이가 바뀐 뒤 waypoint 좌표를 재계산하고,
+	   이미 화면 안(또는 위)에 있는 섹션은 즉시 표시한다.
+	   (중간 위치에서 새로고침하면 통과 이벤트가 없어 카드가 숨어 있던 문제) */
+	$(window).on('load', function () {
+		if (window.Waypoint && Waypoint.refreshAll) Waypoint.refreshAll();
+		$('.main-con03, .main-con04-box, .main-con07').each(function () {
+			if (this.getBoundingClientRect().top < window.innerHeight) $(this).addClass('animated');
+		});
+	});
+
 	buildCountBox();
 	followMousePointer();
 	

@@ -1688,6 +1688,47 @@
 		.main-tit,.hw-h2{letter-spacing:-0.028em;}
 	}
 
+	/* ══ What We Do — 레퍼런스 063 .section-cases 의 4열 리듬 이식 ══
+	   원본은 660×660 정사각형 안 네 모서리에 원을 놓는 궤도형이었다.
+	   항목 4개를 보여주려고 화면 왼쪽 절반을 통째로 비워 두는 구조라,
+	   실측에서 콘텐츠 폭 중앙값이 553px 까지 내려간 주된 원인이었다.
+	   레퍼런스처럼 제목 → 4열 → 상세 순으로 펴고 가로 폭을 다 쓴다.
+	   hover 로 항목이 바뀌는 동작은 클래스를 그대로 두어 유지한다. */
+	#mainContent2 .main-con02-inner{display:flex;flex-direction:column;align-items:stretch;
+		gap:clamp(32px,3vw,52px);}
+	#mainContent2 .main-ai-txt-wrap{order:1;width:100%;}
+	#mainContent2 .main-ai-list-con{order:2;width:100%;height:auto;display:block;}
+	#mainContent2 .main-ai-detail{order:3;width:100%;}
+	#mainContent2 .main-ai-list-con:before{display:none;}      /* 뒤쪽 원형 판 */
+	#mainContent2 .main-ai-list-con .inner-txt{display:none;}  /* 위 제목과 중복 */
+	#mainContent2 .main-ai-list{position:static;width:100%;height:auto;
+		display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1vw,16px);}
+	#mainContent2 .main-ai-list:before{display:none;}          /* 회전 궤도 */
+	#mainContent2 .main-ai-list li{position:static;width:auto;height:auto;
+		border-radius:16px;flex-direction:column;padding:clamp(24px,2.2vw,36px) 14px;
+		cursor:pointer;}
+	#mainContent2 .main-ai-list li strong{font-size:var(--fz-body);margin-top:14px;}
+	#mainContent2 .main-ai-list li .icon-box{height:auto;}
+	#mainContent2 .main-ai-list li .icon-box svg{width:44px;height:44px;}
+
+	/* 상세는 좁은 칼럼에 있을 때의 크기라 전체 폭으로 나오니 왜소해진다.
+	   선택한 항목이 주인공이 되도록 카드 제목·리드 급으로 올린다. */
+	#mainContent2 .main-ai-detail .main-txt01{font-size:var(--fz-cardt);font-weight:700;
+		color:var(--tx-1);margin-bottom:12px;}
+	#mainContent2 .main-ai-detail .main-txt02{font-size:var(--fz-lead);max-width:52ch;}
+	#mainContent2 .main-ai-detail .hw-fit{margin-top:22px;}
+	/* 원본은 높이가 15.5rem 으로 고정이고 항목이 absolute 라, 리드가 긴 항목은
+	   아래 버튼을 침범한다. 같은 그리드 칸에 겹쳐 쌓아 가장 큰 항목에 높이를 맞춘다.
+	   겹쳐 있으므로 opacity 전환은 그대로 동작한다. */
+	#mainContent2 .main-ai-txt-pc{height:auto;display:grid;}
+	#mainContent2 .main-ai-txt-pc .main-ai-txt-con{position:relative;grid-area:1/1;}
+	#mainContent2 .main-ai-detail .cm-main-btn{margin-top:36px;}
+
+	@media all and (max-width:768px){
+		#mainContent2 .main-ai-list{grid-template-columns:repeat(2,1fr);}
+		#mainContent2 .main-ai-list li{padding:22px 12px;}
+	}
+
 	/* ── 카드 높이 정책 ──
 	   텍스트만 있는 카드는 내용 높이에 맞춘다. 큰 높이는 인포그래픽·이미지·
 	   문서 미리보기·인터랙션이 들어있는 카드에만 허용한다. */
@@ -2136,6 +2177,9 @@
 							<div class="main-tit-box">
 								<span class="main-sub-tit font-jost">What We Do</span>
 								<h2 class="main-tit">신규 제작부터 글로벌까지, <br>필요한 모든 과정을 하나의 <br>흐름으로 연결합니다.</h2>
+								</div>
+							</div>
+							<div class="main-ai-detail">
 								<div class="main-ai-txt-pc">
 									<div class="main-ai-txt-con" data-index="1">
 										<p class="main-txt01">신규 제작</p>
@@ -2165,8 +2209,7 @@
 								</a>
 							</div>
 						</div>
-					</div>
-					<div class="main-ai-txt-m">
+						<div class="main-ai-txt-m">
 						<div class="main-ai-txt-con" data-index="1">
 							<p class="main-txt01">신규 제작</p>
 							<p class="main-txt02">처음부터 사업·콘텐츠·문의 구조를 설계합니다.</p>

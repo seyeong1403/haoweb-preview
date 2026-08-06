@@ -527,10 +527,13 @@
 	#hw-cursor.is-label .dot{opacity:0;}
 	/* 상단 네비 항상 고정(원본은 모바일에서만 고정이었음) + 반투명 배경 */
 	#header{position:fixed !important;top:0 !important;}
-	#headerInnerWrap{background-color:rgba(6,9,16,.55);backdrop-filter:blur(14px);
-		border-bottom:1px solid rgba(255,255,255,.08);
+	/* 헤더는 고정이라 라이트 섹션 위에도 얹힌다. 반투명이 옅으면 밝은 배경과 섞여
+	   중간 회색이 되고 흰 메뉴 글씨가 읽히지 않는다. 어느 장면 위에서도 읽히도록
+	   충분히 어둡게 깐다. */
+	#headerInnerWrap{background-color:rgba(6,9,16,.88);backdrop-filter:blur(14px);
+		border-bottom:1px solid rgba(255,255,255,.10);
 		transition:background-color .35s ease;}
-	#header:hover #headerInnerWrap{background-color:rgba(6,9,16,.78);}
+	#header:hover #headerInnerWrap{background-color:rgba(6,9,16,.95);}
 	/* ===== AI 가시성: 3열 횡정렬 + 반투명 박스(원본 카드 톤) ===== */
 	.hwv-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:58px;align-items:stretch;}
 	.hwv-card{display:flex;flex-direction:column;position:relative;overflow:hidden;
@@ -1258,7 +1261,7 @@
 	   장면(scene) 토큰 — 다크 한 톤으로 흐르던 페이지에 리듬을 만든다.
 	   세 층으로 나눈다: 원시값 → 장면 의미값 → 컴포넌트가 참조.
 	   컴포넌트는 --bg / --card / --tx-1..4 / --line 만 보면 되므로,
-	   섹션에 .scene-dark | .scene-light | .scene-red 만 붙이면 톤이 바뀐다.
+	   섹션에 .scene-dark | .scene-light | .scene-ink 만 붙이면 톤이 바뀐다.
 	   ══════════════════════════════════════════════════════════════ */
 	:root{
 		/* 원시값 */
@@ -1303,31 +1306,65 @@
 		--line:rgba(17,19,24,.13); --line-2:rgba(17,19,24,.24);
 		--accent:var(--red-600);
 	}
-	.scene-red{
-		--bg:var(--red-500); --bg-2:var(--red-600);
-		--card:rgba(255,255,255,.97); --card-2:rgba(255,255,255,.90); --card-hi:#fff;
-		--tx-1:#fff; --tx-2:rgba(255,255,255,.92);
-		--tx-3:rgba(255,255,255,.82); --tx-4:rgba(255,255,255,.72);
-		--line:rgba(255,255,255,.30); --line-2:rgba(255,255,255,.48);
-		--accent:#fff;
+	/* 제안서 장면 — 붉은 배경은 면적이 넓어 너무 강했다.
+	   따뜻한 기가 아주 약하게 도는 짙은 차콜로 두고, 그 위에 밝은 종이 패널을
+	   올려 장면 전환을 만든다. 레드는 번호와 도형에만 남는다. */
+	.scene-ink{
+		--bg:#12141A; --bg-2:#171A21;
+		--card:#fff; --card-2:#F3F3F0; --card-hi:#fff;
+		--tx-1:rgba(255,255,255,.97); --tx-2:rgba(255,255,255,.86);
+		--tx-3:rgba(255,255,255,.74); --tx-4:rgba(255,255,255,.62);
+		--line:rgba(255,255,255,.16); --line-2:rgba(255,255,255,.28);
+		--accent:var(--main-color);
 	}
-	.scene-dark,.scene-light,.scene-red{background:var(--bg);color:var(--tx-2);}
+	.scene-dark,.scene-light,.scene-ink{background:var(--bg);color:var(--tx-2);}
 
 	/* ── 공통 타이포를 토큰에 연결 ── */
 	.scene-light .main-tit-box .main-sub-tit,
-	.scene-light .main-sub-tit,
-	.scene-red .main-sub-tit{color:var(--accent);}
+	.scene-light .main-sub-tit{color:var(--accent);}
 	.scene-light .main-tit-box .main-tit,
 	.scene-light .main-tit,
-	.scene-light h2,.scene-light h3,.scene-light h4,
-	.scene-red .main-tit,.scene-red h2,.scene-red h3{color:var(--tx-1);}
+	.scene-light h2,.scene-light h3,.scene-light h4{color:var(--tx-1);}
 	.scene-light .main-tit-box .main-txt01,
 	.scene-light .main-txt01{color:var(--tx-1);}
 	.scene-light .main-tit-box .main-txt02,
 	.scene-light .main-txt02,
-	.scene-light .hw-lead,.scene-light p,
-	.scene-red .hw-lead,.scene-red p{color:var(--tx-2);}
-	.scene-light .hw-note,.scene-red .hw-note{color:var(--tx-4);}
+	.scene-light .hw-lead,.scene-light p{color:var(--tx-2);}
+	.scene-light .hw-note{color:var(--tx-4);}
+
+	/* ── 라이트 장면에서 흰 글씨로 남아 안 보이던 것들 ──
+	   원본이 다크 전용으로 #fff 를 박아 둔 컴포넌트를 장면 토큰에 연결한다. */
+	/* Detail view 버튼: 흰 테두리·흰 글씨 → 잉크색으로 */
+	.scene-light .cm-main-btn:before{border-color:var(--slate-900);}
+	.scene-light .cm-main-btn .txt{color:var(--slate-900);}
+	.scene-light .cm-main-btn .icon{border-color:var(--slate-900);}
+	.scene-light .cm-main-btn:hover .txt{color:#fff;}
+	.scene-light .cm-main-btn .hover-icon{background:var(--slate-900);}
+	/* 칼럼 목록 */
+	.scene-light .main-news-list{border-top-color:var(--slate-900);}
+	.scene-light .main-news-list li{border-bottom-color:var(--line);}
+	.scene-light .main-news-list li a .tit strong{color:var(--tx-1);}
+	.scene-light .main-news-list li a .tit p,
+	.scene-light .main-news-list li a .txt{color:var(--tx-2);}
+	.scene-light .main-news-list li a .date{color:var(--tx-4);}
+	.scene-light .main-news-list li a .arrow,
+	.scene-light .main-news-list li a i{color:var(--tx-3);}
+	.scene-light .main-news-list li a:hover .tit strong{color:var(--accent);}
+	/* 구성 미리보기 결과의 권장 페이지 목록 */
+	.scene-light .hwp__pages li{border-bottom-color:var(--line);color:var(--tx-2);}
+	.scene-light .hwp__pages li span{color:var(--tx-1);}
+	.scene-light .hwp__pages li i{color:var(--accent);}
+	.scene-light .hwp__rline{background:var(--line);}
+	/* 업종 카드는 사진 위 흰 글씨 — 그대로 두되 가독을 위해 어두운 오버레이만 보강 */
+	.scene-light .hw-scard__bg::after{background:linear-gradient(180deg,rgba(10,12,16,.30),rgba(10,12,16,.72));}
+
+	/* 다크용 반투명 흰 배경(rgba(255,255,255,.03~.08))은 라이트 장면에서
+	   회색 띠로 보인다. 라이트에서는 표면을 투명하게 두거나 종이색으로 바꾼다. */
+	.scene-light [class*="__sub"],
+	.scene-light .hwp__rt,
+	.scene-light .hwv-body,
+	.scene-light .hwp__result > p{background:transparent;}
+	.scene-light .hwp__result{background:var(--card);}
 	.scene-light .hw-h2 .r,.scene-light .main-tit .r,
 	.scene-light .r{color:var(--accent);}
 
@@ -1341,6 +1378,10 @@
 	.scene-dark .hw-lead{color:rgba(255,255,255,.82);}
 	.scene-dark .hw-note{color:rgba(255,255,255,.62);}
 	.scene-dark .main-tit-box .main-txt02{color:rgba(255,255,255,.78);}
+	/* 단계 카드의 해시태그가 흰색 30%라 거의 보이지 않았다 */
+	.scene-dark .main-con03-list .tags span,
+	.scene-dark .main-con07-list .tags span,
+	.main-con03-list .tags span,.main-con07-list .tags span{color:rgba(255,255,255,.62);}
 
 	/* ── 섹션 리듬 ── */
 	.hw-sec{padding:var(--pad-normal) 0;}
@@ -1396,9 +1437,9 @@
 	.scene-light .hw-fit li:before{background:var(--accent);}
 
 	/* 레드 장면 — 제안서 패널이 밝게 떠야 한다 */
-	.scene-red .hwp__cta{background:#fff;color:var(--red-600);}
-	.scene-red .hwp__acts a:not(.hwp__cta){color:#fff;border-bottom-color:rgba(255,255,255,.5);}
-	.scene-red .hwp__acts a:not(.hwp__cta):hover{border-bottom-color:#fff;}
+	.scene-ink .hwp__cta{background:#fff;color:var(--red-600);}
+	.scene-ink .hwp__acts a:not(.hwp__cta){color:#fff;border-bottom-color:rgba(255,255,255,.5);}
+	.scene-ink .hwp__acts a:not(.hwp__cta):hover{border-bottom-color:#fff;}
 
 	/* ══ SCOPE — 자료가 홈페이지가 되는 변환 인포그래픽 ══
 	   세 칸 표가 아니라 왼쪽(흩어진 자료) → 가운데(정리) → 오른쪽(결과)로
@@ -1463,17 +1504,20 @@
 	   레드 장면 위에 밝은 종이 패널을 올려 장면 전환을 만든다.
 	   7개를 세로로 쌓지 않고 2열 문서 모듈로 배치한다. */
 	.hwdoc{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:clamp(32px,4vw,72px);align-items:start;}
-	.hwdoc__say .main-sub-tit{color:rgba(255,255,255,.9);}
+	.hwdoc__say .main-sub-tit{color:var(--main-color);}
 	.hwdoc__say .main-tit{color:#fff;}
-	.hwdoc__say .hw-lead{color:rgba(255,255,255,.92);max-width:34ch;}
+	.hwdoc__say .hw-lead{color:rgba(255,255,255,.86);max-width:34ch;}
 	.hwdoc__say .hwp__acts{margin-top:34px;}
-	.hwdoc__say .hw-note{color:rgba(255,255,255,.78);margin-top:26px;max-width:40ch;}
+	.hwdoc__say .hw-note{color:rgba(255,255,255,.64);margin-top:26px;max-width:40ch;}
+	/* 잉크 장면의 신청 버튼은 브랜드 레드로 — 이 장면에서 레드는 여기와 번호에만 쓴다 */
+	.scene-ink .hwp__cta{background:var(--main-color);color:#fff;}
+	.scene-ink .hwp__cta:hover{filter:brightness(1.08);}
 
 	.hwdoc__paper{background:#fff;border-radius:18px;padding:26px 26px 30px;
 		box-shadow:0 26px 70px rgba(0,0,0,.24);}
 	.hwdoc__top{display:flex;align-items:center;gap:7px;padding-bottom:16px;margin-bottom:20px;
 		border-bottom:1px solid rgba(17,19,24,.10);}
-	.hwdoc__top span{font-size:11px;letter-spacing:.14em;font-weight:700;color:#9aa0a8;margin-right:auto;}
+	.hwdoc__top span{font-size:11px;letter-spacing:.14em;font-weight:700;color:#6E737B;margin-right:auto;}
 	.hwdoc__top i{width:7px;height:7px;border-radius:50%;background:rgba(17,19,24,.13);}
 	.hwdoc__grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 	.hwdoc__grid > li{position:relative;border:1px solid rgba(17,19,24,.11);border-radius:12px;

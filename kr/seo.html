@@ -1715,17 +1715,16 @@
 
 	/* 마무리 — 왼쪽은 결론, 오른쪽은 계단형 3항목.
 	   같은 카드 세 장을 만들지 않는다(들여쓰기가 순서를 대신한다). */
-	/* 왼쪽 결론이 오른쪽 계단보다 200px 짧아 아래가 텅 비어 보였다.
-	   계단은 길이가 내용에 달렸으니, 결론을 그 옆 가운데에 세워 균형을 잡는다. */
+	/* 좌측 결론과 우측 계단을 같은 윗줄에서 시작(세영 지시). */
 	.hwdir__close{margin-top:74px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-		gap:40px 64px;align-items:center;
+		gap:40px 64px;align-items:start;
 		border-top:1px solid rgba(255,255,255,.14);padding-top:46px;}
 	.hwdir__close-t{font-size:clamp(24px,2.5vw,34px);font-weight:700;color:#fff;line-height:1.45;
 		letter-spacing:-.02em;}
 	.hwdir__close-t .r{color:var(--main-color);}
 	.hwdir__close-d{margin-top:18px;font-size:16.5px;line-height:1.75;color:rgba(255,255,255,.62);}
 	.hwdir__steps{list-style:none;margin:0;padding:0;}
-	.hwdir__steps li{position:relative;padding:20px 0 22px;border-top:1px solid rgba(255,255,255,.12);}
+	.hwdir__steps li{position:relative;padding:15px 0 16px;border-top:1px solid rgba(255,255,255,.12);}
 	.hwdir__steps li:first-child{border-top:0;padding-top:0;}
 	.hwdir__steps .n{display:block;font-family:Jost,sans-serif;font-size:12px;font-weight:600;
 		letter-spacing:.1em;color:var(--main-color);margin-bottom:8px;}
@@ -1733,7 +1732,7 @@
 		letter-spacing:-.01em;}
 	.hwdir__steps em{display:block;margin-top:8px;font-style:normal;font-size:15.5px;line-height:1.7;
 		color:rgba(255,255,255,.60);}
-	.hwdir-note{margin-top:40px;}
+	.hwdir-note{margin-top:20px;}
 
 	@media all and (max-width:1280px){
 		.hwdir__panel{grid-template-columns:250px minmax(0,1fr);gap:20px 34px;}

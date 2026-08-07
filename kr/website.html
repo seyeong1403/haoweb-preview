@@ -3243,6 +3243,30 @@ $(document).ready(function  () {
 		setTimeout(function(){ Array.prototype.forEach.call(els, on); }, 3000);
 	}
 
+	/* 서브페이지 진입 리듬 — 메인과 같은 문법을 얹는다.
+	   서브는 795개 요소가 전부 같은 fade-up 이라 한꺼번에 뜬다.
+	   마크업은 그대로 두고, 반복 그룹 안의 형제에게만 순번 지연을 준다.
+	   §28 대로 서브에는 메인의 강한 모션을 옮기지 않고 "짧은 순차"만 적용한다. */
+	function initSubRhythm(){
+		if(reduce) return;
+		if(document.querySelector('.hwhero')) return;      /* 메인은 initSeq 가 담당 */
+		/* 서브는 .area 안에 블록이 평평하게 나열된다(라벨 → 제목 → 리드 → 콘텐츠).
+		   그 읽는 순서대로 짧게 이어지게 한다. 계단이 길어지지 않게 5칸에서 멈춘다. */
+		var areas = document.querySelectorAll('.area');
+		Array.prototype.forEach.call(areas, function(area){
+			var kids = [];
+			Array.prototype.forEach.call(area.children, function(c){
+				if(c.hasAttribute && c.hasAttribute('data-scroll')) kids.push(c);
+			});
+			if(kids.length < 2) return;
+			kids.forEach(function(k, i){
+				var cur = k.style.transitionDelay;
+				if(cur && cur !== '' && cur !== '0s') return;   /* 원본 지연이 있으면 존중 */
+				k.style.transitionDelay = (Math.min(i, 5) * 0.07).toFixed(2) + 's';
+			});
+		});
+	}
+
 	function initLegacyReveal(){
 		var secs = document.querySelectorAll('.main-con03, .main-con04-box, .main-con07');
 		if(!secs.length) return;
@@ -3362,7 +3386,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initSeq(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initSeq(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

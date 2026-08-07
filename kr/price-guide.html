@@ -486,12 +486,13 @@
 	/* 페이지별 고유 추상 배경 — 섹션에 class="hw-psec--bg" + style="--bgimg:url(...)".
 	   실크/스모크 계열을 은은하게 깔고, 상하 가장자리는 배경색으로 페이드해 글자 가독 확보.
 	   규칙(세영): 서브페이지당 1~2곳, 인접 섹션 연속 금지, 이미지는 페이지마다 새로. */
-	.hw-psec--bg{position:relative;background:#070A10;}
+	/* 서브페이지 배경은 전부 SITE PREVIEW 와 같은 실크로 통일(세영, 중복 허용).
+	   #hwPick 과 동일한 이미지·불투명도·스크림을 쓴다. */
+	.hw-psec--bg{position:relative;background:#070A10;overflow:hidden;}
 	.hw-psec--bg::before{content:"";position:absolute;inset:0;z-index:0;
-		background:var(--bgimg) center/cover no-repeat;
-		filter:grayscale(.2) brightness(.82) contrast(1.03);opacity:.45;}
+		background:url(../images/photo/visibility-silk.jpg) center/cover no-repeat;opacity:.30;}
 	.hw-psec--bg::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.46) 62%,#070A10 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(7,10,16,.55) 26%,rgba(7,10,16,.55) 72%,#070A10 100%);}
 	.hw-psec--bg > .area{position:relative;z-index:1;}
 
 	/* ===== 섹션 리듬 =====
@@ -2872,7 +2873,7 @@
 		<!-- //visual -->
 		<div id="middleArea">
 			<section id="content" class="wide">
-<article class="hw-psec hw-psec--bg" style="--bgimg:url(../images/photo/bg-price.webp)">
+<article class="hw-psec hw-psec--bg">
 	<div class="area">
 		<span class="hw-eye" data-scroll="fade-up">Price Guide</span>
 		<h1 class="hw-h2" data-scroll="fade-up">제작비는 무엇으로 <br class="m-br"><span class="r">정해질까요?</span></h1>

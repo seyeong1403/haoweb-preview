@@ -250,13 +250,14 @@
 	#mainContent5 .main-con05{position:relative;z-index:1;}
 	/* WORK(사례 준비중) — 배경 이미지 없음. 칼럼과 연속으로 이미지가 깔리지 않게 비워 둔다 */
 
-	/* 메인 실사 배경 2곳 — AI 가시성(어둠 속 노트북, 미니멀) · 최종 CTA(키보드 손, 풀블리드) */
+	/* AI 가시성 — 추상(실크)은 배경으로만 아주 옅게 깔고,
+	   카드 자리에는 실사 사진만 쓴다. */
 	#hwVisibility{position:relative;background:#070A10;}
 	#hwVisibility::before{content:"";position:absolute;inset:0;z-index:0;
-		background:url(../images/photo/visibility-bg.jpg) center/cover no-repeat;
-		filter:grayscale(.35) contrast(1.04) brightness(.85);opacity:.6;}
+		background:url(../images/photo/visibility-silk.jpg) center/cover no-repeat;
+		opacity:.30;}
 	#hwVisibility::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.2) 24%,rgba(6,9,16,.12) 50%,#070A10 100%);}
+		background:linear-gradient(180deg,#070A10 0%,rgba(7,10,16,.55) 26%,rgba(7,10,16,.55) 72%,#070A10 100%);}
 	#hwVisibility .area{position:relative;z-index:1;}
 	.hw-cta{position:relative;overflow:hidden;}
 	.hw-cta::before{content:"";position:absolute;inset:0;z-index:0;
@@ -538,55 +539,45 @@
 		transition:background-color .35s ease;}
 	#header:hover #headerInnerWrap{background-color:rgba(6,9,16,.95);}
 	/* ===== AI 가시성: 3열 횡정렬 + 반투명 박스(원본 카드 톤) ===== */
-	.hwv-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:58px;align-items:stretch;}
-	.hwv-card{display:flex;flex-direction:column;position:relative;overflow:hidden;
-		border-radius:3rem;background:rgba(255,255,255,0.05);backdrop-filter:blur(1rem);
-		border:1px solid rgba(255,255,255,.10);
-		padding:0 40px 36px;min-height:0;box-sizing:border-box;
-		transition:background .4s ease,border-color .4s ease,transform .4s cubic-bezier(.16,1,.3,1);}
-	/* A안 — 상단은 비주얼 영역(오브가 보이는 자리), 아래는 텍스트 영역. 경계를 선으로 분명히 나눈다 */
-	.hwv-fig{display:block;position:relative;z-index:1;height:120px;
-		border-bottom:1px solid rgba(255,255,255,.14);}
-	.hwv-keys{position:relative;z-index:1;margin:14px 0 0;display:flex;flex-wrap:wrap;
-		align-items:center;gap:2px 10px;}
-	.hwv-keys span{font-size:14px;line-height:1.55;color:rgba(255,255,255,.56);}
-	.hwv-keys span + span::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;
-		background:rgba(255,255,255,.30);margin-right:10px;vertical-align:middle;}
-	.hwv-card:hover{background:rgba(255,255,255,0.08);border-color:var(--main-color);transform:translateY(-6px);}
-	.hwv-card::after{content:"";position:absolute;inset:0;pointer-events:none;
-		background:radial-gradient(120% 150% at 90% 0%,rgba(232,56,23,.14) 0%,rgba(232,56,23,0) 60%);}
-	/* 발광 구체(오브) — mondrian.ai 재현(색만 레드).
-	   얇은 코어 림 + 대기(안개)처럼 넓게 번지는 안쪽 글로우.
-	   02·03 오브는 initOrbs() 가 '하나의 가상 원'을 공통 좌표로 계산해
-	   두 카드에 잘라 배치한다 → 카드가 나뉘어도 원은 하나로 이어져 보인다. */
-	.hwv-orb{position:absolute;z-index:0;border-radius:50%;pointer-events:none;
+	/* ═══ AI VISIBILITY — 좌 목록 / 우 비주얼 Split ═══
+	   원형 오브·아이콘·점선 구조를 쓰지 않는다.
+	   SEO·AEO·GEO 는 제목 + 짧은 설명 + 상세 링크만 남기고,
+	   섹션의 시각 중심은 실제 이미지 한 장이 맡는다.
+	   참고: 004 Primora 55:45 블록의 좌 텍스트 / 우 이미지 위계. */
+	.hwv-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.78fr);
+		gap:clamp(36px,5vw,84px);align-items:center;}
+	.hwv-head .hw-lead{max-width:44ch;}
+	.hwv-rows{list-style:none;margin:44px 0 0;padding:0;
+		border-top:1px solid rgba(255,255,255,.16);}
+	.hwv-rows > li{border-bottom:1px solid rgba(255,255,255,.16);}
+	.hwv-rows a{display:grid;grid-template-columns:104px minmax(0,1fr) auto;align-items:center;
+		gap:6px 22px;padding:26px 2px;transition:padding .4s cubic-bezier(.16,1,.3,1);}
+	.hwv-rows__k{grid-column:1;grid-row:1;font-size:29px;font-weight:800;color:#fff;
+		letter-spacing:-.02em;line-height:1;transition:color .3s ease;}
+	.hwv-rows__d{grid-column:2;grid-row:1;font-size:16px;line-height:1.55;color:rgba(255,255,255,.66);}
+	.hwv-rows__go{grid-column:3;grid-row:1;font-size:13px;letter-spacing:.02em;white-space:nowrap;
+		color:rgba(255,255,255,.40);transition:color .3s ease;}
+	.hwv-rows a:hover{padding-left:12px;}
+	.hwv-rows a:hover .hwv-rows__k,.hwv-rows a:hover .hwv-rows__go{color:var(--main-color);}
+	.hwv-rows a:focus-visible{outline:2px solid var(--main-color);outline-offset:3px;}
+	.hwv-left .hw-note{margin-top:26px;}
+	/* 이미지 — 가장자리 페이드로 배경에 스며들게 (하오웹 이미지 원칙) */
+	.hwv-visual{position:relative;border-radius:16px;overflow:hidden;}
+	.hwv-visual img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;}
+	.hwv-visual::after{content:"";position:absolute;inset:0;pointer-events:none;
 		background:
-			/* 구 내부 대기 — 림 안쪽으로 넓게 스며드는 글로우 */
-			radial-gradient(circle at 50% 50%, transparent 42%, rgba(232,56,23,.05) 52%, rgba(232,56,23,.16) 58.6%, rgba(255,120,90,.28) 59.7%, transparent 60.15%),
-			/* 얇은 코어 림 + 바깥 소프트 페이드 */
-			radial-gradient(circle at 50% 50%, transparent 59.6%, rgba(255,190,170,.95) 59.95%, rgba(255,110,80,.5) 60.4%, rgba(232,56,23,.14) 61.8%, transparent 64%);
-		transition:transform .7s cubic-bezier(.16,1,.3,1);will-change:transform;}
-	/* 01: 우상단 소형 원(독립) — 레퍼런스 01과 동일 구도 */
-	.hwv-card:nth-child(1) .hwv-orb{width:520px;height:520px;top:-350px;right:-150px;}
-	/* 02·03: JS 미동작 시 폴백(대략적 연결 구도) — initOrbs 가 정확한 값으로 덮어쓴다 */
-	.hwv-card:nth-child(2) .hwv-orb{width:1150px;height:1150px;bottom:-780px;left:-40px;}
-	.hwv-card:nth-child(3) .hwv-orb{width:1150px;height:1150px;top:-160px;left:-780px;}
-	.hwv-card .hwv-top{margin-top:28px;}
-	.hwv-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
-		padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.14);}
-	.hwv-title{font-size:40px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1;}
-	.hwv-no{font-size:14px;font-weight:700;color:var(--main-color);letter-spacing:.06em;padding-top:6px;}
-	.hwv-body{position:relative;z-index:1;font-size:17.5px;line-height:1.68;color:rgba(255,255,255,.72);flex:1 1 auto;}
-	.hwv-go{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;margin-top:26px;
-		font-size:15px;font-weight:600;color:rgba(255,255,255,.6);transition:all .35s ease;}
-	.hwv-card:hover .hwv-go{color:var(--main-color);gap:14px;}
-	@media (max-width:1024px){
-		.hwv-stack{grid-template-columns:1fr;gap:16px;margin-top:40px;}
-		.hwv-card{min-height:0;padding:0 26px 28px;border-radius:2.4rem;}
-		.hwv-fig{height:92px;}
-		.hwv-card .hwv-top{margin-top:22px;}
-		.hwv-title{font-size:32px;}
-		.hwv-body{font-size:16.5px;}
+			radial-gradient(115% 90% at 50% 50%,rgba(7,10,16,0) 42%,rgba(7,10,16,.72) 100%),
+			linear-gradient(180deg,rgba(7,10,16,.30),rgba(7,10,16,0) 26%,rgba(7,10,16,0) 68%,rgba(7,10,16,.48));}
+	@media all and (max-width:1024px){
+		.hwv-split{grid-template-columns:1fr;gap:36px;}
+		.hwv-visual{order:2;}
+		.hwv-visual img{aspect-ratio:16/9;}
+	}
+	@media all and (max-width:640px){
+		.hwv-rows a{grid-template-columns:74px minmax(0,1fr);gap:4px 16px;padding:20px 2px;}
+		.hwv-rows__k{font-size:24px;}
+		.hwv-rows__d{font-size:15.5px;}
+		.hwv-rows__go{grid-column:2;grid-row:2;font-size:13px;}
 	}
 	/* ===== 플랜 카드 (레퍼런스 구조 이식 · 포인트는 하오웹 레드) ===== */
 	.hwp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;align-items:start;}
@@ -1287,52 +1278,12 @@
 	.hwb-keys span{font-size:14px;line-height:1.5;color:rgba(255,255,255,.62);}
 	.hwb-keys span + span::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;
 		background:rgba(255,255,255,.30);margin-right:10px;vertical-align:middle;}
-	.hwb-v{position:relative;display:block;height:96px;margin:20px 0 4px;
-		border-top:1px solid rgba(255,255,255,.09);}
-	.hwb-v i,.hwb-v b{position:absolute;border-radius:2px;box-sizing:border-box;}
-	/* 01 · 흩어진 자료와 인터뷰 (핵심 한 줄만 포인트) */
-	.hwb-v--collect i{height:5px;background:rgba(255,255,255,.16);}
-	.hwb-v--collect i:nth-of-type(1){left:0;top:22px;width:48%;}
-	.hwb-v--collect i:nth-of-type(2){left:0;top:36px;width:68%;}
-	.hwb-v--collect i:nth-of-type(3){left:0;top:50px;width:33%;background:rgba(232,56,23,.62);}
-	.hwb-v--collect b{right:0;top:18px;width:24%;height:44px;border-radius:3px;
-		border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);}
-	/* 02 · 미니 사이트맵 (문의 페이지만 포인트) */
-	.hwb-v--map i{height:7px;background:rgba(255,255,255,.16);}
-	.hwb-v--map i:nth-of-type(1){left:0;top:20px;width:34%;background:rgba(255,255,255,.30);}
-	.hwb-v--map i:nth-of-type(2){left:9%;top:38px;width:40%;}
-	.hwb-v--map i:nth-of-type(3){left:9%;top:53px;width:55%;}
-	.hwb-v--map i:nth-of-type(4){left:9%;top:68px;width:30%;background:rgba(232,56,23,.6);}
-	.hwb-v--map b{left:4.5%;top:27px;width:1px;height:45px;border-radius:0;background:rgba(255,255,255,.18);}
-	/* 03 · 미니 와이어프레임 (CTA만 포인트) */
-	.hwb-v--wire i{background:rgba(255,255,255,.14);}
-	.hwb-v--wire i:nth-of-type(1){left:0;top:19px;width:100%;height:7px;background:rgba(255,255,255,.22);}
-	.hwb-v--wire i:nth-of-type(2){left:0;top:32px;width:100%;height:26px;background:rgba(255,255,255,.06);
-		border:1px solid rgba(255,255,255,.10);}
-	.hwb-v--wire i:nth-of-type(3){left:0;top:64px;width:31%;height:15px;}
-	.hwb-v--wire i:nth-of-type(4){left:34.5%;top:64px;width:31%;height:15px;}
-	.hwb-v--wire i:nth-of-type(5){left:69%;top:64px;width:31%;height:15px;}
-	.hwb-v--wire b{left:0;top:85px;width:58px;height:8px;background:var(--main-color);opacity:.9;}
-	/* 04 · 검수된 항목과 앞으로 쌓일 콘텐츠 자리 */
-	.hwb-v--ship i:nth-of-type(-n+3){left:0;height:6px;background:rgba(255,255,255,.14);}
-	.hwb-v--ship i:nth-of-type(1){top:21px;width:88%;}
-	.hwb-v--ship i:nth-of-type(2){top:37px;width:74%;}
-	.hwb-v--ship i:nth-of-type(3){top:53px;width:82%;}
-	.hwb-v--ship i:nth-of-type(n+4){right:0;width:8px;height:4.5px;border-radius:0;background:none;
-		border-left:1.5px solid rgba(255,255,255,.34);border-bottom:1.5px solid rgba(255,255,255,.34);
-		transform:rotate(-45deg);}
-	.hwb-v--ship i:nth-of-type(4){top:19px;}
-	.hwb-v--ship i:nth-of-type(5){top:35px;}
-	.hwb-v--ship i:nth-of-type(6){top:51px;}
-	.hwb-v--ship b{left:0;top:70px;width:44px;height:13px;border-radius:3px;
-		border:1px dashed rgba(232,56,23,.6);background:rgba(232,56,23,.10);}
 	/* 제목은 네 패널이 스크롤되는 동안 화면에 남는다 (027 상단 고정 원리) */
 	@media all and (min-width:1025px){
 		.main-con03 .left-con{position:sticky;top:132px;align-self:start;}
 	}
 	@media all and (max-width:640px){
 		.hwb-n{font-size:28px;right:2rem;top:2rem;}
-		.hwb-v{height:88px;}
 	}
 	.main-con03-list li .hw-ico{transition:color .35s ease,opacity .35s ease,transform .55s cubic-bezier(.16,1,.3,1);}
 	/* 호버: 상단 포인트 라인이 좌→우로 그어지고, 박스가 살짝 떠오른다 */
@@ -1564,123 +1515,60 @@
 	.scene-ink .hwp__acts a:not(.hwp__cta){color:#fff;border-bottom-color:rgba(255,255,255,.5);}
 	.scene-ink .hwp__acts a:not(.hwp__cta):hover{border-bottom-color:#fff;}
 
-	/* ══ SCOPE — 자료가 홈페이지가 되는 변환 ══
-	   흰 박스 도식·플로차트·아이콘·화살표를 쓰지 않는다.
-	   FROM 은 크기와 각도가 제각각인 자료 조각, HAOWEB 은 정렬된 편집 그리드,
-	   TO 는 실제 페이지 구조. "정돈되는 정도"의 차이만으로 흐름이 읽혀야 한다. */
-	.scene-soft .hwt3__flow{display:grid;grid-template-columns:3.3fr 3.5fr 5.2fr;
-		gap:0 clamp(20px,2.6vw,38px);align-items:start;margin-top:52px;position:relative;}
+	/* ══ SCOPE — 자료 → 정리 → 결과 ══
+	   가짜 브라우저·문서 시트·페이지 블록을 쓰지 않는다. 도식 대신 정보 UI다.
+	   세 상태의 차이는 "행의 밀도·대비·구분선 종류"로만 만든다.
+	   참고: 027 Unmoth deliverable 행 / 004 Primora 행 그리드와 세로 액센트 바. */
+	.scene-soft .hwt3__flow{display:grid;grid-template-columns:repeat(3,1fr);
+		gap:0 clamp(24px,3vw,52px);align-items:start;margin-top:54px;position:relative;}
 	.scene-soft .hwt3__flow::before{display:none;}
 	.scene-soft .hwt3__col{position:relative;padding:0;margin:0;border:0;border-radius:0;
 		background:none;box-shadow:none;}
 	.scene-soft .hwt3__col + .hwt3__col{border-left:0;}
 	.scene-soft .hwt3__col + .hwt3__col::after{display:none;}
 	.scene-soft .hwt3__col .k{display:block;font-family:'Jost',sans-serif;font-size:11.5px;
-		letter-spacing:.16em;font-weight:600;color:var(--tx-4);margin-bottom:9px;}
+		letter-spacing:.16em;font-weight:600;color:var(--tx-4);margin-bottom:10px;}
 	.scene-soft .hwt3__col--hao .k{color:var(--main-color);}
 	.scene-soft .hwt3__ttl{display:block;font-size:17px;font-weight:700;color:var(--tx-1);
-		letter-spacing:-.02em;margin-bottom:20px;}
+		letter-spacing:-.02em;margin-bottom:22px;padding-bottom:18px;
+		border-bottom:1px solid rgba(255,255,255,.16);}
 	.scene-soft .hwt3__col ul{list-style:none;margin:0;padding:0;}
 	.scene-soft .hwt3__col ul li{position:relative;padding-left:0;}
 	.scene-soft .hwt3__col ul li::before{display:none;}
-	.hws-t{display:block;font-size:14.5px;line-height:1.5;letter-spacing:-.01em;}
-	.hws-g{display:block;position:relative;overflow:hidden;border-radius:7px;
-		border:1px dashed rgba(255,255,255,.20);background:rgba(255,255,255,.022);}
-	.hws-g i,.hws-g b,.hws-pv i,.hws-pv b{position:absolute;border-radius:2px;}
+	.hws-t{display:block;letter-spacing:-.01em;}
 
-	/* ── FROM · 아직 정리되지 않은 자료 조각 (크기·각도·정렬이 제각각) ── */
-	.hws-raw{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;}
-	.hws-raw__i--site,.hws-raw__i--memo{grid-column:1 / span 2;}
-	.hws-raw .hws-t{margin-top:9px;color:var(--tx-3);}
-	.hws-raw__i--site  .hws-g{height:76px;transform:rotate(-.5deg);}
-	.hws-raw__i--doc   .hws-g{height:90px;transform:rotate(1deg) translateY(5px);}
-	.hws-raw__i--photo .hws-g{height:90px;transform:rotate(-1.2deg) translateY(-3px);border-style:solid;border-color:rgba(255,255,255,.14);}
-	.hws-raw__i--memo  .hws-g{height:58px;transform:rotate(.4deg);}
-	/* 기존 홈페이지 — 미니 브라우저 */
-	.hws-g--site .b{left:0;right:0;top:0;height:13px;border-radius:0;background:rgba(255,255,255,.07);
-		border-bottom:1px solid rgba(255,255,255,.10);}
-	.hws-g--site .b::after{content:"";position:absolute;left:9px;top:5px;width:3px;height:3px;border-radius:50%;
-		background:rgba(255,255,255,.30);box-shadow:6px 0 0 rgba(255,255,255,.22),12px 0 0 rgba(255,255,255,.15);}
-	.hws-g--site .h {left:12px;top:29px;width:52%;height:8px;background:rgba(255,255,255,.20);}
-	.hws-g--site .p1{left:12px;top:46px;width:74%;height:3.5px;background:rgba(255,255,255,.11);}
-	.hws-g--site .p2{left:12px;top:56px;width:46%;height:3.5px;background:rgba(255,255,255,.09);}
-	/* 회사소개서·PPT — 문서 시트 */
-	.hws-g--doc{background:rgba(255,255,255,.035);}
-	.hws-g--doc i:nth-of-type(1){left:11px;top:13px;width:46%;height:7px;background:rgba(255,255,255,.22);}
-	.hws-g--doc i:nth-of-type(2){left:11px;top:32px;width:78%;height:3.5px;background:rgba(255,255,255,.11);}
-	.hws-g--doc i:nth-of-type(3){left:11px;top:43px;width:63%;height:3.5px;background:rgba(255,255,255,.11);}
-	.hws-g--doc i:nth-of-type(4){left:11px;top:54px;width:72%;height:3.5px;background:rgba(255,255,255,.11);}
-	.hws-g--doc i:nth-of-type(5){left:11px;top:65px;width:38%;height:3.5px;background:rgba(255,255,255,.09);}
-	/* 사진·홍보물 — 실제 사진 (무채색·가장자리 페이드) */
-	.hws-g--photo img{display:block;width:100%;height:100%;object-fit:cover;
-		filter:grayscale(1) brightness(.6) contrast(1.04);}
-	.hws-g--photo::after{content:"";position:absolute;inset:0;
-		background:linear-gradient(180deg,rgba(7,10,16,.10),rgba(7,10,16,.62));}
-	/* 메모·인터뷰 — 손으로 적은 메모, 핵심 한 줄만 포인트 */
-	.hws-g--memo i{left:12px;height:3.5px;background:rgba(255,255,255,.13);}
-	.hws-g--memo i:nth-of-type(1){top:16px;width:58%;}
-	.hws-g--memo i:nth-of-type(2){top:27px;width:80%;}
-	.hws-g--memo i:nth-of-type(3){top:38px;width:34%;background:rgba(232,56,23,.55);}
+	/* FROM — 아직 정리되지 않은 상태: 낮은 대비, 점선 구분, 좁은 행 */
+	.hws-raw > li{display:flex;align-items:center;min-height:52px;padding:6px 0;
+		border-bottom:1px dashed rgba(255,255,255,.16);}
+	.hws-raw .hws-t{font-size:15px;line-height:1.5;color:rgba(255,255,255,.52);}
 
-	/* ── HAOWEB · 정렬된 편집 그리드 (원고가 하나의 기준선에 정리되는 상태) ── */
-	.hws-edit{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--card);
-		padding:4px 22px 6px;}
-	/* 네 항목이 같은 기준선에 맞춰졌다는 것 — 세로 정렬선 하나만 둔다 */
-	.hws-edit::before{content:"";position:absolute;left:63px;top:16px;bottom:16px;width:1px;
-		background:linear-gradient(180deg,transparent,rgba(232,56,23,.5) 12%,rgba(232,56,23,.5) 88%,transparent);}
-	.hws-edit li{display:grid;grid-template-columns:32px 1fr;align-items:center;gap:20px;
-		padding:20px 0;border-top:1px solid rgba(255,255,255,.09);}
-	.hws-edit li:first-child{border-top:0;}
+	/* HAOWEB — 정리되는 상태: 번호가 붙고, 왼쪽 기준선이 생기고, 대비가 올라간다 */
+	.hws-edit{position:relative;padding-left:20px;}
+	.hws-edit::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;
+		background:var(--main-color);opacity:.72;}
+	.hws-edit > li{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:14px;
+		min-height:60px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.13);}
 	.hws-edit__n{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--main-color);}
-	.hws-edit .hws-t{font-size:15.5px;font-weight:500;color:rgba(255,255,255,.92);}
+	.hws-edit .hws-t{font-size:15.5px;line-height:1.5;font-weight:500;color:rgba(255,255,255,.94);}
 
-	/* ── TO · 완성된 페이지 (블록이 위에서 아래로 쌓인 실제 화면 구조) ── */
-	.hws-page{position:relative;border:1px solid var(--line-2);border-radius:14px;background:var(--card-2);
-		padding:30px 14px 14px;overflow:hidden;}
-	.hws-page::before{content:"";position:absolute;left:0;right:0;top:0;height:20px;
-		background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09);}
-	.hws-page::after{content:"";position:absolute;left:13px;top:8px;width:4px;height:4px;border-radius:50%;
-		background:rgba(255,255,255,.28);box-shadow:8px 0 0 rgba(255,255,255,.2),16px 0 0 rgba(255,255,255,.14);}
-	.hws-page li{position:relative;margin-top:8px;padding:11px 13px 13px;border-radius:6px;
-		border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.028);}
-	.hws-page li:first-child{margin-top:0;}
-	.hws-page .hws-t{font-size:14px;font-weight:500;color:rgba(255,255,255,.88);}
-	.hws-pv{position:relative;display:block;margin-bottom:12px;}
-	.hws-page__b--hero .hws-pv{height:40px;}
-	.hws-page__b--hero .hws-pv i:nth-of-type(1){left:0;top:0;width:58%;height:9px;background:rgba(255,255,255,.24);}
-	.hws-page__b--hero .hws-pv i:nth-of-type(2){left:0;top:15px;width:38%;height:5px;background:rgba(255,255,255,.13);}
-	.hws-page__b--hero .hws-pv b{left:0;bottom:0;width:52px;height:11px;background:var(--main-color);opacity:.92;}
-	.hws-page__b--svc .hws-pv{height:26px;}
-	.hws-page__b--svc .hws-pv i{top:0;bottom:0;width:calc(33.333% - 7px);height:auto;
-		background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.07);}
-	.hws-page__b--svc .hws-pv i:nth-of-type(1){left:0;}
-	.hws-page__b--svc .hws-pv i:nth-of-type(2){left:calc(33.333% + 3.5px);}
-	.hws-page__b--svc .hws-pv i:nth-of-type(3){left:calc(66.666% + 7px);}
-	.hws-page__b--evi .hws-pv{height:20px;}
-	.hws-page__b--evi .hws-pv i{left:0;height:6px;background:rgba(255,255,255,.14);}
-	.hws-page__b--evi .hws-pv i:nth-of-type(1){top:0;width:72%;}
-	.hws-page__b--evi .hws-pv i:nth-of-type(2){top:12px;width:44%;}
-	.hws-page__b--cta{border-color:rgba(232,56,23,.34)!important;background:rgba(232,56,23,.07)!important;}
-	.hws-page__b--cta .hws-pv{height:13px;}
-	.hws-page__b--cta .hws-pv b{left:0;top:0;width:66px;height:13px;background:var(--main-color);}
+	/* TO — 결과: 가장 밝고 행 간격이 넓다. 마지막 전환 지점만 포인트 */
+	.hws-page > li{display:flex;align-items:center;min-height:68px;padding:10px 0;
+		border-bottom:1px solid rgba(255,255,255,.13);}
+	.hws-page .hws-t{font-size:16px;line-height:1.5;font-weight:500;color:rgba(255,255,255,.9);}
+	.hws-page > li.is-conv .hws-t{color:#fff;font-weight:600;}
+	.hws-page > li.is-conv::after{content:"";width:7px;height:7px;border-radius:50%;
+		background:var(--main-color);margin-left:auto;flex:none;}
 
-	.scene-soft .hwt3__ease{margin-top:34px;font-size:var(--fz-body);line-height:1.75;
+	.scene-soft .hwt3__ease{margin-top:38px;font-size:var(--fz-body);line-height:1.75;
 		color:var(--tx-2);max-width:70ch;}
 	.scene-soft .hwt3__links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 26px;}
 	.scene-soft .hwt3__links a{font-size:15.5px;color:var(--tx-1);font-weight:600;
 		padding-bottom:3px;border-bottom:1px solid var(--line-2);transition:all .3s ease;}
 	.scene-soft .hwt3__links a:hover{color:var(--accent);border-color:var(--accent);}
 
-	@media all and (max-width:1024px){
-		/* 한 열로 접히면 FROM 은 폭이 넓어지므로 네 조각을 나란히 둔다 (숨기지 않는다) */
-		.scene-soft .hwt3__flow{grid-template-columns:1fr;gap:34px 0;}
-		.hws-raw{grid-template-columns:repeat(4,1fr);}
-		.hws-raw__i--site,.hws-raw__i--memo{grid-column:auto;}
-		.hws-raw__i--site .hws-g,.hws-raw__i--memo .hws-g{height:90px;}
+	@media all and (max-width:900px){
+		.scene-soft .hwt3__flow{grid-template-columns:1fr;gap:36px 0;}
 	}
-	@media all and (max-width:720px){
-		.hws-raw{grid-template-columns:1fr 1fr;}
-		.hws-page li{grid-template-columns:70px 1fr;gap:12px;}
 	}
 	/* 모바일 가독성(§17) — 라벨·키워드·캡션이 14px 밑으로 내려가지 않게 */
 	@media all and (max-width:640px){
@@ -1739,17 +1627,6 @@
 		letter-spacing:-.01em;line-height:1.4;}
 	.hwdoc__items em{display:block;font-style:normal;font-size:13.5px;line-height:1.55;
 		color:rgba(255,255,255,.56);}
-	/* 각 항목의 성격을 암시하는 아주 작은 도형. 장식이 아니라 무엇이 담기는지의 힌트다 */
-	.hwdoc .fig{display:flex;gap:4px;align-items:flex-end;margin-top:12px;height:22px;}
-	.hwdoc .fig i{background:rgba(255,255,255,.20);border-radius:2px;}
-	.hwdoc .fig--map i{width:14px;height:6px;}
-	.hwdoc .fig--map i:first-child{width:26px;background:rgba(232,56,23,.55);}
-	.hwdoc .fig--msg i{height:6px;} .hwdoc .fig--msg i:first-child{width:52px;background:rgba(232,56,23,.55);} .hwdoc .fig--msg i:last-child{width:32px;}
-	.hwdoc .fig--wire i{width:16px;} .hwdoc .fig--wire i:nth-child(1){height:20px;background:rgba(232,56,23,.5);} .hwdoc .fig--wire i:nth-child(2){height:13px;} .hwdoc .fig--wire i:nth-child(3){height:9px;}
-	.hwdoc .fig--flow i{width:8px;height:8px;border-radius:50%;} .hwdoc .fig--flow i:last-child{background:rgba(232,56,23,.6);}
-	.hwdoc .fig--chk i{width:18px;height:6px;} .hwdoc .fig--chk i:nth-child(2){background:rgba(232,56,23,.5);}
-	.hwdoc .fig--tab i{width:20px;height:6px;} .hwdoc .fig--tab i:nth-child(3){width:12px;background:rgba(232,56,23,.5);}
-	.hwdoc .fig--pub i{width:12px;height:6px;} .hwdoc .fig--pub i:nth-child(1){width:30px;background:rgba(232,56,23,.5);}
 
 	@media all and (max-width:1024px){
 		.hwdoc{grid-template-columns:1fr;gap:34px;}
@@ -1814,22 +1691,17 @@
 	   중요한 페이지일수록 모듈이 크고, 마지막 문의가 화면을 가로지르는 최종 경로로 읽힌다.
 	   복잡한 트리와 연결선은 쓰지 않는다(§8). 참고: 091 결과 Split / 027 미니 구조. */
 	.hwmap{margin:0 0 24px;}
-	.hwmap__root{position:relative;display:block;padding:14px 16px 16px;border-radius:9px;
+	.hwmap__root{position:relative;display:block;padding:15px 16px;border-radius:9px;
 		border:1px solid rgba(232,56,23,.42);background:rgba(232,56,23,.09);}
 	.hwmap__root span{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:#fff;}
-	.hwmap__root::after{content:"";display:block;margin-top:11px;height:7px;width:46%;
-		border-radius:2px;background:var(--main-color);opacity:.85;}
 	.hwmap__kids{list-style:none;margin:12px 0 0;padding:0;position:relative;
 		display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
 	.hwmap__kids::before{display:none;}
 	.hwmap__kids > li{position:relative;display:flex;flex-direction:column;align-items:flex-start;
 		grid-column:span 2;padding:13px 14px 15px;border-radius:8px;
 		border:1px solid var(--line);background:var(--card);}
-	/* 모듈 상단의 짧은 막대 = 그 페이지의 헤드라인 자리 */
-	.hwmap__kids > li::before{content:"";position:static;width:34%;height:5px;border-radius:2px;
-		background:rgba(255,255,255,.20);margin-bottom:10px;}
+	.hwmap__kids > li::before{display:none;}
 	.hwmap__kids > li:nth-child(1),.hwmap__kids > li:nth-child(2){grid-column:span 3;}
-	.hwmap__kids > li:nth-child(1)::before,.hwmap__kids > li:nth-child(2)::before{width:52%;height:7px;}
 	.hwmap__kids > li i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.08em;
 		color:var(--tx-4);font-family:Jost,sans-serif;margin-bottom:5px;}
 	.hwmap__kids > li span{font-size:15px;color:var(--tx-2);letter-spacing:-.01em;
@@ -1837,8 +1709,7 @@
 	/* 마지막은 전환 지점이라 화면을 가로지르는 한 행으로 */
 	.hwmap__kids > li.is-goal{grid-column:1 / -1;flex-direction:row;align-items:center;gap:13px;
 		border-color:rgba(232,56,23,.45);background:rgba(232,56,23,.09);}
-	.hwmap__kids > li.is-goal::before{width:46px;height:7px;margin:0;background:var(--main-color);}
-	.hwmap__kids > li.is-goal i{margin:0;}
+	.hwmap__kids > li.is-goal i{margin:0;color:var(--main-color);}
 	.hwmap__kids > li.is-goal span{color:var(--tx-1);font-weight:600;}
 
 	@media all and (max-width:1024px){
@@ -2578,7 +2449,6 @@
 									</div>
 									<span class="hwb-n font-jost" aria-hidden="true">01</span>
 									<p class="hwb-keys"><span>자료</span><span>인터뷰</span><span>고객의 판단 기준</span></p>
-									<span class="hwb-v hwb-v--collect" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
 									<div class="hash-box font-jost">
 										<span>#Business</span>
 										<span>#Customer</span>
@@ -2591,7 +2461,6 @@
 									</div>
 									<span class="hwb-n font-jost" aria-hidden="true">02</span>
 									<p class="hwb-keys"><span>사이트맵</span><span>핵심 메시지</span><span>콘텐츠 관계</span></p>
-									<span class="hwb-v hwb-v--map" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></span>
 									<div class="hash-box font-jost">
 										<span>#Sitemap</span>
 										<span>#Message</span>
@@ -2604,7 +2473,6 @@
 									</div>
 									<span class="hwb-n font-jost" aria-hidden="true">03</span>
 									<p class="hwb-keys"><span>화면 설계</span><span>반응형</span><span>기능</span></p>
-									<span class="hwb-v hwb-v--wire" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
 									<div class="hash-box font-jost">
 										<span>#Search-AI</span>
 									</div>
@@ -2616,7 +2484,6 @@
 									</div>
 									<span class="hwb-n font-jost" aria-hidden="true">04</span>
 									<p class="hwb-keys"><span>검수</span><span>발행</span><span>유지·운영</span></p>
-									<span class="hwb-v hwb-v--ship" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>
 									<div class="hash-box font-jost">
 										<span>#Content</span>
 										<span>#Maintenance</span>
@@ -2629,44 +2496,45 @@
 			<!-- ****************** 추가섹션 A (AI 가시성) ********************** -->
 			<article id="hwVisibility" class="hw-sec scene-dark">
 				<div class="area">
-					<div class="hwv-head">
-						<span class="main-sub-tit font-jost" data-scroll="fade-up">AI VISIBILITY</span>
-						<h2 class="main-tit" data-scroll="fade-up">검색과 AI가 <br class="m-br">읽는 구조.</h2>
-						<p class="hw-lead" data-scroll="fade-up">SEO·AEO·GEO는 별개의 장식 기능이 아니라, 홈페이지 구조와 콘텐츠 전체에 반영되는 하나의 기준입니다.</p>
+					<div class="hwv-split">
+						<div class="hwv-left">
+							<div class="hwv-head">
+								<span class="main-sub-tit font-jost" data-scroll="fade-up">AI VISIBILITY</span>
+								<h2 class="main-tit" data-scroll="fade-up">검색과 AI가 <br class="m-br">읽는 구조.</h2>
+								<p class="hw-lead" data-scroll="fade-up">SEO·AEO·GEO는 별개의 장식 기능이 아니라, 홈페이지 구조와 콘텐츠 전체에 반영되는 하나의 기준입니다.</p>
+							</div>
+							<ul class="hwv-rows" data-scroll="fade-up">
+								<li>
+									<a href="seo.html">
+										<span class="hwv-rows__k font-jost">SEO</span>
+										<span class="hwv-rows__d">검색엔진이 발견·이해하는 구조</span>
+										<span class="hwv-rows__go">자세히 보기 →</span>
+									</a>
+								</li>
+								<li>
+									<a href="aeo.html">
+										<span class="hwv-rows__k font-jost">AEO</span>
+										<span class="hwv-rows__d">고객 질문에 답하는 콘텐츠 구조</span>
+										<span class="hwv-rows__go">자세히 보기 →</span>
+									</a>
+								</li>
+								<li>
+									<a href="geo.html">
+										<span class="hwv-rows__k font-jost">GEO</span>
+										<span class="hwv-rows__d">AI가 기업·서비스·근거의 관계를 이해</span>
+										<span class="hwv-rows__go">자세히 보기 →</span>
+									</a>
+								</li>
+							</ul>
+							<p class="hw-note">하오웹은 검색 순위나 AI 노출을 보장하지 않습니다. 발견·인용될 수 있도록 구조와 콘텐츠를 준비합니다.</p>
+						</div>
+						<div class="hwv-visual" data-scroll="fade-up" aria-hidden="true">
+							<picture>
+								<source srcset="../images/photo/visibility-rack.webp" type="image/webp">
+								<img src="../images/photo/visibility-rack.jpg" alt="" width="1024" height="768" loading="lazy" decoding="async">
+							</picture>
+						</div>
 					</div>
-					<div class="hwv-stack">
-						<a href="seo.html" class="hwv-card"><span class="hwv-orb" aria-hidden="true"></span>
-							<span class="hwv-fig" aria-hidden="true"></span>
-							<div class="hwv-top">
-								<span class="hwv-title font-jost">SEO</span>
-								<span class="hwv-no font-jost">01</span>
-							</div>
-							<p class="hwv-body">검색엔진이 발견·이해하는 구조</p>
-							<p class="hwv-keys"><span>사이트 구조</span><span>제목 위계</span><span>내부 링크</span></p>
-							<span class="hwv-go">자세히 보기 →</span>
-						</a>
-						<a href="aeo.html" class="hwv-card"><span class="hwv-orb" aria-hidden="true"></span>
-							<span class="hwv-fig" aria-hidden="true"></span>
-							<div class="hwv-top">
-								<span class="hwv-title font-jost">AEO</span>
-								<span class="hwv-no font-jost">02</span>
-							</div>
-							<p class="hwv-body">고객 질문에 답하는 콘텐츠 구조</p>
-							<p class="hwv-keys"><span>고객 질문 조사</span><span>핵심 답변 작성</span><span>FAQ 구조화</span></p>
-							<span class="hwv-go">자세히 보기 →</span>
-						</a>
-						<a href="geo.html" class="hwv-card"><span class="hwv-orb" aria-hidden="true"></span>
-							<span class="hwv-fig" aria-hidden="true"></span>
-							<div class="hwv-top">
-								<span class="hwv-title font-jost">GEO</span>
-								<span class="hwv-no font-jost">03</span>
-							</div>
-							<p class="hwv-body">AI가 기업·서비스·근거의 관계를 이해</p>
-							<p class="hwv-keys"><span>정보 관계 설계</span><span>구조화 데이터</span><span>근거 연결</span></p>
-							<span class="hwv-go">자세히 보기 →</span>
-						</a>
-					</div>
-					<p class="hw-note">하오웹은 검색 순위나 AI 노출을 보장하지 않습니다. 발견·인용될 수 있도록 구조와 콘텐츠를 준비합니다.</p>
 				</div>
 			</article>
 			<!-- ****************** 추가섹션 B (제작 범위) ********************** -->
@@ -2682,10 +2550,10 @@
 								<span class="k font-jost">FROM</span>
 								<b class="hwt3__ttl">고객이 가진 자료</b>
 								<ul class="hws-raw">
-									<li class="hws-raw__i hws-raw__i--site"><span class="hws-g hws-g--site" aria-hidden="true"><i class="b"></i><i class="h"></i><i class="p1"></i><i class="p2"></i></span><span class="hws-t">기존 홈페이지</span></li>
-									<li class="hws-raw__i hws-raw__i--doc"><span class="hws-g hws-g--doc" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="hws-t">회사소개서·PPT</span></li>
-									<li class="hws-raw__i hws-raw__i--photo"><span class="hws-g hws-g--photo" aria-hidden="true"><img src="../images/photo/scope-corporate.jpg" alt="" width="200" height="90" loading="lazy"></span><span class="hws-t">사진·홍보물</span></li>
-									<li class="hws-raw__i hws-raw__i--memo"><span class="hws-g hws-g--memo" aria-hidden="true"><i></i><i></i><i></i></span><span class="hws-t">메모와 담당자 인터뷰</span></li>
+									<li><span class="hws-t">기존 홈페이지</span></li>
+									<li><span class="hws-t">회사소개서·PPT</span></li>
+									<li><span class="hws-t">사진·홍보물</span></li>
+									<li><span class="hws-t">메모와 담당자 인터뷰</span></li>
 								</ul>
 							</div>
 							<div class="hwt3__col hwt3__col--hao">
@@ -2702,10 +2570,10 @@
 								<span class="k font-jost">TO</span>
 								<b class="hwt3__ttl">홈페이지에 나타나는 결과</b>
 								<ul class="hws-page">
-									<li class="hws-page__b hws-page__b--hero"><span class="hws-pv" aria-hidden="true"><i></i><i></i><b></b></span><span class="hws-t">명확한 첫 화면</span></li>
-									<li class="hws-page__b hws-page__b--svc"><span class="hws-pv" aria-hidden="true"><i></i><i></i><i></i></span><span class="hws-t">이해하기 쉬운 서비스 설명</span></li>
-									<li class="hws-page__b hws-page__b--evi"><span class="hws-pv" aria-hidden="true"><i></i><i></i></span><span class="hws-t">신뢰할 수 있는 근거</span></li>
-									<li class="hws-page__b hws-page__b--cta"><span class="hws-pv" aria-hidden="true"><b></b></span><span class="hws-t">상담·견적·예약 동선</span></li>
+									<li><span class="hws-t">명확한 첫 화면</span></li>
+									<li><span class="hws-t">이해하기 쉬운 서비스 설명</span></li>
+									<li><span class="hws-t">신뢰할 수 있는 근거</span></li>
+									<li class="is-conv"><span class="hws-t">상담·견적·예약 동선</span></li>
 								</ul>
 							</div>
 						</div>
@@ -2902,30 +2770,23 @@
 							<div class="hwdoc__p hwdoc__p--a">
 								<div class="hwdoc__ph"><span class="font-jost">HAOWEB · PROPOSAL</span><b class="font-jost">01 — 02</b></div>
 								<ul class="hwdoc__items">
-									<li><span class="n font-jost">01</span><b>권장 사이트맵</b><em>필요한 페이지와 확인 순서</em>
-										<span class="fig fig--map" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></li>
-									<li><span class="n font-jost">02</span><b>핵심 메시지 방향</b><em>첫 화면에서 전달할 메시지와 근거</em>
-										<span class="fig fig--msg" aria-hidden="true"><i></i><i></i></span></li>
+									<li><span class="n font-jost">01</span><b>권장 사이트맵</b><em>필요한 페이지와 확인 순서</em></li>
+									<li><span class="n font-jost">02</span><b>핵심 메시지 방향</b><em>첫 화면에서 전달할 메시지와 근거</em></li>
 								</ul>
 							</div>
 							<div class="hwdoc__p hwdoc__p--b">
 								<div class="hwdoc__ph"><i></i><i></i><i></i><b class="font-jost">03 — 04</b></div>
 								<ul class="hwdoc__items">
-									<li><span class="n font-jost">03</span><b>메인 첫 화면 방향 시안 1종</b><em>디자인 방향을 눈으로 확인</em>
-										<span class="fig fig--wire" aria-hidden="true"><i></i><i></i><i></i></span></li>
-									<li><span class="n font-jost">04</span><b>CTA와 문의 흐름</b><em>상담으로 이어지는 경로</em>
-										<span class="fig fig--flow" aria-hidden="true"><i></i><i></i><i></i></span></li>
+									<li><span class="n font-jost">03</span><b>메인 첫 화면 방향 시안 1종</b><em>디자인 방향을 눈으로 확인</em></li>
+									<li><span class="n font-jost">04</span><b>CTA와 문의 흐름</b><em>상담으로 이어지는 경로</em></li>
 								</ul>
 							</div>
 							<div class="hwdoc__p hwdoc__p--c">
 								<div class="hwdoc__ph"><i></i><i></i><i></i><b class="font-jost">05 — 07</b></div>
 								<ul class="hwdoc__items">
-									<li><span class="n font-jost">05</span><b>검색·AI 개선 방향</b><em>SEO·AEO·GEO 기준</em>
-										<span class="fig fig--chk" aria-hidden="true"><i></i><i></i><i></i></span></li>
-									<li><span class="n font-jost">06</span><b>제작 플랜과 견적 방향</b><em>범위 기준의 예상 견적</em>
-										<span class="fig fig--tab" aria-hidden="true"><i></i><i></i><i></i></span></li>
-									<li><span class="n font-jost">07</span><b>필요한 경우 운영형 콘텐츠 방향</b><em>칼럼·FAQ·사례·가이드의 주제와 발행 방향</em>
-										<span class="fig fig--pub" aria-hidden="true"><i></i><i></i><i></i><i></i></span></li>
+									<li><span class="n font-jost">05</span><b>검색·AI 개선 방향</b><em>SEO·AEO·GEO 기준</em></li>
+									<li><span class="n font-jost">06</span><b>제작 플랜과 견적 방향</b><em>범위 기준의 예상 견적</em></li>
+									<li><span class="n font-jost">07</span><b>필요한 경우 운영형 콘텐츠 방향</b><em>칼럼·FAQ·사례·가이드의 주제와 발행 방향</em></li>
 								</ul>
 							</div>
 						</div>

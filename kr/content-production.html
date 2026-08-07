@@ -2050,118 +2050,97 @@
 		.main-tit,.hw-h2{letter-spacing:-0.028em;}
 	}
 
-	/* ══ What We Do — 레퍼런스 063 .section-cases 의 4열 리듬 이식 ══
-	   원본은 660×660 정사각형 안 네 모서리에 원을 놓는 궤도형이었다.
-	   항목 4개를 보여주려고 화면 왼쪽 절반을 통째로 비워 두는 구조라,
-	   실측에서 콘텐츠 폭 중앙값이 553px 까지 내려간 주된 원인이었다.
-	   레퍼런스처럼 제목 → 4열 → 상세 순으로 펴고 가로 폭을 다 쓴다.
-	   hover 로 항목이 바뀌는 동작은 클래스를 그대로 두어 유지한다. */
-	/* ══ 2026-08-07 재구성 — 동일 아이콘 카드 4개 → 좌 목록(01~04) + 우 선택 이미지 ══
-	   같은 모양의 카드 4장은 네 사업의 차이를 하나도 보여주지 못했다.
-	   PLAN 에서 검증한 .hwp-rail 패턴(좌 레일 + 우 겹침 전환)을 그대로 재사용한다.
-	   활성 상태는 기존 main.js 가 li.on 으로 관리하므로 그 클래스를 그대로 따라간다.
-	   레이아웃:  head(제목, 2열 전체) / rail(좌) + media(우, 2행 span) / detail(좌)
-	   ⚠ 자동배치가 순서를 뒤바꾸지 않도록 네 요소 모두 grid-area 를 명시한다. */
-	#mainContent2 .main-con02-inner{display:grid;
-		grid-template-columns:minmax(0,.64fr) minmax(0,1fr);
-		grid-template-areas:"head head" "rail media" "detail media";
-		column-gap:clamp(30px,3.6vw,66px);row-gap:clamp(24px,2.2vw,36px);
-		align-items:start;}
-	#mainContent2 .main-ai-txt-wrap{grid-area:head;width:100%;}
-	/* ≤800px 레거시는 이 상자를 정사각형 궤도판으로 만든다(padding-top:100%) — 전부 해제 */
-	#mainContent2 .main-ai-list-con{grid-area:rail;width:100%;height:auto;display:block;
-		padding:0;position:relative;overflow:visible;}
-	#mainContent2 .main-ai-detail{grid-area:detail;width:100%;}
-	#mainContent2 .hwx-media{grid-area:media;align-self:stretch;}
-	#mainContent2 .main-ai-list-con:before{display:none;}      /* 뒤쪽 원형 판 */
-	#mainContent2 .main-ai-list-con .inner-txt{display:none;}  /* 위 제목과 중복 */
-	/* .main-ai-txt-m 은 .main-ai-txt-pc 와 글자가 똑같은 모바일 사본이다.
-	   이제 pc 쪽을 모든 폭에서 쓰므로(아래 800px 블록) 사본은 항상 접는다 — 내용 손실 없음 */
-	#mainContent2 .main-ai-txt-m{display:none;}
+	/* ══ What We Do — 147 crepass .sec5 타일 그리드 이식 (2026-08-07 세영 지시) ══
+	   원본 실측(1440, 직접 계측):
+	   · .boxwrap  flex-wrap, gap 20px / .box  width:calc(33.3333% - 13.3333px)
+	   · .box::after{padding-bottom:100%} 로 정사각, .inner 은 absolute + radius 30 + overflow hidden
+	   · .box.txt{transform:translateX(calc(-100% - 20px))} 로 왼쪽 이미지 타일 뒤에 숨어 있다가
+	     .in-view 에서 translateX(0) — transition 1.5s .2s, z-index 는 이미지 2 / 카드 1
+	   · .box.blank{opacity:0} 이 빈 칸을 만들어 대각선 리듬을 낸다
+	   가져오지 않은 것: 밝은 회색 배경·흰 카드·폰트·아이콘·콘텐츠(하오웹은 다크 유지)
+	   4축이라 원본 3열 대신 4열로 짰다. 이미지와 카드 짝은 반드시 같은 행에 인접해야
+	   translateX 로 뒤에 숨는 트릭이 성립한다 — 순서를 바꾸면 카드가 엉뚱한 칸에서 나온다. */
+	#mainContent2 .hwx{display:flex;flex-wrap:wrap;gap:20px;}
+	#mainContent2 .hwx__b{position:relative;width:calc(25% - 15px);z-index:2;}
+	#mainContent2 .hwx__b::after{content:"";display:block;padding-bottom:100%;}
+	#mainContent2 .hwx__inner{position:absolute;inset:0;border-radius:22px;overflow:hidden;}
 
-	/* ── 좌측 레일 ── 번호 + 사업명. 아이콘은 번호가 대신하므로 접는다 */
-	#mainContent2 .main-ai-list{position:static;width:100%;height:auto;
-		display:flex;flex-direction:column;gap:0;
-		border-top:1px solid rgba(255,255,255,.14);}
-	#mainContent2 .main-ai-list:before{display:none;}          /* 회전 궤도 */
-	/* position:relative 로 바꾸면 궤도 배치용 레거시 좌표(item01·04 의 left)가 되살아난다 */
-	#mainContent2 .main-ai-list li{position:relative;width:auto;height:auto;display:block;
-		top:auto;left:auto;right:auto;bottom:auto;margin:0;
-		border-radius:0;background-color:transparent;cursor:pointer;
-		padding:clamp(17px,1.5vw,22px) 34px clamp(17px,1.5vw,22px) 2px;
-		border-bottom:1px solid rgba(255,255,255,.14);
-		transition:padding-left .45s cubic-bezier(.16,1,.3,1);}
-	#mainContent2 .main-ai-list li.on{background-color:transparent;}
-	#mainContent2 .main-ai-list li .inner{display:flex;align-items:baseline;gap:15px;}
-	#mainContent2 .main-ai-list li .icon-box{display:none;}
-	#mainContent2 .main-ai-list li .hwx-n{flex:0 0 auto;font-style:normal;font-size:12.5px;
-		letter-spacing:.14em;font-weight:600;color:rgba(255,255,255,.34);
-		transition:color .3s ease;}
-	#mainContent2 .main-ai-list li strong{margin-top:0;font-size:clamp(20px,1.7vw,26px);
-		font-weight:700;letter-spacing:-.03em;color:rgba(255,255,255,.55);
-		transition:color .3s ease;}
-	/* 활성 — 붉은 세로선 + 명도 + 들여쓰기 (PLAN 레일과 같은 문법) */
-	#mainContent2 .main-ai-list li::before{content:"";position:absolute;left:0;
-		top:14px;bottom:14px;width:2px;background:var(--main-color);
-		transform:scaleY(0);transform-origin:50% 50%;
-		transition:transform .45s cubic-bezier(.16,1,.3,1);}
-	#mainContent2 .main-ai-list li.on::before{transform:scaleY(1);}
-	#mainContent2 .main-ai-list li.on{padding-left:18px;}
-	#mainContent2 .main-ai-list li.on .hwx-n{color:var(--main-color);}
-	#mainContent2 .main-ai-list li.on strong{color:#fff;}
-	#mainContent2 .main-ai-list li:hover strong{color:rgba(255,255,255,.85);}
-	#mainContent2 .main-ai-list li:focus-visible{outline:2px solid var(--main-color);
-		outline-offset:2px;border-radius:0;}
+	/* 제목 칸 — 두 칸을 쓰고 정사각 제약을 받지 않는다 */
+	#mainContent2 .hwx__b--tit{width:calc(50% - 10px);z-index:3;}
+	#mainContent2 .hwx__b--tit::after{display:none;}
+	#mainContent2 .hwx__b--tit .hwx__inner{position:static;border-radius:0;overflow:visible;
+		height:100%;display:flex;flex-direction:column;justify-content:center;
+		padding-right:clamp(16px,3vw,64px);}
+	#mainContent2 .hwx__b--tit .main-tit{margin-bottom:clamp(24px,2.4vw,38px);}
 
-	/* ── 우측 선택 이미지 ── 네 장을 겹쳐 두고 옆에서 닦아 들어오게 바꾼다 */
-	#mainContent2 .hwx-media{position:relative;overflow:hidden;border-radius:18px;
-		background:rgba(255,255,255,.045);min-height:clamp(330px,32vw,540px);}
-	#mainContent2 .hwx-media picture{display:contents;} /* 래퍼가 줄상자를 만들지 않게 */
-	#mainContent2 .hwx-media__i{position:absolute;inset:0;
-		width:100%;height:100%;object-fit:cover;display:block;}
-	/* JS 가 붙어야 겹침 전환을 켠다 — 스크립트가 죽으면 마지막 한 장이 그대로 보인다 */
-	html.hw-js #mainContent2 .hwx-media__i{opacity:0;clip-path:inset(0 0 0 100%);
-		transition:opacity .5s ease,clip-path .85s cubic-bezier(.16,1,.3,1);}
-	html.hw-js #mainContent2 .hwx-media__i.is-on{opacity:1;clip-path:inset(0 0 0 0);z-index:2;}
+	/* 이미지 타일 */
+	#mainContent2 .hwx__b--img .hwx__inner{background:rgba(255,255,255,.04);}
+	#mainContent2 .hwx__b--img img{width:100%;height:100%;object-fit:cover;display:block;}
 
-	/* ── 좌측 하단 상세 ── 사업명은 레일에 이미 있으므로 작은 확인 라벨로 내린다 */
-	#mainContent2 .main-ai-detail .main-txt01{font-size:12.5px;letter-spacing:.14em;
-		font-weight:700;color:var(--main-color);margin-bottom:11px;}
-	#mainContent2 .main-ai-detail .main-txt02{font-size:clamp(17px,1.32vw,20px);
-		font-weight:600;line-height:1.62;color:var(--tx-1);max-width:34ch;}
-	#mainContent2 .main-ai-detail .hw-fit{margin-top:18px;}
-	/* 원본은 높이가 15.5rem 으로 고정이고 항목이 absolute 라, 리드가 긴 항목은
-	   아래 버튼을 침범한다. 같은 그리드 칸에 겹쳐 쌓아 가장 큰 항목에 높이를 맞춘다.
-	   겹쳐 있으므로 opacity 전환은 그대로 동작한다. */
-	#mainContent2 .main-ai-txt-pc{height:auto;display:grid;}
-	#mainContent2 .main-ai-txt-pc .main-ai-txt-con{position:relative;grid-area:1/1;}
-	/* 레거시는 .animated 가 붙어야 레일 항목이 보인다(main.css 의 opacity:0).
-	   스크립트가 통째로 죽으면 레일이 사라지므로 그때는 무조건 보이게 한다. */
-	html:not(.hw-js) #mainContent2 .main-ai-list li{opacity:1;}
-	/* JS 가 죽으면 .on 이 붙지 않아 상세가 전부 사라진다 — 그때는 네 항목을 그냥 쌓는다 */
-	html:not(.hw-js) #mainContent2 .main-ai-txt-pc{display:block;}
-	html:not(.hw-js) #mainContent2 .main-ai-txt-pc .main-ai-txt-con{opacity:1;margin-bottom:26px;}
-	#mainContent2 .main-ai-detail .cm-main-btn{margin-top:30px;}
+	/* 텍스트 카드 — 원본은 흰 카드지만 하오웹은 다크를 유지한다 */
+	#mainContent2 .hwx__b--card{z-index:1;}
+	#mainContent2 .hwx__b--card .hwx__inner{display:flex;flex-direction:column;
+		justify-content:flex-end;padding:clamp(20px,2.05vw,32px);
+		background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13);
+		transition:background-color .4s ease,border-color .4s ease;}
+	#mainContent2 .hwx__b--card:hover .hwx__inner{background:rgba(255,255,255,.085);
+		border-color:rgba(232,56,23,.5);}
+	#mainContent2 .hwx__b--card:focus-visible .hwx__inner{outline:2px solid var(--main-color);
+		outline-offset:-3px;}
+	#mainContent2 .hwx__n{display:block;font-style:normal;font-size:12.5px;letter-spacing:.14em;
+		font-weight:700;color:var(--main-color);}
+	#mainContent2 .hwx__t{display:block;margin-top:9px;font-size:clamp(19px,1.5vw,25px);
+		font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1.3;}
+	#mainContent2 .hwx__lead{margin-top:8px;font-size:15.5px;line-height:1.58;
+		color:rgba(255,255,255,.62);}
+	#mainContent2 .hwx__fit{margin-top:13px;display:grid;gap:4px;}
+	#mainContent2 .hwx__fit li{position:relative;padding-left:12px;font-size:13.5px;
+		line-height:1.5;color:rgba(255,255,255,.42);}
+	#mainContent2 .hwx__fit li::before{content:"";position:absolute;left:0;top:7px;
+		width:3px;height:3px;border-radius:50%;background:var(--main-color);opacity:.8;}
+	/* 우상단 이동 표시 — 카드 전체가 링크라 방향만 알려주면 된다 */
+	#mainContent2 .hwx__go{position:absolute;right:clamp(18px,1.9vw,28px);top:clamp(18px,1.9vw,28px);
+		width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.22);
+		transition:border-color .35s ease,background-color .35s ease;}
+	#mainContent2 .hwx__go::before{content:"→";position:absolute;inset:0;display:flex;
+		align-items:center;justify-content:center;font-size:14px;line-height:1;
+		color:rgba(255,255,255,.72);transition:color .35s ease;}
+	#mainContent2 .hwx__b--card:hover .hwx__go{border-color:var(--main-color);
+		background:var(--main-color);}
+	#mainContent2 .hwx__b--card:hover .hwx__go::before{color:#fff;}
+	/* 빈 칸 — 대각선 리듬을 만드는 자리(원본 .blank) */
+	#mainContent2 .hwx__b--blank{opacity:0;pointer-events:none;}
 
-	/* 1024 이하는 2열을 유지하면 좌측 글 칼럼이 356px 까지 좁아진다 — 한 줄로 편다 */
+	/* 겹침 전환 — 카드가 왼쪽 이미지 뒤에서 옆으로 미끄러져 나온다.
+	   ⚠ hw-js 가드 필수 — 없으면 스크립트가 죽었을 때 카드가 이미지 뒤에 영원히 숨는다 */
+	html.hw-js #mainContent2 .hwx__b--card{transform:translateX(calc(-100% - 20px));}
+	html.hw-js #mainContent2 .hwx__b--card.is-in{transform:translateX(0);
+		transition:transform 1.5s cubic-bezier(.16,1,.3,1) .2s;}
+
 	@media all and (max-width:1024px){
-		#mainContent2 .main-con02-inner{grid-template-columns:1fr;
-			grid-template-areas:"head" "rail" "media" "detail";row-gap:26px;}
-		#mainContent2 .hwx-media{min-height:clamp(210px,46vw,400px);border-radius:14px;}
-		#mainContent2 .main-ai-detail .main-txt02{max-width:44ch;}
+		#mainContent2 .hwx{gap:14px;}
+		#mainContent2 .hwx__b{width:calc(50% - 7px);}
+		#mainContent2 .hwx__b--tit{width:100%;margin-bottom:10px;}
+		#mainContent2 .hwx__b--tit .hwx__inner{padding-right:0;}
+		#mainContent2 .hwx__b--blank{display:none;}
+		html.hw-js #mainContent2 .hwx__b--card{transform:translateX(calc(-100% - 14px));}
 	}
-	@media all and (max-width:800px){
-		/* 모바일 사본 대신 pc 쪽을 계속 쓴다 — 설명이 CTA 앞에 오게 하려는 것 */
-		#mainContent2 .main-ai-txt-pc{display:grid;}
-	}
-	@media all and (max-width:768px){
-		#mainContent2 .main-ai-list li{padding:15px 26px 15px 2px;}
-		#mainContent2 .main-ai-list li strong{font-size:19px;}
+	/* 좁은 화면에서 정사각 카드는 글을 담기엔 너무 작다 — 세로로 펴고 겹침도 끈다
+	   (지시서 §26 문서 스택을 일반 세로 문서로 대체) */
+	@media all and (max-width:640px){
+		#mainContent2 .hwx{gap:12px;}
+		#mainContent2 .hwx__b{width:100%;}
+		#mainContent2 .hwx__b--img::after{padding-bottom:62%;}
+		#mainContent2 .hwx__b--card::after{display:none;}
+		#mainContent2 .hwx__b--card .hwx__inner{position:static;padding:24px 22px 26px;}
+		#mainContent2 .hwx__go{right:20px;top:22px;}
+		html.hw-js #mainContent2 .hwx__b--card,
+		html.hw-js #mainContent2 .hwx__b--card.is-in{transform:none;transition:none;}
 	}
 	@media (prefers-reduced-motion: reduce){
-		#mainContent2 .main-ai-list li,
-		#mainContent2 .main-ai-list li::before,
-		html.hw-js #mainContent2 .hwx-media__i{transition:none !important;}
+		html.hw-js #mainContent2 .hwx__b--card,
+		html.hw-js #mainContent2 .hwx__b--card.is-in{transform:none !important;transition:none !important;}
+		#mainContent2 .hwx__b--card .hwx__inner,#mainContent2 .hwx__go{transition:none !important;}
 	}
 
 	/* ── 카드 높이 정책 ──
@@ -3485,32 +3464,29 @@ $(document).ready(function  () {
 		show(start);
 	}
 
-	/* WHAT WE DO 선택형 — 좌측 레일에서 고른 사업의 이미지를 우측에 보인다.
-	   활성 상태의 주인은 기존 main.js(li.on) 이므로 여기서는 그 클래스만 따라간다.
-	   그래야 자동 넘김·hover·focus 동작을 두 곳에서 관리하지 않는다.
-	   hw-js 가 붙어야 CSS 가 이미지를 겹치므로, 스크립트가 죽으면 한 장이 그대로 나온다. */
-	function initAxesMedia(){
-		var list  = document.querySelector('#mainContent2 .main-ai-list');
-		var media = document.querySelector('#mainContent2 .hwx-media');
-		if(!list || !media) return;
-		var items = list.querySelectorAll('li');
-		var pics  = media.querySelectorAll('.hwx-media__i');
-		if(!items.length || items.length !== pics.length) return;
+	/* WHAT WE DO 타일 — 카드가 왼쪽 이미지 타일 뒤에서 옆으로 미끄러져 나온다.
+	   147 crepass .sec5 의 .in-view 전환을 그대로 옮긴 것(translateX 만, pin·스크럽 없음).
+	   hw-js 가 붙어야 CSS 가 카드를 옆으로 밀어 숨기므로,
+	   스크립트가 죽으면 카드는 처음부터 제자리에 그대로 있다. */
+	function initAxesReveal(){
+		var cards = document.querySelectorAll('#mainContent2 .hwx__b--card');
+		if(!cards.length) return;
 		document.documentElement.classList.add('hw-js');
-		function sync(){
-			var n = 0;
-			for(var i=0;i<items.length;i++){ if(items[i].classList.contains('on')){ n = i; break; } }
-			for(var j=0;j<pics.length;j++){
-				var on = (j === n);
-				pics[j].classList.toggle('is-on', on);
-				pics[j].setAttribute('aria-hidden', on ? 'false' : 'true');
+		function show(el){ el.classList.add('is-in'); }
+		if(reduce){ Array.prototype.forEach.call(cards, show); return; }
+		/* 스크롤 위치만 읽는다 — 관측 API 가 없어도 동작하고 pin 도 만들지 않는다 */
+		var left = Array.prototype.slice.call(cards);
+		function sweep(){
+			var vh = window.innerHeight || 800;
+			for(var i = left.length - 1; i >= 0; i--){
+				var r = left[i].getBoundingClientRect();
+				if(r.top < vh * 0.92 && r.bottom > 0){ show(left[i]); left.splice(i, 1); }
 			}
+			if(!left.length) window.removeEventListener('scroll', sweep);
 		}
-		if(window.MutationObserver){
-			var mo = new MutationObserver(sync);
-			for(var k=0;k<items.length;k++){ mo.observe(items[k], {attributes:true, attributeFilter:['class']}); }
-		}
-		sync();
+		window.addEventListener('scroll', sweep, { passive: true });
+		window.addEventListener('resize', sweep, { passive: true });
+		sweep();
 	}
 
 	function initLegacyReveal(){
@@ -3634,7 +3610,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesMedia(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

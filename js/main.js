@@ -158,6 +158,9 @@ $(document).ready(function  () {
 	});
 
 	function mainAiActive() {
+		/* 2026-08-07 — What We Do 가 타일 그리드로 바뀌면서 .main-ai-list 가 없어졌다.
+		   목록이 없으면 rolling-time 이 undefined 라 setInterval 이 0ms 로 돌아 CPU 를 태운다. */
+		if (!mainAiItemLength) return;
 		var startNum = 0;
 		var rollingSpeed = $mainAiList.data("rolling-time");
 	

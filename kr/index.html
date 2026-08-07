@@ -1663,6 +1663,32 @@
 	.scene-soft .hwt3__col ul li{position:relative;padding-left:0;}
 	.scene-soft .hwt3__col ul li::before{display:none;}
 	.hws-t{display:block;letter-spacing:-.01em;}
+	/* ── 각 단계의 "실제 자료" ── (2026-08-07 지시 §5-G)
+	   표가 아니라 자료가 변해가는 장면이 되도록 세 열에 실물 사진을 둔다.
+	   FROM 은 흐트러진 인쇄물, HAOWEB 은 손으로 정리한 구조,
+	   TO 는 하오웹이 실제로 만든 홈페이지 화면(스톡 아님). */
+	.hws-shot{position:relative;display:block;margin:0 0 22px;overflow:hidden;
+		border-radius:10px;border:1px solid rgba(255,255,255,.10);background:#0b0e14;}
+	.hws-shot img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;}
+	.hws-shot::after{content:"";position:absolute;inset:0;pointer-events:none;
+		background:linear-gradient(180deg,rgba(7,10,16,.10),rgba(7,10,16,.42));}
+	/* FROM — 아직 정리 전이라 살짝 기울고 대비가 낮다 */
+	.hws-shot--raw{transform:rotate(-.8deg);}
+	.hws-shot--raw::after{background:linear-gradient(180deg,rgba(7,10,16,.26),rgba(7,10,16,.58));}
+	/* HAOWEB — 반듯하게 선다 */
+	.hws-shot--edit{transform:none;}
+	/* TO — 브라우저 창 안의 완성 화면 */
+	.hws-shot--done{padding-top:22px;background:rgba(255,255,255,.04);}
+	.hws-shot--done img{aspect-ratio:16/10;object-position:top center;border-radius:0 0 9px 9px;}
+	.hws-shot--done::after{background:linear-gradient(180deg,rgba(7,10,16,0),rgba(7,10,16,.22));}
+	.hws-shot__bar{position:absolute;left:0;right:0;top:0;height:22px;z-index:1;
+		background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09);}
+	.hws-shot__bar::after{content:"";position:absolute;left:11px;top:9px;width:4px;height:4px;border-radius:50%;
+		background:rgba(255,255,255,.30);box-shadow:7px 0 0 rgba(255,255,255,.2),14px 0 0 rgba(255,255,255,.14);}
+	@media all and (max-width:900px){
+		.hws-shot{margin-bottom:16px;}
+		.hws-shot--raw{transform:none;}
+	}
 
 	/* FROM — 아직 정리되지 않은 상태: 낮은 대비, 점선 구분, 좁은 행 */
 	.hws-raw > li{display:flex;align-items:center;min-height:52px;padding:6px 0;
@@ -2672,6 +2698,7 @@
 							<div class="hwt3__col hwt3__col--from">
 								<span class="k font-jost">FROM</span>
 								<b class="hwt3__ttl">고객이 가진 자료</b>
+								<figure class="hws-shot hws-shot--raw"><picture><source srcset="../images/scope/scope-from-docs.webp" type="image/webp"><img src="../images/scope/scope-from-docs.jpg" alt="책상 위에 놓인 회사 서류와 인쇄물" width="1000" height="750" loading="lazy" decoding="async"></picture></figure>
 								<ul class="hws-raw">
 									<li><span class="hws-t">기존 홈페이지</span></li>
 									<li><span class="hws-t">회사소개서·PPT</span></li>
@@ -2682,6 +2709,7 @@
 							<div class="hwt3__col hwt3__col--hao">
 								<span class="k font-jost">HAOWEB</span>
 								<b class="hwt3__ttl">하오웹이 정리하는 것</b>
+								<figure class="hws-shot hws-shot--edit"><picture><source srcset="../images/scope/scope-hao-wire.webp" type="image/webp"><img src="../images/scope/scope-hao-wire.jpg" alt="페이지 구조를 손으로 정리한 와이어프레임 스케치" width="1000" height="750" loading="lazy" decoding="async"></picture></figure>
 								<ul class="hws-edit">
 									<li><span class="hws-edit__n font-jost" aria-hidden="true">01</span><span class="hws-t">핵심 메시지</span></li>
 									<li><span class="hws-edit__n font-jost" aria-hidden="true">02</span><span class="hws-t">사이트맵과 페이지 원고</span></li>
@@ -2692,6 +2720,7 @@
 							<div class="hwt3__col hwt3__col--to">
 								<span class="k font-jost">TO</span>
 								<b class="hwt3__ttl">홈페이지에 나타나는 결과</b>
+								<figure class="hws-shot hws-shot--done"><span class="hws-shot__bar" aria-hidden="true"></span><img src="../images/portfolio/shot-seouldp.jpg" alt="하오웹이 제작한 홈페이지의 완성 화면" width="920" height="560" loading="lazy" decoding="async"></figure>
 								<ul class="hws-page">
 									<li><span class="hws-t">명확한 첫 화면</span></li>
 									<li><span class="hws-t">이해하기 쉬운 서비스 설명</span></li>

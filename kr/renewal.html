@@ -241,7 +241,11 @@
 	/* 3장을 처음부터 나란히 둔 가로 슬라이더(세영). 좌측 레일(탭)을 누르면 트랙이 옆으로
 	   휙 슬라이드하고, 우측 끝 카드는 뷰포트에서 잘려 "더 있다"는 신호를 준다. */
 	.hwp-split{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);
-		gap:clamp(28px,3.4vw,56px);align-items:start;margin-top:52px;}
+		gap:clamp(28px,3.4vw,56px);align-items:stretch;margin-top:52px;}
+	/* 좌측 컬럼 — 탭(위) · 안내문 · Detail 버튼(카드 하단에 맞춰 아랫정렬, 세영) */
+	.hwp-side{display:flex;flex-direction:column;min-width:0;}
+	.hwp-note{margin-top:24px;font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.5);}
+	.hwp-detail{margin-top:auto;align-self:flex-start;}
 	.hwp-rail{display:flex;flex-direction:column;gap:2px;
 		border-top:1px solid rgba(255,255,255,.14);}
 	.hwp-rail__i{position:relative;display:block;width:100%;text-align:left;
@@ -268,20 +272,28 @@
 	/* .hwp-grid 의 margin-top:52px 은 3열로 나열하던 시절의 값이라,
 	   좌측 레일 옆에 들어오면 카드만 52px 내려가 단차가 생긴다 */
 	.hwp-split .hwp-grid{margin-top:0;}
-	/* 뷰포트: 트랙이 옆으로 흐를 때 우측에서 잘라 준다(끝 카드가 살짝 잘려 보임) */
-	.hwp-split .hwp-grid{overflow:hidden;}
-	/* 트랙: 3장을 한 줄로. JS 가 --tx 로 좌우 이동시킨다 */
-	.hwp-track{display:flex;gap:clamp(18px,1.8vw,26px);width:max-content;
-		transform:translateX(var(--tx,0px));will-change:transform;
-		transition:transform .6s cubic-bezier(.16,1,.3,1);}
-	.hwp-track .hwp-card{flex:0 0 clamp(300px,24vw,372px);}
+	/* 뷰포트: 우측에서 카드가 잘리며 페이드아웃한다. overflow:hidden 대신 마스크를 써서
+	   세로(위쪽)는 자르지 않는다 — 추천 배지와 호버로 떠오른 카드 상단이 잘리지 않게(세영).
+	   mask-size 세로를 260%로 키워 위/아래 여백까지 마스크가 덮게 한다. */
+	.hwp-split .hwp-grid{overflow:visible;
+		-webkit-mask-image:linear-gradient(90deg,#000 0,#000 82%,transparent 99%);
+		mask-image:linear-gradient(90deg,#000 0,#000 82%,transparent 99%);
+		-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+		-webkit-mask-size:100% 260%;mask-size:100% 260%;
+		-webkit-mask-position:left center;mask-position:left center;}
+	/* 트랙: 3장을 한 줄로. 클릭하면 JS 가 flex order 를 바꿔 재정렬하고 FLIP 로 슬라이드시킨다 */
+	.hwp-track{display:flex;gap:clamp(18px,1.8vw,26px);width:max-content;padding:22px 0;}
+	.hwp-track .hwp-card{flex:0 0 clamp(300px,24vw,372px);will-change:transform;}
 	/* 3장이 다 보이므로 추천 배지는 그대로 둔다(서브페이지와 동일) */
 	.hwp-rail__i.is-on b{color:#fff;}
 	@media all and (max-width:900px){
 		/* 모바일 — 슬라이더 대신 카드를 세로로 쌓고 트랙은 흐름을 푼다 */
 		.hwp-split{grid-template-columns:1fr;gap:26px;}
-		.hwp-split .hwp-grid{overflow:visible;}
-		.hwp-track{flex-direction:column;width:auto;transform:none !important;gap:16px;}
+		.hwp-split .hwp-grid{overflow:visible;-webkit-mask-image:none;mask-image:none;}
+		/* 좌측 컬럼: Detail 버튼을 하단으로 밀지 않고 안내문 아래에 둔다 */
+		.hwp-detail{margin-top:20px;}
+		.hwp-note{margin-top:18px;}
+		.hwp-track{flex-direction:column;width:auto;transform:none !important;gap:16px;padding:0;}
 		.hwp-track .hwp-card{flex:0 0 auto;}
 		.hwp-rail{flex-direction:row;overflow-x:auto;gap:0;border-top:0;
 			border-bottom:1px solid rgba(255,255,255,.14);-webkit-overflow-scrolling:touch;}
@@ -4266,49 +4278,79 @@ $(document).ready(function  () {
 		});
 	}
 
-	/* PLAN 선택형 — 좌측 레일에서 고른 플랜만 우측에 보인다.
-	   hw-js 가 붙어야 CSS 가 카드를 겹치므로, 스크립트가 죽으면 3장이 그대로 나온다. */
+	/* PLAN — 3장을 나란히 둔 가로 슬라이더. 좌측 탭을 누르면 그 카드가 맨 왼쪽으로 오고
+	   나머지는 순서대로 밀린다(flex order 재배치 + FLIP 로 부드럽게 슬라이드). 세영. */
 	function initPlanRail(){
 		var rail = document.querySelector('.hwp-rail');
 		var grid = document.querySelector('.hwp-split .hwp-grid');
 		var track = grid && grid.querySelector('.hwp-track');
 		if(!rail || !grid || !track) return;
-		var btns  = rail.querySelectorAll('.hwp-rail__i');
-		var cards = track.querySelectorAll('.hwp-card');
-		if(btns.length !== cards.length) return;
+		var btns  = [].slice.call(rail.querySelectorAll('.hwp-rail__i'));
+		var cards = [].slice.call(track.querySelectorAll('.hwp-card'));
+		var n = cards.length;
+		if(btns.length !== n) return;
 		document.documentElement.classList.add('hw-js');
-		var cur = 0;
-		/* 트랙이 뷰포트보다 넓은 만큼(max)을 탭 수로 균등 분할해, 클릭마다 같은 간격으로 슬라이드.
-		   0=시작(끝 카드 잘림) … 마지막=끝 카드 완전히 보임(오른쪽 빈 공간 없음). */
-		function maxShift(){ return Math.max(0, track.scrollWidth - grid.clientWidth); }
-		function apply(n){
-			var m = maxShift();
-			var tx = (btns.length > 1) ? (m * n / (btns.length - 1)) : 0;
-			track.style.setProperty('--tx', '-' + Math.round(tx) + 'px');
+		var cur = 0, animating = false;
+		var seq = cards.map(function(_,i){ return i; });   /* 현재 보이는 순서(카드 인덱스) */
+
+		function setTabs(active){
 			for(var i=0;i<btns.length;i++){
-				var on = (i === n);
-				btns[i].classList.toggle('is-on', on);
-				btns[i].setAttribute('aria-selected', on ? 'true' : 'false');
+				btns[i].classList.toggle('is-on', i===active);
+				btns[i].setAttribute('aria-selected', i===active ? 'true' : 'false');
 			}
-			cur = n;
+		}
+		/* 클릭한 카드를 맨 앞으로, 기존 맨 앞 카드는 맨 뒤로(세영). 나머지는 상대 순서 유지 */
+		function reseq(active){
+			var oldFront = seq[0];
+			seq = seq.filter(function(x){ return x !== active; });
+			seq.unshift(active);
+			if(oldFront !== active){
+				seq = seq.filter(function(x){ return x !== oldFront; });
+				seq.push(oldFront);
+			}
+		}
+		function assignOrder(){
+			for(var k=0;k<seq.length;k++) cards[seq[k]].style.order = String(k);
+		}
+		function go(active){
+			if(active === seq[0] || animating) { setTabs(active); return; }
+			var reduce2 = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+			if(reduce2 || window.innerWidth < 900){ reseq(active); assignOrder(); setTabs(active); cur = active; return; }
+			/* FLIP: 재배치 전 위치 기록 → 순서 변경 → 새 위치와의 차이만큼 되돌린 뒤 0 으로(슬라이드 모션) */
+			var first = cards.map(function(c){ return c.getBoundingClientRect().left; });
+			reseq(active); assignOrder();
+			var last = cards.map(function(c){ return c.getBoundingClientRect().left; });
+			for(var k=0;k<n;k++){
+				var dx = first[k] - last[k];
+				cards[k].style.transition = 'none';
+				cards[k].style.transform = 'translateX(' + dx + 'px)';
+			}
+			void track.offsetWidth;               /* 리플로우 강제 */
+			animating = true;
+			for(var k2=0;k2<n;k2++){
+				cards[k2].style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+				cards[k2].style.transform = 'translateX(0)';
+			}
+			/* 애니메이션이 끝나면 인라인 transform 을 지워 호버(translateY)가 다시 먹게 한다 */
+			setTimeout(function(){
+				for(var k3=0;k3<n;k3++){ cards[k3].style.transition=''; cards[k3].style.transform=''; }
+				animating = false;
+			}, 640);
+			setTabs(active); cur = active;
 		}
 		for(var i=0;i<btns.length;i++){
 			(function(idx){
-				btns[idx].addEventListener('click', function(){ apply(idx); });
+				btns[idx].addEventListener('click', function(){ go(idx); });
 				btns[idx].addEventListener('keydown', function(e){
 					var d = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
 					if(!d) return;
 					e.preventDefault();
 					var nx = (idx + d + btns.length) % btns.length;
-					apply(nx); btns[nx].focus();
+					go(nx); btns[nx].focus();
 				});
 			})(i);
 		}
-		/* 시작은 0(왼쪽부터 나란히, 오른쪽 끝 카드 살짝 잘림) */
-		function relayout(){ apply(cur); }
-		if(document.readyState === 'complete') relayout();
-		else window.addEventListener('load', relayout);
-		window.addEventListener('resize', relayout, {passive:true});
+		assignOrder(); setTabs(0);
 	}
 
 	/* WHAT WE DO 타일 — 카드가 왼쪽 이미지 타일 뒤에서 옆으로 미끄러져 나온다.

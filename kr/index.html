@@ -1935,13 +1935,36 @@
 	   핀은 SCROLLMAGIC 으로 건다(SmoothScroll 과 공존 검증). JS 없으면 그냥 가로로 넘친 채 둔다. */
 	@media all and (min-width:1025px){
 		.main-con03 .left-con{position:sticky;top:132px;align-self:start;}
-		/* 트랙이 옆으로 흐를 때 우측 칼럼이 잘라 준다 */
-		.main-con03 .right-con{overflow:hidden;}
-		.main-con03-list{display:flex;flex-wrap:nowrap;align-items:stretch;gap:24px;
+		/* 트랙이 옆으로 흐를 때 우측 칼럼이 잘라 준다. 경계에서 하드컷되면 카드가 잘린 것처럼
+		   보이므로(세영), 양끝을 페이드해 카드가 가장자리에서 자연스럽게 드나들게 한다. */
+		.main-con03 .right-con{overflow:hidden;
+			-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+			mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);}
+		.main-con03-list{display:flex;flex-wrap:nowrap;align-items:stretch;gap:26px;
 			will-change:transform;}
-		/* 상하좌우 폭 동일 — 번호 카드 네 장을 같은 크기로 */
-		.main-con03-list li{flex:0 0 clamp(300px,25vw,360px) !important;width:auto !important;
-			margin:0 !important;min-height:300px;padding-bottom:3.2rem;}
+		/* 카드를 크게 — 각 단계의 작업 장면이 한눈에 읽히도록(세영: 더 크게) */
+		.main-con03-list li{flex:0 0 clamp(360px,30vw,440px) !important;width:auto !important;
+			margin:0 !important;min-height:480px;padding:0 !important;}
+	}
+	/* 카드 내부 — 이미지 위에 번호(우상단), 본문(하단). 텍스트가 이미지와 하나로 읽히게. */
+	.main-con03-list li{padding:0 !important;justify-content:flex-end;}
+	.main-con03-list li .hwb-c{position:relative;z-index:1;padding:30px 30px 32px;}
+	.hwb-ey{font-family:Jost,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;
+		color:var(--main-color);margin-bottom:12px;text-transform:uppercase;}
+	.hwb-t{display:block;font-size:23px;font-weight:700;color:#fff;line-height:1.34;letter-spacing:-.02em;}
+	.hwb-d{margin-top:12px;font-size:14.5px;line-height:1.62;color:rgba(255,255,255,.72);
+		text-shadow:0 1px 8px rgba(6,9,16,.6);}
+	.main-con03-list li .hwb-n{top:24px;right:26px;}
+	/* 이미지 위 다크 오버레이 — 아래로 갈수록 진해져 하단 본문 가독을 확보 */
+	.main-con03-list li .hwb-bg::after{
+		background:linear-gradient(180deg,rgba(9,11,16,.32) 0%,rgba(9,11,16,.42) 42%,rgba(9,11,16,.9) 100%);}
+	@media all and (max-width:1024px){
+		.main-con03-list li{min-height:420px;}
+	}
+	@media all and (max-width:760px){
+		.main-con03-list li{min-height:360px;}
+		.main-con03-list li .hwb-c{padding:26px 24px 28px;}
+		.hwb-t{font-size:21px;}
 	}
 	/* 순차 진입 — 원본의 스태거 리듬(패널당 약 0.12s)만 옮긴다 */
 	.main-con03-list li{opacity:0;transform:translateY(26px);
@@ -3235,56 +3258,41 @@
 					<div class="right-con">
 							<ul class="main-con03-list">
 								<li class="item01">
-									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-01.webp)"></span>
-									<div class="tit-box">
-										<strong>사업·고객 <br class="pc-br">이해</strong>
-										<p class="font-jost">Understand</p>
-									</div>
-									<span class="hwb-n font-jost" aria-hidden="true">01</span>
-									<p class="hwb-keys"><span>자료</span><span>인터뷰</span><span>고객의 판단 기준</span></p>
-									<div class="hash-box font-jost">
-										<span>#Business</span>
-										<span>#Customer</span>
-									</div>
-								</li>
+										<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-01.webp)"></span>
+										<span class="hwb-n font-jost" aria-hidden="true">01</span>
+										<div class="hwb-c">
+											<p class="hwb-ey font-jost">Understand</p>
+											<strong class="hwb-t">사업과 고객을 <br>이해합니다</strong>
+											<p class="hwb-d">보유 자료와 현재 상황을 검토하고, 고객이 무엇을 중요하게 생각하는지부터 파악합니다.</p>
+										</div>
+									</li>
 								<li class="item02">
-									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-02.webp)"></span>
-									<div class="tit-box">
-										<strong>구조·콘텐츠 <br class="pc-br">설계</strong>
-										<p class="font-jost">Structure &amp; Content</p>
-									</div>
-									<span class="hwb-n font-jost" aria-hidden="true">02</span>
-									<p class="hwb-keys"><span>사이트맵</span><span>핵심 메시지</span><span>콘텐츠 관계</span></p>
-									<div class="hash-box font-jost">
-										<span>#Sitemap</span>
-										<span>#Message</span>
-									</div>
-								</li>
+										<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-02.webp)"></span>
+										<span class="hwb-n font-jost" aria-hidden="true">02</span>
+										<div class="hwb-c">
+											<p class="hwb-ey font-jost">Structure &amp; Content</p>
+											<strong class="hwb-t">구조와 콘텐츠를 <br>설계합니다</strong>
+											<p class="hwb-d">전달해야 할 메시지와 정보의 우선순위를 정리해, 홈페이지 구조와 흐름을 설계합니다.</p>
+										</div>
+									</li>
 								<li class="item03">
-									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-03.webp)"></span>
-									<div class="tit-box">
-										<strong>디자인과 <br class="pc-br">구축</strong>
-										<p class="font-jost">Design &amp; Build</p>
-									</div>
-									<span class="hwb-n font-jost" aria-hidden="true">03</span>
-									<p class="hwb-keys"><span>화면 설계</span><span>반응형</span><span>기능</span></p>
-									<div class="hash-box font-jost">
-										<span>#Search-AI</span>
-									</div>
-								</li>
+										<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-03.webp)"></span>
+										<span class="hwb-n font-jost" aria-hidden="true">03</span>
+										<div class="hwb-c">
+											<p class="hwb-ey font-jost">Design &amp; Build</p>
+											<strong class="hwb-t">디자인과 구축을 <br>진행합니다</strong>
+											<p class="hwb-d">정리된 구조를 바탕으로 화면을 만들고, 브랜드와 목적에 맞는 웹 경험으로 구현합니다.</p>
+										</div>
+									</li>
 								<li class="item04">
-									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-04.webp)"></span>
-									<div class="tit-box">
-										<strong>오픈과 <br class="pc-br">운영</strong>
-										<p class="font-jost">Launch &amp; Operate</p>
-									</div>
-									<span class="hwb-n font-jost" aria-hidden="true">04</span>
-									<p class="hwb-keys"><span>검수</span><span>발행</span><span>유지·운영</span></p>
-									<div class="hash-box font-jost">
-										<span>#Content</span>
-										<span>#Maintenance</span>
-									</div>
-								</li>
+										<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-04.webp)"></span>
+										<span class="hwb-n font-jost" aria-hidden="true">04</span>
+										<div class="hwb-c">
+											<p class="hwb-ey font-jost">Launch &amp; Operate</p>
+											<strong class="hwb-t">오픈 이후까지 <br>이어갑니다</strong>
+											<p class="hwb-d">최종 검수와 운영 관점까지 점검해, 오픈 후에도 안정적으로 활용할 수 있게 준비합니다.</p>
+										</div>
+									</li>
 							</ul>
 					</div>
 				</div>

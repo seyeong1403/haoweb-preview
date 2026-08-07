@@ -542,8 +542,16 @@
 	.hwv-card{display:flex;flex-direction:column;position:relative;overflow:hidden;
 		border-radius:3rem;background:rgba(255,255,255,0.05);backdrop-filter:blur(1rem);
 		border:1px solid rgba(255,255,255,.10);
-		padding:46px 40px 40px;min-height:300px;box-sizing:border-box;
+		padding:0 40px 36px;min-height:0;box-sizing:border-box;
 		transition:background .4s ease,border-color .4s ease,transform .4s cubic-bezier(.16,1,.3,1);}
+	/* A안 — 상단은 비주얼 영역(오브가 보이는 자리), 아래는 텍스트 영역. 경계를 선으로 분명히 나눈다 */
+	.hwv-fig{display:block;position:relative;z-index:1;height:120px;
+		border-bottom:1px solid rgba(255,255,255,.14);}
+	.hwv-keys{position:relative;z-index:1;margin:14px 0 0;display:flex;flex-wrap:wrap;
+		align-items:center;gap:2px 10px;}
+	.hwv-keys span{font-size:14px;line-height:1.55;color:rgba(255,255,255,.56);}
+	.hwv-keys span + span::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;
+		background:rgba(255,255,255,.30);margin-right:10px;vertical-align:middle;}
 	.hwv-card:hover{background:rgba(255,255,255,0.08);border-color:var(--main-color);transform:translateY(-6px);}
 	.hwv-card::after{content:"";position:absolute;inset:0;pointer-events:none;
 		background:radial-gradient(120% 150% at 90% 0%,rgba(232,56,23,.14) 0%,rgba(232,56,23,0) 60%);}
@@ -563,6 +571,7 @@
 	/* 02·03: JS 미동작 시 폴백(대략적 연결 구도) — initOrbs 가 정확한 값으로 덮어쓴다 */
 	.hwv-card:nth-child(2) .hwv-orb{width:1150px;height:1150px;bottom:-780px;left:-40px;}
 	.hwv-card:nth-child(3) .hwv-orb{width:1150px;height:1150px;top:-160px;left:-780px;}
+	.hwv-card .hwv-top{margin-top:28px;}
 	.hwv-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
 		padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.14);}
 	.hwv-title{font-size:40px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1;}
@@ -573,7 +582,9 @@
 	.hwv-card:hover .hwv-go{color:var(--main-color);gap:14px;}
 	@media (max-width:1024px){
 		.hwv-stack{grid-template-columns:1fr;gap:16px;margin-top:40px;}
-		.hwv-card{min-height:0;padding:34px 26px 30px;border-radius:2.4rem;}
+		.hwv-card{min-height:0;padding:0 26px 28px;border-radius:2.4rem;}
+		.hwv-fig{height:92px;}
+		.hwv-card .hwv-top{margin-top:22px;}
 		.hwv-title{font-size:32px;}
 		.hwv-body{font-size:16.5px;}
 	}
@@ -1194,6 +1205,45 @@
 		color:rgba(255,255,255,.42);font-family:Jost,sans-serif;}
 	a.hwpf-list__row:hover .hwpf-list__go{color:var(--main-color);}
 
+	/* ── WORK(메인) · 실제 사이트 캡처를 브라우저 프레임에 담고 크기를 다르게 둔다 ──
+	   로고 카드가 아니라 "실제 만든 화면"이 먼저 보여야 한다.
+	   참고: 043 Blurr 프레임+좌상단 인덱스 / 147 Finenuts 가변 높이 그리드.
+	   포트폴리오 서브페이지는 같은 .hwpf 를 로고로 쓰므로 --main 으로만 스코프한다. */
+	.hwpf.hwpf--main{grid-template-columns:repeat(3,1fr);gap:38px 26px;align-items:start;}
+	.hwpf--main .hwpf__item{background:none;border:0;border-radius:0;overflow:visible;}
+	.hwpf--main .hwpf__item--lead,.hwpf--main .hwpf__item--wide{grid-column:span 2;}
+	.hwpf--main a.hwpf__item:hover{transform:translateY(-4px);background:none;}
+	.hwpf__frame{display:block;position:relative;overflow:hidden;border-radius:9px;
+		border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);
+		padding:27px 11px 11px;transition:border-color .4s ease;}
+	.hwpf__frame::before{content:"";position:absolute;left:14px;top:10px;width:4px;height:4px;border-radius:50%;
+		background:rgba(255,255,255,.30);box-shadow:8px 0 0 rgba(255,255,255,.21),16px 0 0 rgba(255,255,255,.14);}
+	.hwpf__idx{position:absolute;right:13px;top:8px;font-size:11px;letter-spacing:.1em;
+		color:rgba(255,255,255,.34);font-family:Jost,sans-serif;}
+	.hwpf--main .hwpf__thumb{aspect-ratio:16/10;object-position:top center;border-radius:3px;
+		filter:saturate(.92) brightness(.93);
+		transition:filter .45s ease,transform .7s cubic-bezier(.16,1,.3,1);}
+	.hwpf--main .hwpf__item--lead .hwpf__thumb,
+	.hwpf--main .hwpf__item--wide .hwpf__thumb{aspect-ratio:21/9;}
+	.hwpf--main a.hwpf__item:hover .hwpf__frame{border-color:rgba(232,56,23,.5);}
+	.hwpf--main a.hwpf__item:hover .hwpf__thumb{filter:saturate(1) brightness(1);transform:scale(1.015);}
+	.hwpf--main .hwpf__body{padding:15px 2px 0;}
+	.hwpf--main .hwpf__name{font-size:17px;}
+	@media all and (max-width:1024px){
+		.hwpf.hwpf--main{grid-template-columns:repeat(2,1fr);}
+		.hwpf--main .hwpf__item--lead,.hwpf--main .hwpf__item--wide{grid-column:span 2;}
+		.hwpf--main .hwpf__item--lead .hwpf__thumb,
+		.hwpf--main .hwpf__item--wide .hwpf__thumb{aspect-ratio:21/9;}
+	}
+	@media all and (max-width:760px){
+		.hwpf.hwpf--main{grid-template-columns:1fr;gap:26px;}
+		.hwpf--main .hwpf__item--lead,.hwpf--main .hwpf__item--wide{grid-column:span 1;}
+		.hwpf--main .hwpf__thumb,
+		.hwpf--main .hwpf__item--lead .hwpf__thumb,
+		.hwpf--main .hwpf__item--wide .hwpf__thumb{aspect-ratio:16/10;}
+		.hwpf__frame{padding:24px 9px 9px;}
+	}
+
 	@media all and (max-width:1024px){ .hwpf{grid-template-columns:repeat(3,1fr);} }
 	@media all and (max-width:760px){
 		.hwpf{grid-template-columns:repeat(2,1fr);gap:14px;}
@@ -1220,11 +1270,70 @@
 	@media (max-width:1024px){ .main-con03-list li{width:100% !important;} }
 	/* 4단계 카드: 아이콘을 박스 우하단에 안정적으로 고정 + 호버 모션 */
 	.main-con03-list li{position:relative;overflow:hidden;display:flex;flex-direction:column;
-		min-height:24rem;border:1px solid rgba(255,255,255,.08);
+		min-height:0;border:1px solid rgba(255,255,255,.08);
 		transition:transform .55s cubic-bezier(.16,1,.3,1),background-color .4s ease,border-color .4s ease,box-shadow .5s ease;}
-	.main-con03-list li .tit-box{padding-right:0;}
+	.main-con03-list li .tit-box{padding-right:56px;}
 	.main-con03-list li .hash-box{margin-top:auto;position:relative;z-index:1;}
 	.main-con03-list li .icon-box{position:absolute;right:3rem;bottom:3rem;margin:0;z-index:1;}
+
+	/* ── HOW WE BUILD · 단계 패널 ──
+	   장식 선아이콘을 걷어내고, 단계마다 그 단계에서 실제로 만드는 것을
+	   구조 그대로 축소해 보여준다(자료 조각 / 사이트맵 / 와이어프레임 / 발행·점검).
+	   참고: 015 패널 4점 배치(번호 우상단), 027 프로세스 3점 고정. */
+	.hwb-n{position:absolute;right:2.6rem;top:2.4rem;z-index:1;line-height:1;
+		font-size:34px;font-weight:700;letter-spacing:.01em;color:rgba(255,255,255,.20);}
+	.hwb-keys{margin:15px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;
+		position:relative;z-index:1;}
+	.hwb-keys span{font-size:14px;line-height:1.5;color:rgba(255,255,255,.62);}
+	.hwb-keys span + span::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;
+		background:rgba(255,255,255,.30);margin-right:10px;vertical-align:middle;}
+	.hwb-v{position:relative;display:block;height:96px;margin:20px 0 4px;
+		border-top:1px solid rgba(255,255,255,.09);}
+	.hwb-v i,.hwb-v b{position:absolute;border-radius:2px;box-sizing:border-box;}
+	/* 01 · 흩어진 자료와 인터뷰 (핵심 한 줄만 포인트) */
+	.hwb-v--collect i{height:5px;background:rgba(255,255,255,.16);}
+	.hwb-v--collect i:nth-of-type(1){left:0;top:22px;width:48%;}
+	.hwb-v--collect i:nth-of-type(2){left:0;top:36px;width:68%;}
+	.hwb-v--collect i:nth-of-type(3){left:0;top:50px;width:33%;background:rgba(232,56,23,.62);}
+	.hwb-v--collect b{right:0;top:18px;width:24%;height:44px;border-radius:3px;
+		border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);}
+	/* 02 · 미니 사이트맵 (문의 페이지만 포인트) */
+	.hwb-v--map i{height:7px;background:rgba(255,255,255,.16);}
+	.hwb-v--map i:nth-of-type(1){left:0;top:20px;width:34%;background:rgba(255,255,255,.30);}
+	.hwb-v--map i:nth-of-type(2){left:9%;top:38px;width:40%;}
+	.hwb-v--map i:nth-of-type(3){left:9%;top:53px;width:55%;}
+	.hwb-v--map i:nth-of-type(4){left:9%;top:68px;width:30%;background:rgba(232,56,23,.6);}
+	.hwb-v--map b{left:4.5%;top:27px;width:1px;height:45px;border-radius:0;background:rgba(255,255,255,.18);}
+	/* 03 · 미니 와이어프레임 (CTA만 포인트) */
+	.hwb-v--wire i{background:rgba(255,255,255,.14);}
+	.hwb-v--wire i:nth-of-type(1){left:0;top:19px;width:100%;height:7px;background:rgba(255,255,255,.22);}
+	.hwb-v--wire i:nth-of-type(2){left:0;top:32px;width:100%;height:26px;background:rgba(255,255,255,.06);
+		border:1px solid rgba(255,255,255,.10);}
+	.hwb-v--wire i:nth-of-type(3){left:0;top:64px;width:31%;height:15px;}
+	.hwb-v--wire i:nth-of-type(4){left:34.5%;top:64px;width:31%;height:15px;}
+	.hwb-v--wire i:nth-of-type(5){left:69%;top:64px;width:31%;height:15px;}
+	.hwb-v--wire b{left:0;top:85px;width:58px;height:8px;background:var(--main-color);opacity:.9;}
+	/* 04 · 검수된 항목과 앞으로 쌓일 콘텐츠 자리 */
+	.hwb-v--ship i:nth-of-type(-n+3){left:0;height:6px;background:rgba(255,255,255,.14);}
+	.hwb-v--ship i:nth-of-type(1){top:21px;width:88%;}
+	.hwb-v--ship i:nth-of-type(2){top:37px;width:74%;}
+	.hwb-v--ship i:nth-of-type(3){top:53px;width:82%;}
+	.hwb-v--ship i:nth-of-type(n+4){right:0;width:8px;height:4.5px;border-radius:0;background:none;
+		border-left:1.5px solid rgba(255,255,255,.34);border-bottom:1.5px solid rgba(255,255,255,.34);
+		transform:rotate(-45deg);}
+	.hwb-v--ship i:nth-of-type(4){top:19px;}
+	.hwb-v--ship i:nth-of-type(5){top:35px;}
+	.hwb-v--ship i:nth-of-type(6){top:51px;}
+	.hwb-v--ship b{left:0;top:70px;width:44px;height:13px;border-radius:3px;
+		border:1px dashed rgba(232,56,23,.6);background:rgba(232,56,23,.10);}
+	/* 제목은 네 패널이 스크롤되는 동안 화면에 남는다 (027 상단 고정 원리) */
+	@media all and (min-width:1025px){
+		.main-con03 .left-con{position:sticky;top:132px;align-self:start;}
+	}
+	@media all and (max-width:640px){
+		.hwb-n{font-size:28px;right:2rem;top:2rem;}
+		.hwb-v{height:88px;}
+	}
 	.main-con03-list li .hw-ico{transition:color .35s ease,opacity .35s ease,transform .55s cubic-bezier(.16,1,.3,1);}
 	/* 호버: 상단 포인트 라인이 좌→우로 그어지고, 박스가 살짝 떠오른다 */
 	.main-con03-list li::after{content:"";position:absolute;left:0;top:0;height:3px;width:0;
@@ -1455,50 +1564,106 @@
 	.scene-ink .hwp__acts a:not(.hwp__cta){color:#fff;border-bottom-color:rgba(255,255,255,.5);}
 	.scene-ink .hwp__acts a:not(.hwp__cta):hover{border-bottom-color:#fff;}
 
-	/* ══ SCOPE — 자료가 홈페이지가 되는 변환 인포그래픽 ══
-	   세 칸 표가 아니라 왼쪽(흩어진 자료) → 가운데(정리) → 오른쪽(결과)로
-	   밀도와 정돈감이 올라가는 것이 보여야 한다. 큰 화살표는 쓰지 않고
-	   얇은 연결선과 단계별 표면 차이로 흐름을 만든다. */
-	.scene-soft .hwt3__flow{display:grid;grid-template-columns:1fr 1.15fr 1fr;
-		gap:0;align-items:stretch;margin-top:52px;position:relative;}
-	.scene-soft .hwt3__col{position:relative;padding:34px 30px 32px;border-radius:16px;
-		border:1px solid var(--line);background:var(--card);}
-	/* 왼쪽: 아직 정리되지 않은 느낌 — 살짝 작고 낮은 대비 */
-	.scene-soft .hwt3__col--from{background:transparent;border-style:dashed;
-		border-color:rgba(255,255,255,.22);margin:14px 0;}
-	.scene-soft .hwt3__col--from ul li{color:var(--tx-3);}
-	/* 가운데: 시각적 중심 */
-	.scene-soft .hwt3__col--hao{background:#F5F5F2;border-color:#F5F5F2;
-		box-shadow:0 18px 46px rgba(0,0,0,.42);z-index:2;}
-	.scene-soft .hwt3__col--hao .k{color:#6E737B;}
-	.scene-soft .hwt3__col--hao .hwt3__ttl{color:#111318;}
-	.scene-soft .hwt3__col--hao ul li{color:#41454D;}
-	.scene-soft .hwt3__col--hao ul li::before{background:var(--main-color);}
-	/* 오른쪽: 가장 정돈된 결과 */
-	.scene-soft .hwt3__col--to{background:var(--card-2);box-shadow:none;margin:14px 0;}
-
-	/* 칸을 잇는 얇은 선 — 흐름만 암시한다 */
-	.scene-soft .hwt3__flow::before{content:"";position:absolute;left:8%;right:8%;top:50%;
-		height:1px;background:linear-gradient(90deg,rgba(255,255,255,.12),rgba(232,56,23,.6),rgba(255,255,255,.16));
-		z-index:0;}
-	.scene-soft .hwt3__col{margin-inline:0;}
-	.scene-soft .hwt3__col--hao{margin-inline:-10px;}
-
-	.scene-soft .hwt3__col .k{display:block;font-size:11.5px;letter-spacing:.14em;font-weight:700;
-		color:var(--tx-4);margin-bottom:8px;}
+	/* ══ SCOPE — 자료가 홈페이지가 되는 변환 ══
+	   흰 박스 도식·플로차트·아이콘·화살표를 쓰지 않는다.
+	   FROM 은 크기와 각도가 제각각인 자료 조각, HAOWEB 은 정렬된 편집 그리드,
+	   TO 는 실제 페이지 구조. "정돈되는 정도"의 차이만으로 흐름이 읽혀야 한다. */
+	.scene-soft .hwt3__flow{display:grid;grid-template-columns:3.3fr 3.5fr 5.2fr;
+		gap:0 clamp(20px,2.6vw,38px);align-items:start;margin-top:52px;position:relative;}
+	.scene-soft .hwt3__flow::before{display:none;}
+	.scene-soft .hwt3__col{position:relative;padding:0;margin:0;border:0;border-radius:0;
+		background:none;box-shadow:none;}
+	.scene-soft .hwt3__col + .hwt3__col{border-left:0;}
+	.scene-soft .hwt3__col + .hwt3__col::after{display:none;}
+	.scene-soft .hwt3__col .k{display:block;font-family:'Jost',sans-serif;font-size:11.5px;
+		letter-spacing:.16em;font-weight:600;color:var(--tx-4);margin-bottom:9px;}
+	.scene-soft .hwt3__col--hao .k{color:var(--main-color);}
 	.scene-soft .hwt3__ttl{display:block;font-size:17px;font-weight:700;color:var(--tx-1);
-		letter-spacing:-.02em;margin-bottom:18px;}
-	.scene-soft .hwt3__col ul{display:flex;flex-direction:column;gap:11px;}
-	.scene-soft .hwt3__col ul li{position:relative;padding-left:15px;font-size:15.5px;
-		line-height:1.55;color:var(--tx-2);}
-	.scene-soft .hwt3__col ul li::before{content:"";position:absolute;left:0;top:.62em;
-		width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.32);}
-	/* 가운데 패널은 어두운 표면이라 글자를 다시 밝게 되돌린다.
-	   위의 일반 규칙과 특이도가 같아 순서상 여기서 확정해야 한다. */
-	.scene-soft .hwt3__flow .hwt3__col--hao .hwt3__ttl{color:#111318;}
-	.scene-soft .hwt3__flow .hwt3__col--hao ul li{color:#41454D;}
-	.scene-soft .hwt3__flow .hwt3__col--hao ul li::before{background:var(--main-color);}
-	.scene-soft .hwt3__flow .hwt3__col--hao .k{color:#6E737B;}
+		letter-spacing:-.02em;margin-bottom:20px;}
+	.scene-soft .hwt3__col ul{list-style:none;margin:0;padding:0;}
+	.scene-soft .hwt3__col ul li{position:relative;padding-left:0;}
+	.scene-soft .hwt3__col ul li::before{display:none;}
+	.hws-t{display:block;font-size:14.5px;line-height:1.5;letter-spacing:-.01em;}
+	.hws-g{display:block;position:relative;overflow:hidden;border-radius:7px;
+		border:1px dashed rgba(255,255,255,.20);background:rgba(255,255,255,.022);}
+	.hws-g i,.hws-g b,.hws-pv i,.hws-pv b{position:absolute;border-radius:2px;}
+
+	/* ── FROM · 아직 정리되지 않은 자료 조각 (크기·각도·정렬이 제각각) ── */
+	.hws-raw{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;}
+	.hws-raw__i--site,.hws-raw__i--memo{grid-column:1 / span 2;}
+	.hws-raw .hws-t{margin-top:9px;color:var(--tx-3);}
+	.hws-raw__i--site  .hws-g{height:76px;transform:rotate(-.5deg);}
+	.hws-raw__i--doc   .hws-g{height:90px;transform:rotate(1deg) translateY(5px);}
+	.hws-raw__i--photo .hws-g{height:90px;transform:rotate(-1.2deg) translateY(-3px);border-style:solid;border-color:rgba(255,255,255,.14);}
+	.hws-raw__i--memo  .hws-g{height:58px;transform:rotate(.4deg);}
+	/* 기존 홈페이지 — 미니 브라우저 */
+	.hws-g--site .b{left:0;right:0;top:0;height:13px;border-radius:0;background:rgba(255,255,255,.07);
+		border-bottom:1px solid rgba(255,255,255,.10);}
+	.hws-g--site .b::after{content:"";position:absolute;left:9px;top:5px;width:3px;height:3px;border-radius:50%;
+		background:rgba(255,255,255,.30);box-shadow:6px 0 0 rgba(255,255,255,.22),12px 0 0 rgba(255,255,255,.15);}
+	.hws-g--site .h {left:12px;top:29px;width:52%;height:8px;background:rgba(255,255,255,.20);}
+	.hws-g--site .p1{left:12px;top:46px;width:74%;height:3.5px;background:rgba(255,255,255,.11);}
+	.hws-g--site .p2{left:12px;top:56px;width:46%;height:3.5px;background:rgba(255,255,255,.09);}
+	/* 회사소개서·PPT — 문서 시트 */
+	.hws-g--doc{background:rgba(255,255,255,.035);}
+	.hws-g--doc i:nth-of-type(1){left:11px;top:13px;width:46%;height:7px;background:rgba(255,255,255,.22);}
+	.hws-g--doc i:nth-of-type(2){left:11px;top:32px;width:78%;height:3.5px;background:rgba(255,255,255,.11);}
+	.hws-g--doc i:nth-of-type(3){left:11px;top:43px;width:63%;height:3.5px;background:rgba(255,255,255,.11);}
+	.hws-g--doc i:nth-of-type(4){left:11px;top:54px;width:72%;height:3.5px;background:rgba(255,255,255,.11);}
+	.hws-g--doc i:nth-of-type(5){left:11px;top:65px;width:38%;height:3.5px;background:rgba(255,255,255,.09);}
+	/* 사진·홍보물 — 실제 사진 (무채색·가장자리 페이드) */
+	.hws-g--photo img{display:block;width:100%;height:100%;object-fit:cover;
+		filter:grayscale(1) brightness(.6) contrast(1.04);}
+	.hws-g--photo::after{content:"";position:absolute;inset:0;
+		background:linear-gradient(180deg,rgba(7,10,16,.10),rgba(7,10,16,.62));}
+	/* 메모·인터뷰 — 손으로 적은 메모, 핵심 한 줄만 포인트 */
+	.hws-g--memo i{left:12px;height:3.5px;background:rgba(255,255,255,.13);}
+	.hws-g--memo i:nth-of-type(1){top:16px;width:58%;}
+	.hws-g--memo i:nth-of-type(2){top:27px;width:80%;}
+	.hws-g--memo i:nth-of-type(3){top:38px;width:34%;background:rgba(232,56,23,.55);}
+
+	/* ── HAOWEB · 정렬된 편집 그리드 (원고가 하나의 기준선에 정리되는 상태) ── */
+	.hws-edit{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--card);
+		padding:4px 22px 6px;}
+	/* 네 항목이 같은 기준선에 맞춰졌다는 것 — 세로 정렬선 하나만 둔다 */
+	.hws-edit::before{content:"";position:absolute;left:63px;top:16px;bottom:16px;width:1px;
+		background:linear-gradient(180deg,transparent,rgba(232,56,23,.5) 12%,rgba(232,56,23,.5) 88%,transparent);}
+	.hws-edit li{display:grid;grid-template-columns:32px 1fr;align-items:center;gap:20px;
+		padding:20px 0;border-top:1px solid rgba(255,255,255,.09);}
+	.hws-edit li:first-child{border-top:0;}
+	.hws-edit__n{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--main-color);}
+	.hws-edit .hws-t{font-size:15.5px;font-weight:500;color:rgba(255,255,255,.92);}
+
+	/* ── TO · 완성된 페이지 (블록이 위에서 아래로 쌓인 실제 화면 구조) ── */
+	.hws-page{position:relative;border:1px solid var(--line-2);border-radius:14px;background:var(--card-2);
+		padding:30px 14px 14px;overflow:hidden;}
+	.hws-page::before{content:"";position:absolute;left:0;right:0;top:0;height:20px;
+		background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.09);}
+	.hws-page::after{content:"";position:absolute;left:13px;top:8px;width:4px;height:4px;border-radius:50%;
+		background:rgba(255,255,255,.28);box-shadow:8px 0 0 rgba(255,255,255,.2),16px 0 0 rgba(255,255,255,.14);}
+	.hws-page li{position:relative;margin-top:8px;padding:11px 13px 13px;border-radius:6px;
+		border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.028);}
+	.hws-page li:first-child{margin-top:0;}
+	.hws-page .hws-t{font-size:14px;font-weight:500;color:rgba(255,255,255,.88);}
+	.hws-pv{position:relative;display:block;margin-bottom:12px;}
+	.hws-page__b--hero .hws-pv{height:40px;}
+	.hws-page__b--hero .hws-pv i:nth-of-type(1){left:0;top:0;width:58%;height:9px;background:rgba(255,255,255,.24);}
+	.hws-page__b--hero .hws-pv i:nth-of-type(2){left:0;top:15px;width:38%;height:5px;background:rgba(255,255,255,.13);}
+	.hws-page__b--hero .hws-pv b{left:0;bottom:0;width:52px;height:11px;background:var(--main-color);opacity:.92;}
+	.hws-page__b--svc .hws-pv{height:26px;}
+	.hws-page__b--svc .hws-pv i{top:0;bottom:0;width:calc(33.333% - 7px);height:auto;
+		background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.07);}
+	.hws-page__b--svc .hws-pv i:nth-of-type(1){left:0;}
+	.hws-page__b--svc .hws-pv i:nth-of-type(2){left:calc(33.333% + 3.5px);}
+	.hws-page__b--svc .hws-pv i:nth-of-type(3){left:calc(66.666% + 7px);}
+	.hws-page__b--evi .hws-pv{height:20px;}
+	.hws-page__b--evi .hws-pv i{left:0;height:6px;background:rgba(255,255,255,.14);}
+	.hws-page__b--evi .hws-pv i:nth-of-type(1){top:0;width:72%;}
+	.hws-page__b--evi .hws-pv i:nth-of-type(2){top:12px;width:44%;}
+	.hws-page__b--cta{border-color:rgba(232,56,23,.34)!important;background:rgba(232,56,23,.07)!important;}
+	.hws-page__b--cta .hws-pv{height:13px;}
+	.hws-page__b--cta .hws-pv b{left:0;top:0;width:66px;height:13px;background:var(--main-color);}
+
 	.scene-soft .hwt3__ease{margin-top:34px;font-size:var(--fz-body);line-height:1.75;
 		color:var(--tx-2);max-width:70ch;}
 	.scene-soft .hwt3__links{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 26px;}
@@ -1507,11 +1672,32 @@
 	.scene-soft .hwt3__links a:hover{color:var(--accent);border-color:var(--accent);}
 
 	@media all and (max-width:1024px){
-		.scene-soft .hwt3__flow{grid-template-columns:1fr;gap:14px;}
-		.scene-soft .hwt3__flow::before{left:50%;right:auto;top:6%;bottom:6%;width:1px;height:auto;
-			background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(232,56,23,.6),rgba(255,255,255,.16));}
-		.scene-soft .hwt3__col,.scene-soft .hwt3__col--hao{margin:0;}
-		.scene-soft .hwt3__col{padding:26px 22px;}
+		/* 한 열로 접히면 FROM 은 폭이 넓어지므로 네 조각을 나란히 둔다 (숨기지 않는다) */
+		.scene-soft .hwt3__flow{grid-template-columns:1fr;gap:34px 0;}
+		.hws-raw{grid-template-columns:repeat(4,1fr);}
+		.hws-raw__i--site,.hws-raw__i--memo{grid-column:auto;}
+		.hws-raw__i--site .hws-g,.hws-raw__i--memo .hws-g{height:90px;}
+	}
+	@media all and (max-width:720px){
+		.hws-raw{grid-template-columns:1fr 1fr;}
+		.hws-page li{grid-template-columns:70px 1fr;gap:12px;}
+	}
+	/* 모바일 가독성(§17) — 라벨·키워드·캡션이 14px 밑으로 내려가지 않게 */
+	@media all and (max-width:640px){
+		.hws-t,.hws-page .hws-t{font-size:15.5px;}
+		.hws-edit .hws-t{font-size:16px;}
+		.hwb-keys span,.hwv-keys span{font-size:15.5px;}
+		.hws-row__d{font-size:15.5px;}
+		.hwdoc__items em{font-size:15px;}
+		.hwmap__kids > li span{font-size:15.5px;}
+	}
+	/* 이번에 추가한 상태 전환은 감소 모션에서 전부 끈다 (§18) */
+	@media (prefers-reduced-motion: reduce){
+		.main-con07 .hws-rows > li > a,.hws-row__go,.hws-row__n,.hws-row__t,
+		.hwpf__frame,.hwpf--main .hwpf__thumb{transition:none !important;}
+		.main-con07 .hws-rows > li > a:hover{padding-left:4px;}
+		.hwpf--main a.hwpf__item:hover{transform:none;}
+		.hwpf--main a.hwpf__item:hover .hwpf__thumb{transform:none;}
 	}
 
 	/* ══ FREE PROPOSAL — 제안서를 펼쳐 본 듯한 문서 레이아웃 ══
@@ -1527,23 +1713,35 @@
 	.scene-ink .hwp__cta{background:var(--main-color);color:#fff;}
 	.scene-ink .hwp__cta:hover{filter:brightness(1.08);}
 
-	.hwdoc__paper{background:#fff;border-radius:18px;padding:26px 26px 30px;
-		box-shadow:0 26px 70px rgba(0,0,0,.24);}
-	.hwdoc__top{display:flex;align-items:center;gap:7px;padding-bottom:16px;margin-bottom:20px;
-		border-bottom:1px solid rgba(17,19,24,.10);}
-	.hwdoc__top span{font-size:11px;letter-spacing:.14em;font-weight:700;color:#6E737B;margin-right:auto;}
-	.hwdoc__top i{width:7px;height:7px;border-radius:50%;background:rgba(17,19,24,.13);}
-	.hwdoc__grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-	.hwdoc__grid > li{position:relative;border:1px solid rgba(17,19,24,.11);border-radius:12px;
-		padding:16px 16px 14px;background:#FCFCFB;display:flex;flex-direction:column;}
-	.hwdoc__grid > li.wide{grid-column:1 / -1;}
-	.hwdoc__grid .n{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--main-color);}
-	.hwdoc__grid b{display:block;font-size:15px;font-weight:700;color:#111318;
-		letter-spacing:-.02em;margin:4px 0 3px;line-height:1.35;}
-	.hwdoc__grid em{font-style:normal;font-size:13px;line-height:1.5;color:#5D626B;}
+	/* ── FREE PROPOSAL · 제안서를 문서 3장으로 나눠 겹쳐 보여준다 ──
+	   중앙에 큰 흰 박스 하나를 두지 않고, 7개를 같은 크기 카드로 나누지도 않는다.
+	   패널마다 폭과 열 수가 다르고 문서 표면은 하오웹 2색 안에서 처리한다.
+	   참고: 015 문서 패널 겹침 / 091 정돈된 패널 / 027 미니 구조. */
+	.hwdoc__stack{position:relative;}
+	.hwdoc__p{position:relative;border-radius:12px;border:1px solid rgba(255,255,255,.13);
+		background:var(--card-2);box-shadow:0 26px 62px rgba(0,0,0,.55);}
+	.hwdoc__p--a{width:100%;z-index:1;}
+	.hwdoc__p--b{width:93%;margin:-10px 0 0 auto;z-index:2;}
+	.hwdoc__p--c{width:86%;margin:-10px auto 0 0;z-index:3;}
+	.hwdoc__ph{display:flex;align-items:center;gap:7px;padding:13px 20px;
+		border-bottom:1px solid rgba(255,255,255,.10);}
+	.hwdoc__ph span{margin-right:auto;font-size:11px;letter-spacing:.14em;font-weight:700;
+		color:rgba(255,255,255,.45);}
+	.hwdoc__ph i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18);}
+	.hwdoc__ph b{margin-left:auto;font-size:11px;letter-spacing:.1em;font-weight:600;
+		color:rgba(255,255,255,.34);}
+	.hwdoc__items{list-style:none;margin:0;padding:18px 20px 20px;display:grid;gap:18px;}
+	.hwdoc__p--a .hwdoc__items,.hwdoc__p--b .hwdoc__items{grid-template-columns:1fr 1fr;}
+	.hwdoc__p--c .hwdoc__items{grid-template-columns:repeat(3,1fr);}
+	.hwdoc__items > li{position:relative;min-width:0;}
+	.hwdoc__items .n{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--main-color);}
+	.hwdoc__items b{display:block;margin:7px 0 4px;font-size:15px;font-weight:600;color:#fff;
+		letter-spacing:-.01em;line-height:1.4;}
+	.hwdoc__items em{display:block;font-style:normal;font-size:13.5px;line-height:1.55;
+		color:rgba(255,255,255,.56);}
 	/* 각 항목의 성격을 암시하는 아주 작은 도형. 장식이 아니라 무엇이 담기는지의 힌트다 */
 	.hwdoc .fig{display:flex;gap:4px;align-items:flex-end;margin-top:12px;height:22px;}
-	.hwdoc .fig i{background:rgba(17,19,24,.13);border-radius:2px;}
+	.hwdoc .fig i{background:rgba(255,255,255,.20);border-radius:2px;}
 	.hwdoc .fig--map i{width:14px;height:6px;}
 	.hwdoc .fig--map i:first-child{width:26px;background:rgba(232,56,23,.55);}
 	.hwdoc .fig--msg i{height:6px;} .hwdoc .fig--msg i:first-child{width:52px;background:rgba(232,56,23,.55);} .hwdoc .fig--msg i:last-child{width:32px;}
@@ -1557,9 +1755,16 @@
 		.hwdoc{grid-template-columns:1fr;gap:34px;}
 		.hwdoc__say .hw-lead,.hwdoc__say .hw-note{max-width:none;}
 	}
+	@media all and (max-width:900px){
+		/* 겹침을 풀고 일반 세로 문서 목록으로 (§13 모바일 대체) */
+		.hwdoc__p--a,.hwdoc__p--b,.hwdoc__p--c{width:100%;margin:0;}
+		.hwdoc__p + .hwdoc__p{margin-top:14px;}
+		.hwdoc__p--c .hwdoc__items{grid-template-columns:1fr 1fr;}
+	}
 	@media all and (max-width:640px){
-		.hwdoc__grid{grid-template-columns:1fr;}
-		.hwdoc__paper{padding:20px 18px 24px;}
+		.hwdoc__p--a .hwdoc__items,.hwdoc__p--b .hwdoc__items,
+		.hwdoc__p--c .hwdoc__items{grid-template-columns:1fr;}
+		.hwdoc__items{padding:16px 18px 18px;}
 	}
 
 	/* ══ 서브페이지 톤 ══
@@ -1605,34 +1810,46 @@
 	   선택 결과를 번호 목록이 아니라 페이지 구조로 보여 준다.
 	   첫 화면에서 하위 페이지가 갈라지고 마지막이 문의로 모인다.
 	   한 단계만 그려 한눈에 읽히게 하고, 모바일에서는 세로 목록이 된다. */
-	.hwmap{margin:0 0 22px;}
-	.hwmap__root{display:inline-flex;align-items:center;gap:9px;padding:9px 16px;
-		border-radius:8px;background:var(--main-color);color:#fff;
-		font-size:14.5px;font-weight:700;letter-spacing:-.01em;}
-	.hwmap__kids{list-style:none;margin:0;padding:0 0 0 22px;position:relative;}
-	/* 첫 화면에서 내려오는 세로 줄기 */
-	.hwmap__kids::before{content:"";position:absolute;left:0;top:-6px;bottom:22px;
-		width:1px;background:var(--line-2);}
-	.hwmap__kids > li{position:relative;display:flex;align-items:center;gap:12px;
-		padding:10px 0 10px 20px;}
-	/* 줄기에서 각 페이지로 뻗는 가지 */
-	.hwmap__kids > li::before{content:"";position:absolute;left:0;top:50%;
-		width:14px;height:1px;background:var(--line-2);}
-	.hwmap__kids > li i{font-style:normal;font-size:11.5px;font-weight:700;
-		letter-spacing:.06em;color:var(--tx-4);flex:none;font-family:Jost,sans-serif;}
-	.hwmap__kids > li span{font-size:16px;color:var(--tx-2);letter-spacing:-.01em;
-		padding:7px 13px;border:1px solid var(--line);border-radius:7px;
-		background:var(--card);flex:1;}
-	/* 마지막은 전환 지점이라 강조한다 */
-	.hwmap__kids > li.is-goal span{border-color:var(--main-color);color:var(--tx-1);
-		background:rgba(232,56,23,.10);font-weight:600;}
-	.hwmap__kids > li.is-goal::before{background:var(--main-color);}
+	/* ── SITE PREVIEW 결과 · 번호 목록이 아니라 "페이지 모듈"로 ──
+	   중요한 페이지일수록 모듈이 크고, 마지막 문의가 화면을 가로지르는 최종 경로로 읽힌다.
+	   복잡한 트리와 연결선은 쓰지 않는다(§8). 참고: 091 결과 Split / 027 미니 구조. */
+	.hwmap{margin:0 0 24px;}
+	.hwmap__root{position:relative;display:block;padding:14px 16px 16px;border-radius:9px;
+		border:1px solid rgba(232,56,23,.42);background:rgba(232,56,23,.09);}
+	.hwmap__root span{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:#fff;}
+	.hwmap__root::after{content:"";display:block;margin-top:11px;height:7px;width:46%;
+		border-radius:2px;background:var(--main-color);opacity:.85;}
+	.hwmap__kids{list-style:none;margin:12px 0 0;padding:0;position:relative;
+		display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
+	.hwmap__kids::before{display:none;}
+	.hwmap__kids > li{position:relative;display:flex;flex-direction:column;align-items:flex-start;
+		grid-column:span 2;padding:13px 14px 15px;border-radius:8px;
+		border:1px solid var(--line);background:var(--card);}
+	/* 모듈 상단의 짧은 막대 = 그 페이지의 헤드라인 자리 */
+	.hwmap__kids > li::before{content:"";position:static;width:34%;height:5px;border-radius:2px;
+		background:rgba(255,255,255,.20);margin-bottom:10px;}
+	.hwmap__kids > li:nth-child(1),.hwmap__kids > li:nth-child(2){grid-column:span 3;}
+	.hwmap__kids > li:nth-child(1)::before,.hwmap__kids > li:nth-child(2)::before{width:52%;height:7px;}
+	.hwmap__kids > li i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.08em;
+		color:var(--tx-4);font-family:Jost,sans-serif;margin-bottom:5px;}
+	.hwmap__kids > li span{font-size:15px;color:var(--tx-2);letter-spacing:-.01em;
+		padding:0;border:0;background:none;line-height:1.42;}
+	/* 마지막은 전환 지점이라 화면을 가로지르는 한 행으로 */
+	.hwmap__kids > li.is-goal{grid-column:1 / -1;flex-direction:row;align-items:center;gap:13px;
+		border-color:rgba(232,56,23,.45);background:rgba(232,56,23,.09);}
+	.hwmap__kids > li.is-goal::before{width:46px;height:7px;margin:0;background:var(--main-color);}
+	.hwmap__kids > li.is-goal i{margin:0;}
+	.hwmap__kids > li.is-goal span{color:var(--tx-1);font-weight:600;}
 
+	@media all and (max-width:1024px){
+		.hwmap__kids{grid-template-columns:repeat(4,1fr);}
+		.hwmap__kids > li:nth-child(1),.hwmap__kids > li:nth-child(2){grid-column:span 4;}
+	}
 	@media all and (max-width:640px){
-		.hwmap__kids{padding-left:16px;}
-		.hwmap__kids > li{padding-left:14px;gap:9px;}
-		.hwmap__kids > li::before{width:10px;}
-		.hwmap__kids > li span{font-size:15px;padding:6px 11px;}
+		.hwmap__kids{grid-template-columns:repeat(2,1fr);gap:8px;}
+		.hwmap__kids > li,
+		.hwmap__kids > li:nth-child(1),.hwmap__kids > li:nth-child(2){grid-column:span 2;}
+		.hwmap__kids > li span{font-size:14.5px;}
 	}
 
 	/* ══════════════════════════════════════════════════════════════
@@ -1668,6 +1885,37 @@
 	/* 숫자는 자리를 고정해 목록에서 세로로 정렬되게 한다 */
 	.hwmap__kids > li i,.hwdoc__grid .n,.hwv-no,.hws__item .n,
 	.main-con03-list .no,.main-con07-list .no{font-variant-numeric:tabular-nums;}
+
+	/* ── SUPPORT · 둥근 카드 3개 → 화면을 가로지르는 큰 링크 행 ──
+	   강제 min-height(315px)를 걷어내고 박스·배경을 없앤다.
+	   번호 + 제목 + 한 문장 + 화살표. 참고: 027 FAQ 행 정렬 / 147 서비스 행. */
+	.main-con07 .hws-rows{display:block;margin:0;padding:0;list-style:none;
+		border-top:1px solid rgba(255,255,255,.14);}
+	.main-con07 .hws-rows > li{display:block;width:auto !important;min-height:0 !important;
+		margin:0 !important;padding:0;border:0;border-radius:0;background:none;
+		border-bottom:1px solid rgba(255,255,255,.14);}
+	/* 네 요소 모두 명시 배치 — 자동 배치에 맡기면 제목과 화살표 자리가 뒤바뀐다 */
+	.main-con07 .hws-rows > li > a{display:grid;align-items:center;gap:5px 22px;
+		grid-template-columns:38px minmax(0,1fr) 22px;padding:26px 4px 27px;
+		transition:padding .4s cubic-bezier(.16,1,.3,1);}
+	.hws-row__n{grid-column:1;grid-row:1 / span 2;font-size:12px;font-weight:600;letter-spacing:.08em;
+		color:rgba(255,255,255,.34);align-self:start;padding-top:5px;transition:color .3s ease;}
+	.hws-row__t{grid-column:2;grid-row:1;font-size:21px;font-weight:700;color:#fff;
+		letter-spacing:-.02em;line-height:1.35;transition:color .3s ease;}
+	.hws-row__d{grid-column:2;grid-row:2;font-size:15px;line-height:1.6;color:rgba(255,255,255,.58);}
+	.hws-row__go{grid-column:3;grid-row:1 / span 2;font-size:19px;color:rgba(255,255,255,.34);
+		text-align:right;transition:transform .45s cubic-bezier(.16,1,.3,1),color .3s ease;}
+	.main-con07 .hws-rows > li > a:hover{padding-left:14px;}
+	.main-con07 .hws-rows > li > a:hover .hws-row__n{color:var(--main-color);}
+	.main-con07 .hws-rows > li > a:hover .hws-row__t{color:var(--main-color);}
+	.main-con07 .hws-rows > li > a:hover .hws-row__go{color:var(--main-color);transform:translateX(6px);}
+	.main-con07 .hws-rows > li > a:focus-visible{outline:2px solid var(--main-color);outline-offset:3px;}
+	@media all and (max-width:640px){
+		.main-con07 .hws-rows > li > a{grid-template-columns:auto minmax(0,1fr) 18px;gap:3px 14px;
+			padding:20px 2px 21px;}
+		.hws-row__t{font-size:18px;}
+		.hws-row__d{font-size:14.5px;}
+	}
 
 	/* 라틴 표기(Jost)는 한글과 크기 인상이 달라 소폭 보정한다.
 	   단 대형 레터링은 제외한다 — 여기에 양수 자간이 들어가면 글자가 흩어진다. */

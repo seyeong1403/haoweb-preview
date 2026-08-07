@@ -745,26 +745,18 @@
 		border-top:1px solid rgba(255,255,255,.07);min-height:clamp(560px,88vh,980px);display:flex;}
 	.hwvs__bg{position:absolute;inset:0;pointer-events:none;}
 
-	/* 배경 — 원본은 PNG 한 장. 하오웹은 패널마다 다른 추상 결을 코드로 그린다
-	   (용량 0·라이선스 없음). 큰 면적이라 미세 노이즈를 한 겹 얹어 띠를 막는다. */
-	.hwvs__panel[data-k="seo"] .hwvs__bg{background:
-		radial-gradient(42% 52% at 66% 34%,rgba(232,56,23,.62) 0%,rgba(232,56,23,0) 70%),
-		radial-gradient(30% 38% at 84% 26%,rgba(255,126,54,.44) 0%,rgba(255,126,54,0) 72%),
-		radial-gradient(26% 34% at 50% 44%,rgba(176,26,12,.42) 0%,rgba(176,26,12,0) 76%);}
-	.hwvs__panel[data-k="aeo"] .hwvs__bg{background:
-		radial-gradient(46% 42% at 70% 60%,rgba(38,172,190,.52) 0%,rgba(38,172,190,0) 70%),
-		radial-gradient(28% 34% at 56% 28%,rgba(94,214,226,.34) 0%,rgba(94,214,226,0) 74%),
-		radial-gradient(30% 40% at 88% 42%,rgba(16,104,142,.50) 0%,rgba(16,104,142,0) 74%);}
-	.hwvs__panel[data-k="geo"] .hwvs__bg{background:
-		radial-gradient(40% 46% at 62% 36%,rgba(126,74,214,.50) 0%,rgba(126,74,214,0) 72%),
-		radial-gradient(32% 38% at 84% 58%,rgba(214,64,150,.40) 0%,rgba(214,64,150,0) 74%),
-		radial-gradient(26% 32% at 46% 62%,rgba(58,44,150,.46) 0%,rgba(58,44,150,0) 76%);}
-	.hwvs__bg::before{content:"";position:absolute;inset:0;opacity:.5;
-		background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
+	/* 배경 — 패널마다 다른 추상 실사(스톡). 코드로 그리지 않는다(2026-08-07 세영).
+	   원본과 달리 색은 맞출 필요가 없어 결이 다른 세 장을 골랐다. */
+	.hwvs__bg::before{content:"";position:absolute;inset:0;
+		background-position:center;background-size:cover;background-repeat:no-repeat;
+		opacity:.42;}   /* 기존 섹션 배경(실크 .30)과 같은 방식 — 원본은 그대로 두고 레이어만 눌러 쓴다 */
+	.hwvs__panel[data-k="seo"] .hwvs__bg::before{background-image:url(../images/photo/viz-seo.webp);}
+	.hwvs__panel[data-k="aeo"] .hwvs__bg::before{background-image:url(../images/photo/viz-aeo.webp);opacity:.30;}
+	.hwvs__panel[data-k="geo"] .hwvs__bg::before{background-image:url(../images/photo/viz-geo.webp);opacity:.26;}
 	/* 글이 얹히는 좌측·하단을 눌러 대비 확보 */
 	.hwvs__bg::after{content:"";position:absolute;inset:0;background:
-		linear-gradient(100deg,rgba(0,0,0,.90) 0%,rgba(0,0,0,.55) 36%,rgba(0,0,0,0) 66%),
-		linear-gradient(180deg,rgba(0,0,0,.40) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,.62) 86%,rgba(0,0,0,.86) 100%);}
+		linear-gradient(100deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.62) 38%,rgba(0,0,0,.18) 70%),
+		linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.10) 32%,rgba(0,0,0,.70) 84%,rgba(0,0,0,.90) 100%);}
 
 	/* ── 원본 .wrap / .inner ── */
 	.hwvs__wrap{position:relative;z-index:1;width:100%;margin:0 5%;}
@@ -3570,16 +3562,17 @@ $(document).ready(function  () {
 		        앞 패널은 다음 패널이 올라올 때 뒤로 물러난다(원본 scale .6). */
 		Array.prototype.forEach.call(panels, function(p, i){
 			var t    = 1.0 + i * 1.6;
-			var head = p.querySelectorAll('.hwvs__head > *');
-			var foot = p.querySelector('.hwvs__foot');
+			/* ⚠ 선택자는 마크업(.hwvs__titleBx / .hwvs__txt)과 반드시 같아야 한다.
+			   한 번 어긋나서 글자 모션이 통째로 죽었었다. */
+			var head = p.querySelectorAll('.hwvs__titleBx > *');
+			var foot = p.querySelector('.hwvs__txt');
 			var dir  = (i % 2 === 0) ? -80 : 80;
 			tl.fromTo(p, 1.0, { y: '100%' }, { y: '0%', ease: Linear.easeNone }, t);
+			/* 원본 그대로: b·p 가 x:∓80 에서 stagger 로 밀려 들어온다 */
 			tl.staggerFromTo(head, 0.7, { x: dir, opacity: 0 },
-			                 { x: 0, opacity: 1, ease: Linear.easeNone }, 0.18, t + 0.55);
-			tl.fromTo(foot, 0.6, { opacity: 0 }, { opacity: 1, ease: Linear.easeNone }, t + 1.05);
-			if(i < panels.length - 1){
-				tl.to(p, 0.9, { scale: 0.62, ease: Linear.easeNone }, t + 1.6);
-			}
+			                 { x: 0, opacity: 1, ease: Linear.easeNone }, 0.18, t + 0.5);
+			tl.fromTo(foot, 0.6, { opacity: 0 }, { opacity: 1, ease: Linear.easeNone }, t + 1.0);
+			/* 앞 패널을 축소하지 않는다 — 원본은 줄어드는 게 보이지 않는다(2026-08-07 세영) */
 		});
 
 		var build = function(){

@@ -445,11 +445,12 @@
 		background:linear-gradient(180deg,#070A10 0%,rgba(7,10,16,.55) 26%,rgba(7,10,16,.55) 72%,#070A10 100%);}
 	#hwPick .area{position:relative;z-index:1;}
 	.hw-cta{position:relative;overflow:hidden;}
+	/* 키보드 배경 — 너무 어둡던 것 교체(세영). 밝은 타이핑 컷 + 가운데 글자용 스크림 */
 	.hw-cta::before{content:"";position:absolute;inset:0;z-index:0;
-		background:url(../images/photo/kb-dark.jpg) center/cover no-repeat;
-		filter:grayscale(.25) contrast(1.05) brightness(.58);}
+		background:url(../images/photo/kb-type.webp) center/cover no-repeat;
+		filter:grayscale(.12) contrast(1.02) brightness(.86);}
 	.hw-cta::after{content:"";position:absolute;inset:0;z-index:0;
-		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.45) 65%,#070A10 100%);}
+		background:linear-gradient(180deg,rgba(6,9,16,.72) 0%,rgba(6,9,16,.6) 40%,rgba(6,9,16,.66) 70%,#070A10 100%);}
 	.hw-cta .area{position:relative;z-index:1;}
 
 	/* 인덱스 + 우측 이미지 2단 — hw-idx 오른쪽 여백을 섹션을 아우르는 사진으로 채운다 */
@@ -482,6 +483,16 @@
 	.hw-psec--silk::after, .hw-psec--night::after{content:"";position:absolute;inset:0;z-index:0;
 		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.3) 26%,rgba(6,9,16,.25) 55%,#070A10 100%);}
 	.hw-psec--silk > .area, .hw-psec--night > .area{position:relative;z-index:1;}
+	/* 페이지별 고유 추상 배경 — 섹션에 class="hw-psec--bg" + style="--bgimg:url(...)".
+	   실크/스모크 계열을 은은하게 깔고, 상하 가장자리는 배경색으로 페이드해 글자 가독 확보.
+	   규칙(세영): 서브페이지당 1~2곳, 인접 섹션 연속 금지, 이미지는 페이지마다 새로. */
+	.hw-psec--bg{position:relative;background:#070A10;}
+	.hw-psec--bg::before{content:"";position:absolute;inset:0;z-index:0;
+		background:var(--bgimg) center/cover no-repeat;
+		filter:grayscale(.2) brightness(.82) contrast(1.03);opacity:.45;}
+	.hw-psec--bg::after{content:"";position:absolute;inset:0;z-index:0;
+		background:linear-gradient(180deg,#070A10 0%,rgba(6,9,16,.5) 30%,rgba(6,9,16,.46) 62%,#070A10 100%);}
+	.hw-psec--bg > .area{position:relative;z-index:1;}
 
 	/* ===== 섹션 리듬 =====
 	   도입 당시 섹션마다 상하 여백이 제각각(180~360px)이라 리듬이 어긋났다.
@@ -2942,7 +2953,7 @@
 	</div>
 </article>
 
-<article class="hw-psec hw-psec--line hw-psec--night">
+<article class="hw-psec hw-psec--line hw-psec--bg" style="--bgimg:url(../images/photo/bg-website.webp)">
 	<div class="area">
 		<span class="hw-eye" data-scroll="fade-up">콘텐츠 지원</span>
 		<h2 class="hw-h2" data-scroll="fade-up">자료가 부족해도 <br class="m-br"><span class="r">시작할 수 있습니다.</span></h2>

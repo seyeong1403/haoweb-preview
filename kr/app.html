@@ -410,15 +410,21 @@
 	#mainContent5 .main-con05{position:relative;z-index:1;}
 	/* WORK(사례 준비중) — 배경 이미지 없음. 칼럼과 연속으로 이미지가 깔리지 않게 비워 둔다 */
 
-	/* AI 가시성 — 추상(실크)은 배경으로만 아주 옅게 깔고,
-	   카드 자리에는 실사 사진만 쓴다. */
+	/* AI 가시성 — 2026-08-07 세영: 인트로에 깔려 있던 실크 배경을 걷어냈다.
+	   패널마다 자체 배경(radial-gradient)을 갖게 되어 섹션 배경이 겹쳤고,
+	   인트로 화면이 지저분해 보였다. 실크는 아래 SITE PREVIEW 로 옮겼다. */
 	#hwVisibility{position:relative;background:#070A10;}
-	#hwVisibility::before{content:"";position:absolute;inset:0;z-index:0;
+	#hwVisibility .area{position:relative;z-index:1;}
+
+	/* SITE PREVIEW — 위로 옮겨 온 실크 배경. 앞뒤(What We Do·HOW WE BUILD)에
+	   섹션 배경이 없어 같은 이미지가 인접 반복될 위험이 없는 자리다. */
+	#hwPick{position:relative;background:#070A10;overflow:hidden;}
+	#hwPick::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/visibility-silk.jpg) center/cover no-repeat;
 		opacity:.30;}
-	#hwVisibility::after{content:"";position:absolute;inset:0;z-index:0;
+	#hwPick::after{content:"";position:absolute;inset:0;z-index:0;
 		background:linear-gradient(180deg,#070A10 0%,rgba(7,10,16,.55) 26%,rgba(7,10,16,.55) 72%,#070A10 100%);}
-	#hwVisibility .area{position:relative;z-index:1;}
+	#hwPick .area{position:relative;z-index:1;}
 	.hw-cta{position:relative;overflow:hidden;}
 	.hw-cta::before{content:"";position:absolute;inset:0;z-index:0;
 		background:url(../images/photo/kb-dark.jpg) center/cover no-repeat;
@@ -717,9 +723,101 @@
 	   SEO·AEO·GEO 는 제목 + 짧은 설명 + 상세 링크만 남기고,
 	   섹션의 시각 중심은 실제 이미지 한 장이 맡는다.
 	   참고: 004 Primora 55:45 블록의 좌 텍스트 / 우 이미지 위계. */
-	/* ── 2026-08-07 재구성: clunix .overlay._1 패널 ──
-	   원본은 검은 전면 패널에 추상 글로우가 깔리고, 좌상단 대형 타이틀 + 설명,
-	   하단은 좌측 화살표 / 우측 큰 문장으로 갈린다. 그 골격만 가져온다. */
+	/* ══════ AI VISIBILITY — clunix .s2 전면 핀 시퀀스 (2026-08-07 세영 지시) ══════
+	   "내용과 배경 이미지 빼고 완전히 똑같이" 지시라, 구조·수치를 실측해서 그대로 옮겼다.
+	   원본 실측(1440 뷰포트 / .wrap 1289 / 화면 900):
+	     .wrap    좌우 여백 71.6px = 5%
+	     .inner   flex column · justify-content:space-between · padding 183.673px 0 110.204px
+	              (= 20.4vh / 12.25vh)
+	     b        130px · w500 · lh130 · ls -2.6px(-0.02em) · #fff · padding-bottom 40px
+	     p        18px  · w400 · lh30  · ls -0.54px(-0.03em) · #bbb
+	     .txt     flex row · space-between · align-items:center · 높이 128
+	     .arr     95x100 · .move 두 겹(호버 시 화살표가 밀려 나가고 새것이 들어옴)
+	     .txt_sub 44px · w600 · lh64 · ls -1.32px(-0.03em) · #fff · text-align:right
+	   하오웹 것으로 바꾼 것: 문구(전부 seo/aeo/geo.html 에 이미 있는 문장)와 배경뿐.
+
+	   ⚠ 기본 상태는 '세로로 쌓인 3개'다. JS 가 .is-pin 을 붙였을 때만 겹친다.
+	     그래야 스크립트가 죽거나 모바일이거나 reduced-motion 일 때 전부 그냥 읽힌다. */
+	.hwvs{padding:0 !important;}
+	.hwvs__intro{padding:clamp(90px,11vw,150px) 0 clamp(40px,5vw,70px);}
+	.hwvs__intro .hw-lead{margin-bottom:0;}
+	.hwvs__panel{position:relative;overflow:hidden;background:#000;
+		border-top:1px solid rgba(255,255,255,.07);min-height:clamp(560px,88vh,980px);display:flex;}
+	.hwvs__bg{position:absolute;inset:0;pointer-events:none;}
+
+	/* 배경 — 원본은 PNG 한 장. 하오웹은 패널마다 다른 추상 결을 코드로 그린다
+	   (용량 0·라이선스 없음). 큰 면적이라 미세 노이즈를 한 겹 얹어 띠를 막는다. */
+	.hwvs__panel[data-k="seo"] .hwvs__bg{background:
+		radial-gradient(42% 52% at 66% 34%,rgba(232,56,23,.62) 0%,rgba(232,56,23,0) 70%),
+		radial-gradient(30% 38% at 84% 26%,rgba(255,126,54,.44) 0%,rgba(255,126,54,0) 72%),
+		radial-gradient(26% 34% at 50% 44%,rgba(176,26,12,.42) 0%,rgba(176,26,12,0) 76%);}
+	.hwvs__panel[data-k="aeo"] .hwvs__bg{background:
+		radial-gradient(46% 42% at 70% 60%,rgba(38,172,190,.52) 0%,rgba(38,172,190,0) 70%),
+		radial-gradient(28% 34% at 56% 28%,rgba(94,214,226,.34) 0%,rgba(94,214,226,0) 74%),
+		radial-gradient(30% 40% at 88% 42%,rgba(16,104,142,.50) 0%,rgba(16,104,142,0) 74%);}
+	.hwvs__panel[data-k="geo"] .hwvs__bg{background:
+		radial-gradient(40% 46% at 62% 36%,rgba(126,74,214,.50) 0%,rgba(126,74,214,0) 72%),
+		radial-gradient(32% 38% at 84% 58%,rgba(214,64,150,.40) 0%,rgba(214,64,150,0) 74%),
+		radial-gradient(26% 32% at 46% 62%,rgba(58,44,150,.46) 0%,rgba(58,44,150,0) 76%);}
+	.hwvs__bg::before{content:"";position:absolute;inset:0;opacity:.5;
+		background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
+	/* 글이 얹히는 좌측·하단을 눌러 대비 확보 */
+	.hwvs__bg::after{content:"";position:absolute;inset:0;background:
+		linear-gradient(100deg,rgba(0,0,0,.90) 0%,rgba(0,0,0,.55) 36%,rgba(0,0,0,0) 66%),
+		linear-gradient(180deg,rgba(0,0,0,.40) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,.62) 86%,rgba(0,0,0,.86) 100%);}
+
+	/* ── 원본 .wrap / .inner ── */
+	.hwvs__wrap{position:relative;z-index:1;width:100%;margin:0 5%;}
+	/* box-sizing 이 없으면 height:100% 에 상하 패딩이 더해져 하단 행이 패널 밖으로 잘린다 */
+	.hwvs__inner{display:flex;flex-direction:column;justify-content:space-between;
+		height:100%;box-sizing:border-box;padding:20.4vh 0 12.25vh;}
+	/* ── 원본 .titleBx ── */
+	.hwvs__titleBx{display:flex;flex-direction:column;}
+	.hwvs__titleBx b{display:block;font-weight:500;color:#fff;
+		font-size:clamp(46px,9.03vw,150px);line-height:1;letter-spacing:-0.02em;
+		padding-bottom:clamp(16px,2.8vw,40px);}
+	.hwvs__titleBx p{display:block;font-weight:400;color:#bbb;
+		font-size:clamp(15px,1.25vw,18px);line-height:1.667;letter-spacing:-0.03em;}
+	/* ── 원본 .txt ── */
+	.hwvs__txt{display:flex;flex-direction:row;justify-content:space-between;align-items:center;
+		gap:clamp(20px,3vw,56px);}
+	.hwvs__sub{font-weight:600;color:#fff;text-align:right;
+		font-size:clamp(19px,3.06vw,50px);line-height:1.4545;letter-spacing:-0.03em;}
+	/* ── 원본 .arr — .move 두 겹이 좌우로 미끄러진다 ── */
+	.hwvs__arr{position:relative;flex:0 0 auto;display:block;overflow:hidden;
+		width:clamp(52px,6.6vw,95px);height:clamp(56px,6.9vw,100px);}
+	.hwvs__move{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+		font-size:clamp(52px,6.5vw,94px);line-height:1;color:#fff;
+		transition:transform .55s cubic-bezier(.16,1,.3,1);}
+	.hwvs__move:nth-child(2){transform:translateX(-100%);}
+	.hwvs__arr:hover .hwvs__move:nth-child(1){transform:translateX(100%);}
+	.hwvs__arr:hover .hwvs__move:nth-child(2){transform:translateX(0);}
+	.hwvs__arr:focus-visible{outline:2px solid var(--main-color);outline-offset:6px;}
+	.hwvs .hw-note{padding:clamp(30px,3.4vw,52px) 0 clamp(70px,8vw,120px);margin:0;}
+
+	/* ── 핀 모드 (JS 가 붙였을 때만) ── 무대를 고정하고 패널을 겹친다 */
+	.hwvs.is-pin .hwvs__stage{height:100vh;height:100svh;position:relative;overflow:hidden;}
+	.hwvs.is-pin .hwvs__intro,
+	.hwvs.is-pin .hwvs__panel{position:absolute;inset:0;min-height:0;display:flex;}
+	.hwvs.is-pin .hwvs__panel{align-items:center;}
+	/* 인트로 제목은 clunix 를 따르지 않는다(2026-08-07 세영).
+	   하오웹의 다른 섹션과 같은 리듬 — 상단 정렬 + 표준 섹션 여백, 표준 타이포 클래스. */
+	.hwvs.is-pin .hwvs__intro{z-index:1;align-items:flex-start;
+		padding-top:clamp(150px,20vh,240px);}
+	.hwvs.is-pin .hwvs__intro .area{width:100%;}
+	.hwvs.is-pin .hwvs__panel{z-index:2;transform:translateY(100%);border-top:0;}
+	.hwvs.is-pin .hwvs__panel[data-k="aeo"]{z-index:3;}
+	.hwvs.is-pin .hwvs__panel[data-k="geo"]{z-index:4;}
+	.hwvs.is-pin .hwvs__wrap{height:100%;}
+
+	@media all and (max-width:1024px){
+		/* 원본도 좁은 폭에서는 좌우 분할을 유지하지 못한다 — 세로로 편다 */
+		.hwvs__inner{padding:clamp(56px,9vh,110px) 0 clamp(40px,7vh,80px);gap:clamp(34px,6vh,70px);}
+		.hwvs__txt{flex-direction:column;align-items:flex-start;gap:22px;}
+		.hwvs__sub{text-align:left;}
+		.hwvs__panel{min-height:0;}
+	}
+	/* 예전 Split 구성 잔재 — 서브페이지에서 아직 쓰므로 남겨 둔다 */
 	.hwv-panel{position:relative;overflow:hidden;border-radius:clamp(16px,1.6vw,26px);
 		background:#07090e;border:1px solid rgba(255,255,255,.08);
 		min-height:clamp(470px,58vh,660px);display:flex;}
@@ -3444,6 +3542,62 @@ $(document).ready(function  () {
 		pick();
 	}
 
+	/* AI VISIBILITY 전면 핀 시퀀스 — clunix .s2 타임라인 이식.
+	   스크롤이 이 섹션에서 멈추고, 인트로가 물러난 뒤 SEO→AEO→GEO 패널이
+	   차례로 화면을 덮는다. 다 끝나면 스크롤이 다시 풀린다.
+	   ⚠ 핀은 GSAP ScrollTrigger 대신 ScrollMagic 으로 건다 —
+	     이 사이트는 SmoothScroll(휠 하이재킹)이라 ScrollTrigger 핀과 충돌하고,
+	     SCOPE 가 이미 ScrollMagic 핀으로 돌고 있어 공존이 검증돼 있다.
+	   ⚠ .is-pin 을 붙여야만 패널이 겹친다. 아래 조건에서 하나라도 걸리면
+	     붙이지 않고 그대로 둔다 → 세로로 쌓인 3개 섹션으로 읽힌다. */
+	function initVizPin(){
+		var sec = document.querySelector('#hwVisibility');
+		if(!sec) return;
+		var stage  = sec.querySelector('.hwvs__stage');
+		var intro  = sec.querySelector('.hwvs__intro');
+		var panels = sec.querySelectorAll('.hwvs__panel');
+		if(!stage || !intro || panels.length !== 3) return;
+		if(reduce) return;                    /* 모션을 끄면 핀도 걸지 않는다 */
+		if(window.innerWidth < 1025) return;  /* 모바일 핀은 터치 스크롤이 갇힌다 */
+		if(typeof ScrollMagic === 'undefined' || typeof TimelineMax === 'undefined' ||
+		   typeof Linear === 'undefined') return;
+
+		sec.classList.add('is-pin');
+
+		var tl = new TimelineMax();
+		tl.set(intro, { scale: 1, opacity: 1 }, 0);
+		Array.prototype.forEach.call(panels, function(p){ tl.set(p, { y: '100%', scale: 1 }, 0); });
+		/* 0) 인트로가 뒤로 물러난다 */
+		tl.to(intro, 0.9, { scale: 0.88, opacity: 0, ease: Linear.easeNone }, 0.1);
+		/* 1~3) 패널이 아래에서 올라오고, 글이 좌우 번갈아 들어오고, 하단이 뜬다.
+		        앞 패널은 다음 패널이 올라올 때 뒤로 물러난다(원본 scale .6). */
+		Array.prototype.forEach.call(panels, function(p, i){
+			var t    = 1.0 + i * 1.6;
+			var head = p.querySelectorAll('.hwvs__head > *');
+			var foot = p.querySelector('.hwvs__foot');
+			var dir  = (i % 2 === 0) ? -80 : 80;
+			tl.fromTo(p, 1.0, { y: '100%' }, { y: '0%', ease: Linear.easeNone }, t);
+			tl.staggerFromTo(head, 0.7, { x: dir, opacity: 0 },
+			                 { x: 0, opacity: 1, ease: Linear.easeNone }, 0.18, t + 0.55);
+			tl.fromTo(foot, 0.6, { opacity: 0 }, { opacity: 1, ease: Linear.easeNone }, t + 1.05);
+			if(i < panels.length - 1){
+				tl.to(p, 0.9, { scale: 0.62, ease: Linear.easeNone }, t + 1.6);
+			}
+		});
+
+		var build = function(){
+			/* 장면 4개(인트로+패널3)를 넘기는 데 필요한 스크롤 양 */
+			var dur = Math.round((window.innerHeight || 800) * 3.4);
+			var ctrl = new ScrollMagic.Controller();
+			new ScrollMagic.Scene({ triggerElement: sec, triggerHook: 0, duration: dur })
+				.setPin(stage)
+				.setTween(tl)
+				.addTo(ctrl);
+		};
+		if(document.readyState === 'complete') build();
+		else window.addEventListener('load', build);
+	}
+
 	/* 섹션별 진입 모션 — 화면에 들어오면 한 번만 켜고 관측을 끊는다.
 	   순서·지연은 전부 CSS 가 갖고 있고, 여기서는 신호와 인덱스만 넘긴다. pin·스크럽 없음. */
 	function initSeq(){
@@ -3683,7 +3837,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

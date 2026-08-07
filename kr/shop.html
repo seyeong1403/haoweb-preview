@@ -4094,14 +4094,15 @@ $(document).ready(function  () {
 		sec.classList.add('is-pin');
 
 		var tl = new TimelineMax();
+		/* 인트로 타이틀은 사라지지 않는다(2026-08-07 세영) — 제자리에 그대로 두고,
+		   SEO 패널이 아래에서 올라와 덮는다. 패널 z-index 가 인트로보다 높다. */
 		tl.set(intro, { scale: 1, opacity: 1 }, 0);
 		Array.prototype.forEach.call(panels, function(p){ tl.set(p, { y: '100%', scale: 1 }, 0); });
-		/* 0) 인트로가 뒤로 물러난다 */
-		tl.to(intro, 0.9, { scale: 0.88, opacity: 0, ease: Linear.easeNone }, 0.1);
 		/* 1~3) 패널이 아래에서 올라오고, 글이 좌우 번갈아 들어오고, 하단이 뜬다.
 		        앞 패널은 다음 패널이 올라올 때 뒤로 물러난다(원본 scale .6). */
 		Array.prototype.forEach.call(panels, function(p, i){
-			var t    = 1.0 + i * 1.6;
+			/* 인트로 페이드를 없앴으므로 SEO 패널이 스크롤 초반부터 곧바로 올라와 덮는다 */
+			var t    = 0.3 + i * 1.6;
 			/* ⚠ 선택자는 마크업(.hwvs__titleBx / .hwvs__txt)과 반드시 같아야 한다.
 			   한 번 어긋나서 글자 모션이 통째로 죽었었다. */
 			var head = p.querySelectorAll('.hwvs__titleBx > *');

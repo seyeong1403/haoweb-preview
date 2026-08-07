@@ -4387,8 +4387,15 @@ $(document).ready(function  () {
 	else { revealHero(); }
 
 	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initBuildPan(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initWorkParallax(); initDirections(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
-	if(document.readyState === 'complete'){ boot(); }
-	else { window.addEventListener('load', boot); }
+	/* DOM 이 준비되면 바로 띄운다 — window.load(히어로 영상·전체 이미지)를 기다리면
+	   data-scroll·hw-seq 로 숨겨 둔 타이틀·이미지가 늦게 나타난다.
+	   폭을 재야 하는 마퀴·핀(initScope/initBuildPan)은 내부에서 load 를 다시 기다린다. */
+	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', boot); }
+	else { boot(); }
+	/* 이미지가 다 실린 뒤 스크롤 위치를 다시 계산(핀·패럴랙스 정확도) */
+	window.addEventListener('load', function(){
+		if(typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+	});
 })();
 </script>
 </body>

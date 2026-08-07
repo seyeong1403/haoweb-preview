@@ -315,7 +315,20 @@
 	html.hw-js .hw-seq[data-seq="scope"].is-on .hwt3__col:nth-child(2) li{transition-delay:calc(.26s + var(--i,0) * .06s);}
 	html.hw-js .hw-seq[data-seq="scope"].is-on .hwt3__col:nth-child(3) li{transition-delay:calc(.42s + var(--i,0) * .06s);}
 
-	/* FREE PROPOSAL — 문서 3장이 뒤에서 앞으로 한 장씩 놓인다 */
+	/* FREE PROPOSAL — 문서가 떠오르고, 항목이 위에서부터 순서대로 들어온다 */
+	html.hw-js .hw-seq[data-seq="doc"] .hwdoc__doc{opacity:0;transform:translateY(22px) scale(.99);}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__doc{opacity:1;transform:none;
+		transition:opacity .7s ease,transform .8s cubic-bezier(.16,1,.3,1);}
+	html.hw-js .hw-seq[data-seq="doc"] .hwdoc__list li{opacity:0;transform:translateY(10px);}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li{opacity:1;transform:none;
+		transition:opacity .55s ease,transform .6s cubic-bezier(.16,1,.3,1);}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(1){transition-delay:.20s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(2){transition-delay:.28s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(3){transition-delay:.36s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(4){transition-delay:.44s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(5){transition-delay:.52s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(6){transition-delay:.60s;}
+	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__list li:nth-child(7){transition-delay:.68s;}
 	html.hw-js .hw-seq[data-seq="doc"] .hwdoc__p{opacity:0;transform:translateY(22px) scale(.985);}
 	html.hw-js .hw-seq[data-seq="doc"].is-on .hwdoc__p{opacity:1;transform:none;
 		transition:opacity .75s ease,transform .85s cubic-bezier(.16,1,.3,1);}
@@ -2310,47 +2323,49 @@
 	.scene-ink .hwp__cta{background:var(--main-color);color:#fff;}
 	.scene-ink .hwp__cta:hover{filter:brightness(1.08);}
 
-	/* ── FREE PROPOSAL · 제안서를 문서 3장으로 나눠 겹쳐 보여준다 ──
-	   중앙에 큰 흰 박스 하나를 두지 않고, 7개를 같은 크기 카드로 나누지도 않는다.
-	   패널마다 폭과 열 수가 다르고 문서 표면은 하오웹 2색 안에서 처리한다.
-	   참고: 015 문서 패널 겹침 / 091 정돈된 패널 / 027 미니 구조. */
+	/* ── FREE PROPOSAL · 한 장의 정돈된 제안서 문서 + 뒤에 겹친 종이 두 장 ──
+	   겹쳐 놓은 3장이 어긋나 보였다(세영). 앞의 한 장에 7개 항목을 인덱스로 정리하고,
+	   여러 장짜리라는 신호는 뒤에 살짝 물린 종이(가상요소)로만 준다. */
 	.hwdoc__stack{position:relative;}
-	.hwdoc__p{position:relative;border-radius:12px;border:1px solid rgba(255,255,255,.13);
-		background:var(--card-2);box-shadow:0 26px 62px rgba(0,0,0,.55);}
-	.hwdoc__p--a{width:100%;z-index:1;}
-	.hwdoc__p--b{width:93%;margin:-10px 0 0 auto;z-index:2;}
-	.hwdoc__p--c{width:86%;margin:-10px auto 0 0;z-index:3;}
-	.hwdoc__ph{display:flex;align-items:center;gap:7px;padding:13px 20px;
-		border-bottom:1px solid rgba(255,255,255,.10);}
-	.hwdoc__ph span{margin-right:auto;font-size:11px;letter-spacing:.14em;font-weight:700;
-		color:rgba(255,255,255,.45);}
-	.hwdoc__ph i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18);}
-	.hwdoc__ph b{margin-left:auto;font-size:11px;letter-spacing:.1em;font-weight:600;
-		color:rgba(255,255,255,.34);}
-	.hwdoc__items{list-style:none;margin:0;padding:18px 20px 20px;display:grid;gap:18px;}
-	.hwdoc__p--a .hwdoc__items,.hwdoc__p--b .hwdoc__items{grid-template-columns:1fr 1fr;}
-	.hwdoc__p--c .hwdoc__items{grid-template-columns:repeat(3,1fr);}
-	.hwdoc__items > li{position:relative;min-width:0;}
-	.hwdoc__items .n{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--main-color);}
-	.hwdoc__items b{display:block;margin:7px 0 4px;font-size:15px;font-weight:600;color:#fff;
-		letter-spacing:-.01em;line-height:1.4;}
-	.hwdoc__items em{display:block;font-style:normal;font-size:15.5px;line-height:1.6;
-		color:rgba(255,255,255,.56);}
+	/* 뒤 종이 두 장 — 내용 없이 깊이만. 오른쪽·아래로 조금씩 물린다 */
+	.hwdoc__stack::before,.hwdoc__stack::after{content:"";position:absolute;inset:0;
+		border-radius:16px;border:1px solid rgba(255,255,255,.07);background:var(--card);
+		box-shadow:0 20px 44px rgba(0,0,0,.35);}
+	.hwdoc__stack::after{transform:translate(9px,9px);opacity:.55;}
+	.hwdoc__stack::before{transform:translate(18px,18px);opacity:.3;}
+	.hwdoc__doc{position:relative;z-index:1;border-radius:16px;overflow:hidden;
+		border:1px solid rgba(255,255,255,.15);background:var(--card-2);
+		box-shadow:0 34px 74px rgba(0,0,0,.5);}
+	.hwdoc__ph{display:flex;align-items:center;justify-content:space-between;
+		padding:17px 26px;border-bottom:1px solid rgba(255,255,255,.10);
+		background:rgba(255,255,255,.02);}
+	.hwdoc__ph span{font-size:11.5px;letter-spacing:.18em;font-weight:700;color:rgba(255,255,255,.5);}
+	.hwdoc__ph b{font-size:11px;letter-spacing:.14em;font-weight:600;color:var(--main-color);}
+	/* 7개 항목을 목차처럼 — 번호·제목·설명, 얇은 구분선으로 정렬 */
+	.hwdoc__list{list-style:none;margin:0;padding:6px 26px 12px;}
+	.hwdoc__list li{display:grid;grid-template-columns:38px 1fr;align-items:baseline;
+		gap:0 18px;padding:15px 0;border-top:1px solid rgba(255,255,255,.08);
+		transition:padding-left .4s cubic-bezier(.16,1,.3,1);}
+	.hwdoc__list li:first-child{border-top:0;}
+	.hwdoc__list .n{font-family:Jost,sans-serif;font-size:14px;font-weight:700;
+		letter-spacing:.06em;color:var(--main-color);}
+	.hwdoc__c{min-width:0;}
+	.hwdoc__list b{display:block;font-size:16px;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.4;}
+	.hwdoc__list em{display:block;font-style:normal;margin-top:5px;font-size:14px;line-height:1.55;
+		color:rgba(255,255,255,.55);}
 
 	@media all and (max-width:1024px){
 		.hwdoc{grid-template-columns:1fr;gap:34px;}
 		.hwdoc__say .hw-lead,.hwdoc__say .hw-note{max-width:none;}
+		/* 좁으면 뒤 종이 물림을 줄여 넘침 방지 */
+		.hwdoc__stack::after{transform:translate(6px,6px);}
+		.hwdoc__stack::before{transform:translate(12px,12px);}
 	}
-	@media all and (max-width:900px){
-		/* 겹침을 풀고 일반 세로 문서 목록으로 (§13 모바일 대체) */
-		.hwdoc__p--a,.hwdoc__p--b,.hwdoc__p--c{width:100%;margin:0;}
-		.hwdoc__p + .hwdoc__p{margin-top:14px;}
-		.hwdoc__p--c .hwdoc__items{grid-template-columns:1fr 1fr;}
-	}
-	@media all and (max-width:640px){
-		.hwdoc__p--a .hwdoc__items,.hwdoc__p--b .hwdoc__items,
-		.hwdoc__p--c .hwdoc__items{grid-template-columns:1fr;}
-		.hwdoc__items{padding:16px 18px 18px;}
+	@media all and (max-width:600px){
+		.hwdoc__ph{padding:15px 18px;}
+		.hwdoc__list{padding:4px 18px 10px;}
+		.hwdoc__list li{grid-template-columns:30px 1fr;padding:13px 0;}
+		.hwdoc__list b{font-size:15px;}
 	}
 
 	/* ══ 서브페이지 톤 ══

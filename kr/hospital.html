@@ -501,8 +501,12 @@
 	.hwp__pill input:focus-visible + span{outline:2px solid var(--main-color);outline-offset:3px;}
 	/* 결과 패널 — 편집형(좌측 라인) */
 	.hwp__result{position:relative;padding:6px 0 4px clamp(24px,3vw,44px);border-left:1px solid rgba(255,255,255,.16);}
-	.hwp__result.is-swap{animation:hwpSwap .45s cubic-bezier(.16,1,.3,1);}
+	/* 결과 교체 — 문구 블록만 가볍게 스왑한다.
+	   사이트맵(.hwmap)은 JS 가 FLIP 으로 항목을 이동시키므로 여기서 건드리면 안 된다.
+	   (예전엔 결과 전체에 걸려 있어서 바뀔 때마다 통째로 사라졌다 나타났다) */
+	.hwp__result.is-swap > :not(.hwmap){animation:hwpSwap .45s cubic-bezier(.16,1,.3,1);}
 	@keyframes hwpSwap{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
+	.hwmap__kids li{will-change:transform;}
 	.hwp__rk{font-size:11.5px;letter-spacing:.16em;color:rgba(255,255,255,.4);margin-bottom:14px;}
 	.hwp__rt{font-size:clamp(20px,1.8vw,25px);font-weight:700;color:#fff;letter-spacing:-.02em;margin:0 0 12px;}
 	.hwp__rline{font-size:16px;line-height:1.7;color:rgba(255,255,255,.66);margin:0 0 24px;}
@@ -3085,8 +3089,45 @@ $(document).ready(function  () {
 				+ '<a class="hwp__cta" id="hwPickCTA" href="free-proposal.html?' + qs + '#apply">이 구성으로 무료 제안받기 →</a>'
 				+ '<div class="hwp__sub"><a href="website.html">제작 방식 자세히 보기</a><a href="diagnosis.html">현재 홈페이지 진단받기</a><a href="inquiry.html">제작 문의하기</a></div>'
 				+ '</div>';
+			/* 결과가 통째로 사라졌다 나타나지 않게 — 사이트맵 항목은 제자리를 찾아 이동한다(FLIP).
+			   바꾸기 전 위치를 재 두고, 새로 그린 뒤 차이만큼 되돌려 놓았다가 0 으로 보낸다.
+			   같은 페이지 이름은 살아남아 미끄러지고, 새로 생긴 항목만 떠오른다. */
+			/* ⚠ 키는 페이지 이름(span)만 쓴다. li 전체 텍스트를 쓰면 앞의 번호(01·02…)가 섞여
+			   자리를 옮긴 항목이 매번 '새 항목'으로 잡혀 이동 애니메이션이 걸리지 않는다. */
+			var keyOf = function(li){ var s = li.querySelector('span'); return (s ? s.textContent : li.textContent).trim(); };
+			var prev = null;
+			if(!first && !reduce){
+				prev = {};
+				Array.prototype.forEach.call(out.querySelectorAll('.hwmap__kids li'), function(li){
+					prev[keyOf(li)] = li.getBoundingClientRect();
+				});
+			}
 			out.innerHTML = html;
-			if(!first && !reduce){ out.classList.remove('is-swap'); void out.offsetWidth; out.classList.add('is-swap'); }
+			if(!first && !reduce){
+				/* 목록 바깥(문구 블록)만 가벼운 스왑 — 지도는 FLIP 이 맡는다 */
+				out.classList.remove('is-swap'); void out.offsetWidth; out.classList.add('is-swap');
+				var items = out.querySelectorAll('.hwmap__kids li');
+				Array.prototype.forEach.call(items, function(li, idx){
+					var was = prev[keyOf(li)];
+					var now = li.getBoundingClientRect();
+					li.style.transition = 'none';
+					if(was){
+						var dx = was.left - now.left, dy = was.top - now.top;
+						if(Math.abs(dx) < 1 && Math.abs(dy) < 1){ li.style.transition = ''; return; }
+						li.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+					}else{
+						li.style.opacity = '0';
+						li.style.transform = 'translateY(12px)';
+					}
+					requestAnimationFrame(function(){
+						var d = (was ? 0 : idx * 0.045) + 's';
+						li.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1) ' + d
+						                    + ',opacity .45s ease ' + d;
+						li.style.transform = '';
+						li.style.opacity = '';
+					});
+				});
+			}
 			/* 전달값 저장 — 개인정보 없음(코드값·권장 페이지 목록만) */
 			try{ sessionStorage.setItem('haoPick', JSON.stringify({ type: t, ind: i, goal: g, pages: pages })); }catch(e){}
 		}

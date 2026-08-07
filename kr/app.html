@@ -413,8 +413,11 @@
 	/* AI 가시성 — 2026-08-07 세영: 인트로에 깔려 있던 실크 배경을 걷어냈다.
 	   패널마다 자체 배경(radial-gradient)을 갖게 되어 섹션 배경이 겹쳤고,
 	   인트로 화면이 지저분해 보였다. 실크는 아래 SITE PREVIEW 로 옮겼다. */
-	#hwVisibility{position:relative;background:#070A10;}
+	/* 섹션 바탕을 패널과 같은 검정으로 — 핀이 풀리는 지점에 색 단차가 생기지 않게 */
+	#hwVisibility{position:relative;background:#000;}
 	#hwVisibility .area{position:relative;z-index:1;}
+	/* 인트로는 위아래 여백이 균형 잡히게 세로 중앙 (하단만 크게 비지 않도록) */
+	.hwvs.is-pin .hwvs__intro{align-items:center;padding-top:0;}
 
 	/* SITE PREVIEW — 위로 옮겨 온 실크 배경. 앞뒤(What We Do·HOW WE BUILD)에
 	   섹션 배경이 없어 같은 이미지가 인접 반복될 위험이 없는 자리다. */
@@ -754,9 +757,10 @@
 	.hwvs__panel[data-k="aeo"] .hwvs__bg::before{background-image:url(../images/photo/viz-aeo.webp);opacity:.30;}
 	.hwvs__panel[data-k="geo"] .hwvs__bg::before{background-image:url(../images/photo/viz-geo.webp);opacity:.26;}
 	/* 글이 얹히는 좌측·하단을 눌러 대비 확보 */
+	/* 아래쪽은 완전한 검정까지 떨어뜨린다 — 패널이 끝나는 지점에서 배경이 뚝 끊겨 보이지 않게 */
 	.hwvs__bg::after{content:"";position:absolute;inset:0;background:
 		linear-gradient(100deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.62) 38%,rgba(0,0,0,.18) 70%),
-		linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.10) 32%,rgba(0,0,0,.70) 84%,rgba(0,0,0,.90) 100%);}
+		linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.10) 30%,rgba(0,0,0,.72) 80%,#000 100%);}
 
 	/* ── 원본 .wrap / .inner ── */
 	.hwvs__wrap{position:relative;z-index:1;width:100%;margin:0 5%;}

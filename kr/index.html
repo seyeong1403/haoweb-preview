@@ -9,7 +9,7 @@
 <meta name="Title" content="하오웹">
 <meta name="Subject" content="하오웹 홈페이지 제작·리뉴얼">
 <meta name="Keywords" content="하오웹, HAOWEB, 홈페이지 제작, 홈페이지 리뉴얼, 기업 홈페이지, 병원 홈페이지, 프랜차이즈, 쇼핑몰, 랜딩페이지, SEO, AEO, GEO, AI 가시성, 콘텐츠 제작, 글로벌 홈페이지, 반응형 웹, 웹디자인, 웹에이전시">
-<meta name="Description" content="하오웹은 검색과 AI가 읽을 수 있는 구조로 홈페이지 신규 제작과 리뉴얼을 설계합니다. 고객이 정보를 이해하고 문의하는 홈페이지 — 무료 시안·제안으로 방향과 시안을 먼저 확인하세요.">
+<meta name="Description" content="하오웹은 검색과 AI가 읽을 수 있는 구조로 홈페이지 신규 제작과 리뉴얼을 설계합니다. 고객이 정보를 이해하고 문의하는 홈페이지 — 무료 홈페이지 제안으로 필요한 구조와 제작 범위, 예상 견적을 먼저 확인하세요.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="하오웹 — 문의로 이어지는 홈페이지 제작 · 리뉴얼">
 <meta property="og:description" content="검색과 AI가 읽을 수 있는 구조로. 고객이 이해하고 문의하는 홈페이지를 만듭니다.">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="../images/common/haoweb-og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="하오웹 — 문의로 이어지는 홈페이지 제작 · 리뉴얼">
-<meta name="twitter:description" content="하오웹은 검색과 AI가 읽을 수 있는 구조로 홈페이지 신규 제작과 리뉴얼을 설계합니다. 고객이 정보를 이해하고 문의하는 홈페이지 — 무료 시안·제안으로 방향과 시안을 먼저 확인하세요.">
+<meta name="twitter:description" content="하오웹은 검색과 AI가 읽을 수 있는 구조로 홈페이지 신규 제작과 리뉴얼을 설계합니다. 고객이 정보를 이해하고 문의하는 홈페이지 — 무료 홈페이지 제안으로 필요한 구조와 제작 범위, 예상 견적을 먼저 확인하세요.">
 <meta name="twitter:image" content="../images/common/haoweb-og.png">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
@@ -1594,6 +1594,261 @@
 	.main-con03-list li .hash-box{margin-top:auto;position:relative;z-index:1;}
 	.main-con03-list li .icon-box{position:absolute;right:3rem;bottom:3rem;margin:0;z-index:1;}
 
+	/* ══ 3 DIRECTIONS — 계약 후 3가지 디자인 방향 ══
+	   SITE PREVIEW 에서 "어떤 구조로 만들지"를 본 직후, "그럼 디자인은?" 에 답하는 자리.
+	   카드 3장으로 만들지 않는다. 실제로 서로 다른 세 화면을 겹쳐 두고
+	   하나씩 앞으로 나오게 한다 — 비교해서 고른다는 행위 자체가 이 섹션의 내용이다.
+	   핀은 걸지 않는다(Industry 가로 팬이 이미 있어 페이지가 스크롤 데모처럼 느껴지면 안 됨). */
+	.hwdir-head{max-width:1000px;}
+	.hwdir-head .hw-lead{max-width:860px;}
+	.hwdir-flow{margin-top:26px;font-size:13.5px;letter-spacing:.16em;font-weight:600;
+		color:rgba(255,255,255,.62);}
+	.hwdir-flow i{font-style:normal;color:var(--main-color);margin:0 .55em;}
+
+	.hwdir{margin-top:48px;}
+	/* 무대 — 가로로 넘치는 화면은 여기서 자른다(페이지 가로 스크롤 금지) */
+	.hwdir__cap{display:flex;justify-content:flex-end;margin-bottom:16px;}
+	.hwdir__demo{font-size:12px;letter-spacing:.06em;
+		font-family:Jost,sans-serif;color:rgba(255,255,255,.44);
+		border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:5px 13px;}
+	/* 좌우 화면이 컨테이너 끝에서 딱 잘리면 오류처럼 보인다 — 가장자리에서 사라지게 한다 */
+	.hwdir__stage{position:relative;aspect-ratio:2.8;overflow:hidden;
+		-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+		mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);}
+
+	.hwdir__win{position:absolute;top:50%;left:50%;width:52%;padding:0;margin:0;border:0;
+		background:none;text-align:left;cursor:pointer;
+		--x:0%; --s:.88; --o:0; --z:1;
+		transform:translate(-50%,-50%) translateX(var(--x)) scale(var(--s));
+		opacity:var(--o); z-index:var(--z);
+		transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .7s ease;}
+	.hwdir__win:focus-visible{outline:2px solid var(--main-color);outline-offset:6px;}
+	/* WORK 의 브라우저 프레임과 같은 언어를 쓴다 — 새 장치를 또 만들지 않는다 */
+	.hwdir__frame{display:block;position:relative;border-radius:10px;overflow:hidden;
+		border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);
+		padding:30px 12px 12px;transition:border-color .45s ease;}
+	.hwdir__frame::before{content:"";position:absolute;left:15px;top:11px;width:4px;height:4px;border-radius:50%;
+		background:rgba(255,255,255,.30);box-shadow:8px 0 0 rgba(255,255,255,.21),16px 0 0 rgba(255,255,255,.14);}
+	.hwdir__tag{position:absolute;right:14px;top:9px;font-size:11px;letter-spacing:.1em;
+		color:rgba(255,255,255,.36);font-family:Jost,sans-serif;}
+	.hwdir__win.is-cur .hwdir__tag{color:var(--main-color);}
+	.hwdir__win.is-cur .hwdir__frame{border-color:rgba(232,56,23,.42);}
+	.hwdir__win:hover .hwdir__frame{border-color:rgba(255,255,255,.30);}
+	.hwdir__screen{display:block;position:relative;overflow:hidden;border-radius:3px;
+		aspect-ratio:16/10;background:#0d1017;}
+
+	/* 진입 전에는 세 화면이 한 지점에 겹쳐 있다 */
+	html.hw-js .hwdir:not(.is-on) .hwdir__win{--x:0%;--s:.86;--o:0;}
+	/* 펼친 뒤 — 활성이 가운데, 나머지는 좌우로 물러난다 */
+	html.hw-js .hwdir.is-on .hwdir__win{--o:.16;--s:.66;--z:1;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"]{--x:-56%;--s:.80;--o:.46;--z:2;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{--x:56%;--s:.80;--o:.46;--z:2;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-2"]{--x:-112%;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="2"]{--x:112%;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="0"]{--x:0%;--s:1;--o:1;--z:3;}
+	/* 펼치기는 좌우가 아주 살짝 늦게 — 가운데에서 밀려나는 것처럼 보이게 */
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"],
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{transition-delay:.10s;}
+	/* JS 가 없으면 세 화면을 그냥 세로로 쌓아 보여 준다 */
+	html:not(.hw-js) .hwdir__stage{aspect-ratio:auto;display:grid;gap:26px;}
+	html:not(.hw-js) .hwdir__win{position:static;width:100%;transform:none;opacity:1;}
+
+	/* 네비 + 설명 */
+	.hwdir__panel{margin-top:34px;display:grid;grid-template-columns:300px minmax(0,1fr);
+		gap:22px 48px;align-items:start;}
+	.hwdir__nav{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.14);}
+	.hwdir__nav li{border-bottom:1px solid rgba(255,255,255,.14);}
+	.hwdir__nav button{display:flex;align-items:baseline;gap:14px;width:100%;padding:13px 2px;
+		background:none;border:0;cursor:pointer;text-align:left;
+		transition:padding .4s cubic-bezier(.16,1,.3,1);}
+	.hwdir__nav .n{font-family:Jost,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;
+		color:rgba(255,255,255,.34);transition:color .3s ease;}
+	.hwdir__nav .k{font-family:Jost,sans-serif;font-size:15px;font-weight:600;letter-spacing:.1em;
+		color:rgba(255,255,255,.55);transition:color .3s ease;}
+	.hwdir__nav button:hover{padding-left:10px;}
+	.hwdir__nav button:hover .k,.hwdir__nav button:hover .n{color:rgba(255,255,255,.9);}
+	.hwdir__nav li.is-cur button .n,.hwdir__nav li.is-cur button .k{color:var(--main-color);}
+	.hwdir__nav button:focus-visible{outline:2px solid var(--main-color);outline-offset:2px;}
+
+	.hwdir__says{position:relative;min-height:150px;}
+	.hwdir__say{position:absolute;left:0;top:0;right:0;opacity:0;transform:translateY(10px);
+		transition:opacity .45s ease,transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none;}
+	.hwdir__say.is-cur{opacity:1;transform:none;pointer-events:auto;}
+	html:not(.hw-js) .hwdir__says{min-height:0;}
+	html:not(.hw-js) .hwdir__say{position:static;opacity:1;transform:none;margin-bottom:22px;}
+	.hwdir__say h3{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.4;}
+	.hwdir__say p{margin-top:12px;font-size:16.5px;line-height:1.72;color:rgba(255,255,255,.66);
+		max-width:620px;}
+	.hwdir__say ul{margin-top:14px;list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px 10px;}
+	.hwdir__say li{font-size:13px;letter-spacing:.01em;color:rgba(255,255,255,.60);
+		border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:5px 13px;}
+
+	/* 마무리 — 왼쪽은 결론, 오른쪽은 계단형 3항목.
+	   같은 카드 세 장을 만들지 않는다(들여쓰기가 순서를 대신한다). */
+	.hwdir__close{margin-top:74px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+		gap:40px 64px;align-items:start;
+		border-top:1px solid rgba(255,255,255,.14);padding-top:46px;}
+	.hwdir__close-t{font-size:clamp(24px,2.5vw,34px);font-weight:700;color:#fff;line-height:1.45;
+		letter-spacing:-.02em;}
+	.hwdir__close-t .r{color:var(--main-color);}
+	.hwdir__close-d{margin-top:18px;font-size:16.5px;line-height:1.75;color:rgba(255,255,255,.62);}
+	.hwdir__steps{list-style:none;margin:0;padding:0;}
+	.hwdir__steps li{position:relative;padding:20px 0 22px;border-top:1px solid rgba(255,255,255,.12);}
+	.hwdir__steps li:first-child{border-top:0;padding-top:0;}
+	.hwdir__steps li:nth-child(2){margin-left:7%;}
+	.hwdir__steps li:nth-child(3){margin-left:14%;}
+	.hwdir__steps .n{display:block;font-family:Jost,sans-serif;font-size:12px;font-weight:600;
+		letter-spacing:.1em;color:var(--main-color);margin-bottom:8px;}
+	.hwdir__steps b{display:block;font-size:18.5px;font-weight:700;color:#fff;line-height:1.45;
+		letter-spacing:-.01em;}
+	.hwdir__steps em{display:block;margin-top:8px;font-style:normal;font-size:15.5px;line-height:1.7;
+		color:rgba(255,255,255,.60);}
+	.hwdir-note{margin-top:40px;}
+
+	@media all and (max-width:1280px){
+		.hwdir__panel{grid-template-columns:250px minmax(0,1fr);gap:20px 34px;}
+	}
+	@media all and (max-width:1024px){
+		.hwdir__stage{aspect-ratio:2.35;}
+		.hwdir__win{width:62%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"]{--x:-52%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{--x:52%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="-2"]{--x:-100%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="2"]{--x:100%;}
+		.hwdir__panel{grid-template-columns:1fr;gap:26px;}
+		.hwdir__nav{display:flex;border-top:0;border-bottom:1px solid rgba(255,255,255,.14);}
+		.hwdir__nav li{flex:1;border-bottom:0;}
+		.hwdir__nav button{padding:11px 2px;}
+		.hwdir__nav button:hover{padding-left:2px;}
+		.hwdir__close{grid-template-columns:1fr;gap:34px;}
+		.hwdir__steps li:nth-child(2),.hwdir__steps li:nth-child(3){margin-left:0;}
+	}
+	/* 모바일 — 억지로 세 화면을 나란히 두지 않는다. 한 장을 크게, 탭·스와이프로 넘긴다. */
+	@media all and (max-width:760px){
+		.hwdir{margin-top:44px;}
+		.hwdir__stage{aspect-ratio:auto;overflow:visible;
+			-webkit-mask-image:none;mask-image:none;}
+		.hwdir__win{position:relative;top:auto;left:auto;width:100%;
+			--x:0% !important;--s:1 !important;--z:1 !important;
+			transform:none;}
+		html.hw-js .hwdir__win{display:none;}
+		html.hw-js .hwdir__win[data-slot="0"]{display:block;--o:1;}
+		html.hw-js .hwdir:not(.is-on) .hwdir__win{--o:1;}
+		.hwdir__frame{padding:26px 9px 9px;}
+		.hwdir__panel{margin-top:22px;}
+		.hwdir__nav .k{font-size:13px;letter-spacing:.06em;}
+		.hwdir__nav .n{font-size:11px;}
+		.hwdir__nav button{flex-direction:column;align-items:flex-start;gap:3px;}
+		.hwdir__says{min-height:0;}
+		.hwdir__say{position:static;opacity:0;height:0;overflow:hidden;transform:none;}
+		.hwdir__say.is-cur{height:auto;overflow:visible;}
+		.hwdir__say h3{font-size:20px;}
+		.hwdir__close{margin-top:60px;padding-top:38px;}
+		.hwdir__steps b{font-size:17px;}
+	}
+	@media (prefers-reduced-motion: reduce){
+		.hwdir__win,.hwdir__say{transition:none !important;}
+		.hwdir__nav button:hover{padding-left:2px;}
+	}
+
+	/* ── 목업 3종 ──
+	   같은 가상 기업(MATERA)을 서로 다른 방향으로 디자인한 화면.
+	   색만 바꾸지 않는다 — 레이아웃·정보 우선순위·타이포·이미지 비율이 실제로 다르다.
+	   화면 안 글자는 장식이므로 aria-hidden 이며, 크기는 컨테이너 폭에 비례한다. */
+	.hwdm{display:block;position:absolute;inset:0;font-size:9px;line-height:1.5;
+		font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif;}
+	@supports (width:1cqw){
+		.hwdir__screen{container-type:inline-size;}
+		.hwdm{font-size:1.28cqw;}
+	}
+	.hwdm span,.hwdm b,.hwdm i,.hwdm em{display:block;}
+	.hwdm .row{display:flex;align-items:center;}
+	.hwdm img{display:block;width:100%;height:100%;object-fit:cover;}
+
+	/* A — 구조·신뢰. 정돈된 그리드, 사실 위주, 여백 넉넉 */
+	.hwdm-a{background:#F2F4F7;color:#131A22;}
+	.hwdm-a .nav{justify-content:space-between;padding:1.3em 2.2em;border-bottom:1px solid #DEE3EA;}
+	.hwdm-a .logo{font-weight:800;letter-spacing:.22em;font-size:1.35em;}
+	.hwdm-a .menu{gap:1.9em;font-size:.95em;color:#4B586A;}
+	.hwdm-a .btn{border:1px solid #131A22;border-radius:2px;padding:.55em 1.2em;font-size:.9em;font-weight:600;}
+	.hwdm-a .hero{display:grid;grid-template-columns:1.02fr .98fr;gap:2.6em;padding:2.2em 2.2em 1.7em;align-items:center;}
+	.hwdm-a .eyebrow{font-size:.92em;letter-spacing:.18em;font-weight:700;color:#B4402B;margin-bottom:1.1em;}
+	.hwdm-a .h1{font-size:3.3em;font-weight:800;line-height:1.24;letter-spacing:-.03em;}
+	.hwdm-a .sub{margin-top:1.2em;font-size:1.08em;line-height:1.7;color:#4B586A;}
+	.hwdm-a .acts{display:flex;gap:.8em;margin-top:1.8em;}
+	.hwdm-a .acts .p{background:#131A22;color:#fff;border-radius:2px;padding:.75em 1.5em;font-size:.96em;font-weight:600;}
+	.hwdm-a .acts .g{border:1px solid #C3CAD4;border-radius:2px;padding:.75em 1.5em;font-size:.96em;color:#4B586A;}
+	.hwdm-a .shot{aspect-ratio:16/10;overflow:hidden;border-radius:2px;}
+	.hwdm-a .specs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #DEE3EA;
+		border-bottom:1px solid #DEE3EA;margin:0 2.2em;}
+	.hwdm-a .specs > span{padding:1.05em 0;border-right:1px solid #DEE3EA;}
+	.hwdm-a .specs > span:last-child{border-right:0;}
+	.hwdm-a .specs i{font-size:.85em;letter-spacing:.12em;color:#7A889B;margin-bottom:.5em;}
+	.hwdm-a .specs b{font-size:1.5em;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+	.hwdm-a .list{padding:.3em 2.2em 0;}
+	.hwdm-a .list .r{display:flex;justify-content:space-between;align-items:center;
+		padding:.85em 0;border-bottom:1px solid #E5E9EF;font-size:1.02em;}
+	.hwdm-a .list .r span:last-child{color:#9AA6B6;font-size:.9em;}
+
+	/* B — 성과·전환. 정보 밀도가 높고 CTA 가 강하다 */
+	.hwdm-b{background:#FFFFFF;color:#16181C;}
+	.hwdm-b .top{justify-content:space-between;background:#16181C;color:#fff;padding:.55em 2em;font-size:.86em;}
+	.hwdm-b .top .r{gap:1.4em;color:rgba(255,255,255,.72);}
+	.hwdm-b .nav{justify-content:space-between;padding:1em 2em;border-bottom:1px solid #ECEDF0;}
+	.hwdm-b .logo{font-weight:800;letter-spacing:.2em;font-size:1.25em;}
+	.hwdm-b .menu{gap:1.4em;font-size:.9em;color:#5A6069;}
+	.hwdm-b .cta-s{background:#E83817;color:#fff;border-radius:3px;padding:.55em 1.1em;font-size:.88em;font-weight:700;}
+	.hwdm-b .hero{display:grid;grid-template-columns:1.5fr 1fr;gap:1.9em;padding:1.9em 2em 1.3em;}
+	.hwdm-b .badge{display:inline-block;background:#FDECE8;color:#C62F12;font-size:.85em;font-weight:700;
+		border-radius:2px;padding:.42em .9em;margin-bottom:1em;letter-spacing:.02em;width:fit-content;}
+	.hwdm-b .h1{font-size:2.35em;font-weight:800;line-height:1.32;letter-spacing:-.03em;}
+	.hwdm-b .pts{margin-top:1.1em;}
+	.hwdm-b .pts span{position:relative;padding-left:1.4em;font-size:1em;line-height:1.85;color:#3D434C;}
+	.hwdm-b .pts span::before{content:"";position:absolute;left:0;top:.72em;width:.62em;height:.62em;
+		border-radius:50%;background:#E83817;}
+	.hwdm-b .acts{display:flex;gap:.7em;margin-top:1.4em;}
+	.hwdm-b .acts .p{background:#E83817;color:#fff;border-radius:3px;padding:.85em 1.7em;font-size:1em;font-weight:700;}
+	.hwdm-b .acts .g{border:1px solid #D6D9DE;border-radius:3px;padding:.85em 1.5em;font-size:1em;color:#3D434C;}
+	.hwdm-b .side{position:relative;}
+	.hwdm-b .shot{aspect-ratio:3/2;overflow:hidden;border-radius:3px;}
+	.hwdm-b .float{position:absolute;left:-1.1em;bottom:-1.1em;background:#fff;border:1px solid #E7E9ED;
+		border-radius:3px;padding:.85em 1.1em;box-shadow:0 .6em 1.6em rgba(0,0,0,.10);}
+	.hwdm-b .float i{font-size:.82em;color:#7C828C;margin-bottom:.35em;}
+	.hwdm-b .float b{font-size:1.35em;font-weight:800;color:#E83817;font-variant-numeric:tabular-nums;}
+	.hwdm-b .nums{display:grid;grid-template-columns:repeat(4,1fr);background:#F6F7F9;margin:0 2em;
+		border-radius:3px;}
+	.hwdm-b .nums > span{padding:1em .9em;}
+	.hwdm-b .nums b{font-size:1.45em;font-weight:800;color:#16181C;font-variant-numeric:tabular-nums;}
+	.hwdm-b .nums i{font-size:.82em;color:#7C828C;margin-top:.3em;}
+	.hwdm-b .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:.9em;padding:1.1em 2em 0;}
+	.hwdm-b .cases > span{border:1px solid #ECEDF0;border-radius:3px;padding:.85em .95em;}
+	.hwdm-b .cases i{font-size:.8em;letter-spacing:.1em;color:#B0B5BC;margin-bottom:.45em;}
+	.hwdm-b .cases b{font-size:.98em;font-weight:700;}
+
+	/* C — 브랜드·몰입. 전면 이미지 + 대형 타이포 + 여백 */
+	.hwdm-c{background:#0A0B0D;color:#fff;}
+	.hwdm-c .bg{position:absolute;inset:0;}
+	/* 원본이 아주 어두워 그대로 두면 화면이 통째로 검게 보인다 — 밝기만 올린다 */
+	.hwdm-c .bg img{filter:brightness(1.75) contrast(1.04);}
+	.hwdm-c .bg::after{content:"";position:absolute;inset:0;
+		background:linear-gradient(102deg,rgba(6,7,9,.80) 0%,rgba(6,7,9,.40) 48%,rgba(6,7,9,.06) 100%);}
+	.hwdm-c .in{position:absolute;inset:0;display:flex;flex-direction:column;
+		justify-content:space-between;padding:1.8em 2.4em 2em;}
+	.hwdm-c .nav{justify-content:space-between;}
+	.hwdm-c .logo{font-weight:300;letter-spacing:.55em;font-size:1.25em;}
+	.hwdm-c .menu{gap:2.2em;font-size:.9em;letter-spacing:.14em;color:rgba(255,255,255,.72);}
+	.hwdm-c .burger{width:1.9em;}
+	.hwdm-c .burger i{height:1px;background:rgba(255,255,255,.7);margin-bottom:.42em;}
+	.hwdm-c .burger i:last-child{width:60%;margin:0;}
+	.hwdm-c .h1{font-size:3.9em;font-weight:300;line-height:1.18;letter-spacing:-.02em;max-width:11em;
+		text-shadow:0 .04em .5em rgba(0,0,0,.45);}
+	.hwdm-c .h1 b{display:inline;font-weight:600;}
+	.hwdm-c .foot{display:flex;justify-content:space-between;align-items:flex-end;}
+	.hwdm-c .cap{font-size:.88em;letter-spacing:.2em;color:rgba(255,255,255,.55);}
+	.hwdm-c .idx{display:flex;gap:1.3em;font-size:.85em;letter-spacing:.14em;color:rgba(255,255,255,.35);}
+	.hwdm-c .idx b{color:#fff;font-weight:500;}
+	.hwdm-c .rule{height:1px;max-width:22em;background:rgba(255,255,255,.24);margin:1.2em 0 1.1em;}
+
 	/* ── HOW WE BUILD · 단계 패널 ──
 	   장식 선아이콘을 걷어내고, 단계마다 그 단계에서 실제로 만드는 것을
 	   구조 그대로 축소해 보여준다(자료 조각 / 사이트맵 / 와이어프레임 / 발행·점검).
@@ -2385,7 +2640,7 @@
 							<ul>
 								<li><a href="renewal.html"><span>홈페이지 리뉴얼</span></a></li>
 								<li><a href="diagnosis.html"><span>현재 홈페이지 진단</span></a></li>
-								<li><a href="free-proposal.html?type=renewal"><span>무료 리뉴얼 시안·제안</span></a></li>
+								<li><a href="free-proposal.html?type=renewal"><span>무료 리뉴얼 제안</span></a></li>
 							</ul>
 						</div>
 					</li>
@@ -2445,7 +2700,7 @@
 						<a href="faq.html">고객지원</a>
 						<div class="gnb-2dep">
 							<ul>
-								<li><a href="free-proposal.html"><span>무료 시안·제안</span></a></li>
+								<li><a href="free-proposal.html"><span>무료 홈페이지 제안</span></a></li>
 								<li><a href="inquiry.html"><span>제작 문의</span></a></li>
 								<li><a href="faq.html"><span>FAQ</span></a></li>
 								<li><a href="notice.html"><span>공지사항</span></a></li>
@@ -2491,7 +2746,7 @@
 					<h1 class="hwhero__lead"><span class="ln"><i>고객이 이해하고, 신뢰하고,</i></span><span class="ln"><i><b>문의하는</b> 홈페이지</i></span></h1>
 					<p class="hwhero__desc">신규 제작부터 리뉴얼까지, 검색과 AI가 읽을 수 있는 구조로. 고객이 필요한 정보를 이해하고 문의하는 홈페이지를 만듭니다.</p>
 					<div class="hwhero__cta">
-						<a href="free-proposal.html" class="on">무료 시안·제안받기 →</a>
+						<a href="free-proposal.html" class="on">무료 홈페이지 제안받기 →</a>
 						<a href="inquiry.html">제작 문의</a>
 					</div>
 				</div>
@@ -2691,6 +2946,184 @@
 						</div>
 					</div>
 					<p class="hw-note">권장 구성은 일반적인 방향을 안내하기 위한 것이며, 실제 사이트맵과 제작 범위는 사업 내용과 보유 자료를 검토한 뒤 확정합니다.</p>
+				</div>
+			</article>
+			<!-- ****************** 추가섹션 B2 (3 DIRECTIONS) **********************
+			     SITE PREVIEW 에서 "어떤 구조" 를 본 다음 "그럼 디자인은?" 에 답하는 자리.
+			     화면 안 목업은 전부 장식이므로 aria-hidden — 가상 기업 문구가
+			     실제 콘텐츠처럼 읽히면 안 된다. -->
+			<article id="hwDir" class="hw-sec scene-dark">
+				<div class="area">
+					<div class="hwdir-head">
+						<span class="main-sub-tit font-jost" data-scroll="fade-up">3 DIRECTIONS</span>
+						<h2 class="main-tit" data-scroll="fade-up">하나의 시안을 기다리는 대신, <br class="pc-br">세&nbsp;가지 디자인 방향에서 선택하세요.</h2>
+						<p class="hw-lead" data-scroll="fade-up">계약 후 사업과 고객을 분석해 서로 다른 3가지 디자인 방향을 제안합니다. 메시지와 레이아웃, 이미지와 인터랙션을 비교한 뒤 가장 적합한 한 방향을 선택해 전체 홈페이지로 발전시킵니다.</p>
+						<p class="hwdir-flow font-jost" data-scroll="fade-up">3 DIRECTIONS <i>·</i> 1 SELECTION <i>·</i> FINAL DESIGN</p>
+					</div>
+
+					<div class="hwdir hw-seq" data-seq="dir">
+						<div class="hwdir__cap"><span class="hwdir__demo">예시 · 가상 기업 화면</span></div>
+						<div class="hwdir__stage">
+							<!-- A · 구조·신뢰 -->
+							<button class="hwdir__win" type="button" data-dir="0" data-slot="-1" aria-pressed="false" aria-label="방향 A · STRUCTURE 화면 보기">
+								<span class="hwdir__frame">
+									<span class="hwdir__tag font-jost">A · STRUCTURE</span>
+									<span class="hwdir__screen">
+										<span class="hwdm hwdm-a" aria-hidden="true">
+											<span class="row nav">
+												<span class="logo">MATERA</span>
+												<span class="row menu"><span>회사소개</span><span>제품</span><span>기술</span><span>인증</span><span>자료실</span></span>
+												<span class="btn">문의하기</span>
+											</span>
+											<span class="hero">
+												<span>
+													<span class="eyebrow">PRECISION PARTS</span>
+													<span class="h1">정확한 치수를<br>반복해서 만듭니다</span>
+													<span class="sub">1998년부터 산업용 정밀 가공 부품을 생산합니다. 도면 검토부터 양산까지 한 곳에서 진행합니다.</span>
+													<span class="row acts"><span class="p">제품 보기</span><span class="g">기술 자료</span></span>
+												</span>
+												<span class="shot"><img src="../images/mock/dir-a-parts.webp" alt="" width="1000" height="750" loading="lazy"></span>
+											</span>
+											<span class="specs">
+												<span><i>공차</i><b>±0.005mm</b></span>
+												<span><i>인증</i><b>ISO 9001</b></span>
+												<span><i>설립</i><b>1998</b></span>
+												<span><i>도면 검토</i><b>24시간</b></span>
+											</span>
+											<span class="list">
+												<span class="r"><span>정밀 절삭 부품</span><span>자세히 보기</span></span>
+												<span class="r"><span>표면 처리·열처리</span><span>자세히 보기</span></span>
+												<span class="r"><span>조립과 검사</span><span>자세히 보기</span></span>
+											</span>
+										</span>
+									</span>
+								</span>
+							</button>
+							<!-- B · 성과·전환 -->
+							<button class="hwdir__win" type="button" data-dir="1" data-slot="0" aria-pressed="true" aria-label="방향 B · CONVERSION 화면 보기">
+								<span class="hwdir__frame">
+									<span class="hwdir__tag font-jost">B · CONVERSION</span>
+									<span class="hwdir__screen">
+										<span class="hwdm hwdm-b" aria-hidden="true">
+											<span class="row top">
+												<span>MATERA — 정밀 가공 · 소재</span>
+												<span class="row r"><span>견적 문의 031-000-0000</span><span>자료 다운로드</span></span>
+											</span>
+											<span class="row nav">
+												<span class="logo">MATERA</span>
+												<span class="row menu"><span>서비스</span><span>사례</span><span>견적</span><span>자료실</span></span>
+												<span class="cta-s">견적 문의</span>
+											</span>
+											<span class="hero">
+												<span>
+													<span class="badge">누적 납품 3,200건 · 재의뢰율 92%</span>
+													<span class="h1">필요한 부품을<br>더 빠르게 받는 방법</span>
+													<span class="pts">
+														<span>도면을 보내면 4시간 안에 견적을 회신합니다</span>
+														<span>시제품 1개부터 양산까지 같은 라인에서 진행합니다</span>
+														<span>납기가 밀리면 밀리기 전에 먼저 알려 드립니다</span>
+													</span>
+													<span class="row acts"><span class="p">무료 견적 받기</span><span class="g">사례 보기</span></span>
+												</span>
+												<span class="side">
+													<span class="shot"><img src="../images/mock/dir-b-shop.webp" alt="" width="900" height="600" loading="lazy"></span>
+													<span class="float"><i>평균 견적 회신</i><b>4시간</b></span>
+												</span>
+											</span>
+											<span class="nums">
+												<span><b>3,200건</b><i>누적 납품</i></span>
+												<span><b>92%</b><i>재의뢰율</i></span>
+												<span><b>4시간</b><i>평균 회신</i></span>
+												<span><b>27년</b><i>업력</i></span>
+											</span>
+											<span class="cases">
+												<span><i>CASE 01</i><b>자동차 부품 양산</b></span>
+												<span><i>CASE 02</i><b>반도체 장비 부품</b></span>
+												<span><i>CASE 03</i><b>시제품 소량 가공</b></span>
+											</span>
+										</span>
+									</span>
+								</span>
+							</button>
+							<!-- C · 브랜드·몰입 -->
+							<button class="hwdir__win" type="button" data-dir="2" data-slot="1" aria-pressed="false" aria-label="방향 C · BRAND 화면 보기">
+								<span class="hwdir__frame">
+									<span class="hwdir__tag font-jost">C · BRAND</span>
+									<span class="hwdir__screen">
+										<span class="hwdm hwdm-c" aria-hidden="true">
+											<span class="bg"><img src="../images/mock/dir-c-hall.webp" alt="" width="1800" height="1125" loading="lazy"></span>
+											<span class="in">
+												<span class="row nav">
+													<span class="logo">MATERA</span>
+													<span class="row menu"><span>WORKS</span><span>MATERIAL</span><span>CONTACT</span></span>
+													<span class="burger"><i></i><i></i><i></i></span>
+												</span>
+												<span>
+													<span class="h1">소재의 기준을<br><b>다시 씁니다</b></span>
+													<span class="rule"></span>
+													<span class="cap">1998 — 정밀 소재와 가공</span>
+												</span>
+												<span class="row foot">
+													<span class="cap">SCROLL</span>
+													<span class="row idx"><b>01</b><span>02</span><span>03</span></span>
+												</span>
+											</span>
+										</span>
+									</span>
+								</span>
+							</button>
+						</div>
+
+						<div class="hwdir__panel">
+							<ol class="hwdir__nav">
+								<li><button type="button" data-go="0"><span class="n font-jost">01</span><span class="k font-jost">STRUCTURE</span></button></li>
+								<li class="is-cur"><button type="button" data-go="1"><span class="n font-jost">02</span><span class="k font-jost">CONVERSION</span></button></li>
+								<li><button type="button" data-go="2"><span class="n font-jost">03</span><span class="k font-jost">BRAND</span></button></li>
+							</ol>
+							<div class="hwdir__says" aria-live="polite">
+								<div class="hwdir__say" data-say="0">
+									<h3>구조와 신뢰를 앞세운 방향</h3>
+									<p>제품과 기술 정보를 먼저 읽히게 배치하고, 수치와 인증처럼 판단 근거가 되는 내용을 앞쪽에 둡니다. 화면은 정돈되고 안정적입니다.</p>
+									<ul><li>명확한 그리드</li><li>정보 우선</li><li>신뢰 요소 강조</li></ul>
+								</div>
+								<div class="hwdir__say is-cur" data-say="1">
+									<h3>문의로 이어지는 것을 앞세운 방향</h3>
+									<p>핵심 서비스와 결과를 위쪽에 모으고 문의 버튼을 눈에 띄게 둡니다. 정보 밀도가 조금 더 높고, 사례와 수치로 판단을 돕습니다.</p>
+									<ul><li>강한 CTA</li><li>사례·수치</li><li>높은 정보 밀도</li></ul>
+								</div>
+								<div class="hwdir__say" data-say="2">
+									<h3>브랜드 인상을 앞세운 방향</h3>
+									<p>큰 비주얼과 타이포그래피로 첫인상을 만들고, 정보는 아래에서 차례로 펼칩니다. 여백과 움직임으로 브랜드의 인상을 전달합니다.</p>
+									<ul><li>대형 비주얼</li><li>타이포그래피</li><li>여백과 모션</li></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="hwdir__close">
+						<div>
+							<p class="hwdir__close-t">선택은 고객이, <br class="pc-br">완성은 <span class="r">하오웹</span>이 합니다.</p>
+							<p class="hwdir__close-d">사업과 고객에 가장 잘 맞는 방향을 선택하면, 선택한 디자인을 기준으로 메인과 서브페이지 전체를 완성합니다.</p>
+						</div>
+						<ol class="hwdir__steps">
+							<li>
+								<span class="n font-jost">01</span>
+								<b>한 가지 안만 보여드리지 않습니다.</b>
+								<em>하나의 디자인을 만든 뒤 계속 수정하는 방식보다, 초기에 서로 다른 방향을 비교할 수 있도록 합니다.</em>
+							</li>
+							<li>
+								<span class="n font-jost">02</span>
+								<b>세 방향은 색상만 다른 시안이 아닙니다.</b>
+								<em>레이아웃, 정보의 우선순위, 이미지 사용 방식, 타이포그래피와 인터랙션까지 서로 다른 방향으로 제안합니다.</em>
+							</li>
+							<li>
+								<span class="n font-jost">03</span>
+								<b>선택한 한 방향을 완성합니다.</b>
+								<em>3가지 방향을 비교한 후 고객이 선택한 하나를 기준으로 메인페이지와 서브페이지 전체 디자인을 발전시킵니다.</em>
+							</li>
+						</ol>
+					</div>
+					<p class="hw-note hwdir-note">초기 3가지 방향은 디자인 선택을 위한 콘셉트 제안이며, 선택된 한 방향을 기준으로 전체 디자인을 발전시킵니다. 위 STRUCTURE·CONVERSION·BRAND 는 이해를 돕기 위한 예시이고, 실제로는 고객의 사업과 목적에 맞춰 3가지 방향을 새로 제안합니다.</p>
 				</div>
 			</article>
 			<!-- ****************** 메인컨텐츠 3 ********************** -->
@@ -3077,19 +3510,19 @@
 					</div>
 				</div>
 			</article>
-			<!-- ****************** 추가섹션 D (무료 시안·제안) ********************** -->
+			<!-- ****************** 추가섹션 D (무료 홈페이지 제안) ********************** -->
 			<article id="hwProposal" class="hw-sec scene-dark">
 				<div class="area">
 					<div class="hwdoc">
 						<div class="hwdoc__say">
 							<span class="main-sub-tit font-jost" data-scroll="fade-up">FREE PROPOSAL</span>
 							<h2 class="main-tit" data-scroll="fade-up">말로만 설명하지 <br class="m-br">않습니다.</h2>
-							<p class="hw-lead" data-scroll="fade-up">사업과 고객을 검토한 뒤, 홈페이지에 필요한 구조와 첫 화면 방향을 문서로 정리해 드립니다.</p>
+							<p class="hw-lead" data-scroll="fade-up">사업과 고객, 현재 보유 자료를 검토한 뒤 필요한 사이트 구조와 핵심 메시지, 제작 범위와 예상 견적을 먼저 정리해 드립니다.</p>
 							<div class="hwp__acts" data-scroll="fade-up">
-								<a class="hwp__cta" href="free-proposal.html#apply">무료 시안·제안 신청 →</a>
+								<a class="hwp__cta" href="free-proposal.html#apply">무료 홈페이지 제안받기 →</a>
 								<div class="hwp__sub"><a href="free-proposal.html#preview">제안서 구성 자세히 보기</a></div>
 							</div>
-							<p class="hw-note">방향과 시안을 확인하는 단계로, 실제 제작 계약과 동일하지 않습니다. 신청 내용을 확인한 뒤 진행 가능 여부와 일정을 안내합니다.</p>
+							<p class="hw-note">제작 범위와 예상 견적을 먼저 확인하는 단계이며, 실제 제작 계약과 동일하지 않습니다. 디자인 시안은 계약 후 3가지 방향으로 제안합니다. 신청 내용을 확인한 뒤 진행 가능 여부와 일정을 안내합니다.</p>
 						</div>
 
 						<!-- 제안서를 펼쳐 본 듯한 문서 모듈. 실제 고객사 제안서처럼 보이지 않도록
@@ -3105,7 +3538,7 @@
 							<div class="hwdoc__p hwdoc__p--b">
 								<div class="hwdoc__ph"><i></i><i></i><i></i><b class="font-jost">03 — 04</b></div>
 								<ul class="hwdoc__items">
-									<li><span class="n font-jost">03</span><b>메인 첫 화면 방향 시안 1종</b><em>디자인 방향을 눈으로 확인</em></li>
+									<li><span class="n font-jost">03</span><b>콘텐츠·화면 구성 방향</b><em>어떤 정보를 어떤 순서로 보여줄지 제안</em></li>
 									<li><span class="n font-jost">04</span><b>CTA와 문의 흐름</b><em>상담으로 이어지는 경로</em></li>
 								</ul>
 							</div>
@@ -3140,8 +3573,8 @@
 							<li class="item01">
 								<a href="free-proposal.html">
 									<span class="hws-row__n font-jost" aria-hidden="true">01</span>
-									<span class="hws-row__t">무료 시안·제안</span>
-									<span class="hws-row__d">업종과 목표를 알려주시면 제안서 형태로 방향과 시안을 먼저 드립니다.</span>
+									<span class="hws-row__t">무료 홈페이지 제안</span>
+									<span class="hws-row__d">업종과 목표를 알려주시면 필요한 구조와 제작 범위, 예상 견적을 제안서로 먼저 드립니다.</span>
 									<span class="hws-row__go" aria-hidden="true">→</span>
 								</a>
 							</li>
@@ -3173,7 +3606,7 @@
 				<span class="main-sub-tit font-jost" data-scroll="fade-up" style="display:block;margin-bottom:20px;">GET STARTED</span>
 				<h2 data-scroll="fade-up">지금 상황에 맞게 <br class="m-br">시작하세요.</h2>
 				<div class="btns" data-scroll="fade-up">
-					<a href="free-proposal.html" class="on">무료 시안·제안받기 →</a>
+					<a href="free-proposal.html" class="on">무료 홈페이지 제안받기 →</a>
 					<a href="inquiry.html">제작 문의</a>
 				</div>
 			</div>
@@ -3502,6 +3935,93 @@ $(document).ready(function  () {
 				{yPercent:-d, scale:s, ease:'none',
 				 scrollTrigger:{trigger:item, start:'top bottom', end:'bottom top', scrub:0.5}});
 		});
+	}
+
+	/* 3 DIRECTIONS — 겹쳐 있던 세 화면이 펼쳐지고, 하나씩 가운데로 나온다.
+	   핀은 걸지 않는다(Industry 가로 팬이 이미 있어 페이지가 스크롤 데모가 되면 안 됨).
+	   무대가 화면을 지나가는 동안의 진행도를 셋으로 나눠 방향이 한 번씩 앞으로 오고,
+	   사용자가 화면이나 번호를 누르면 그때부터는 누른 쪽이 우선한다. */
+	function initDirections(){
+		var root = document.querySelector('.hwdir');
+		if(!root) return;
+		var stage = root.querySelector('.hwdir__stage');
+		var wins  = [].slice.call(root.querySelectorAll('.hwdir__win'));
+		var navs  = [].slice.call(root.querySelectorAll('.hwdir__nav li'));
+		var says  = [].slice.call(root.querySelectorAll('.hwdir__say'));
+		if(!stage || wins.length < 2) return;
+		var cur = 1, armed = false, locked = false;
+
+		function paint(i){
+			cur = i;
+			wins.forEach(function(w,j){
+				/* 순환 배치 — 어느 방향이 활성이든 좌·중앙·우가 항상 채워진다.
+				   단순히 j-i 로 두면 01 에서 왼쪽이, 03 에서 오른쪽이 비어 화면이 기운다. */
+				var n = wins.length;
+				var slot = ((j - i + 1) % n + n) % n - 1;
+				w.setAttribute('data-slot', String(slot));
+				w.setAttribute('aria-pressed', j===i ? 'true' : 'false');
+				w.classList.toggle('is-cur', j===i);
+			});
+			navs.forEach(function(li,j){ li.classList.toggle('is-cur', j===i); });
+			says.forEach(function(s,j){ s.classList.toggle('is-cur', j===i); });
+		}
+		function set(i, byUser){
+			if(byUser) locked = true;
+			if(i !== cur) paint(i);
+		}
+		paint(cur);
+
+		wins.forEach(function(w){
+			w.addEventListener('click', function(){ set(+w.getAttribute('data-dir'), true); });
+		});
+		root.querySelectorAll('.hwdir__nav button').forEach(function(b){
+			b.addEventListener('click', function(){ set(+b.getAttribute('data-go'), true); });
+		});
+		/* 모바일 — 한 장만 보이므로 좌우 스와이프로 넘긴다 */
+		var sx = null, sy = null;
+		stage.addEventListener('touchstart', function(e){
+			var t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+		}, {passive:true});
+		stage.addEventListener('touchend', function(e){
+			if(sx === null) return;
+			var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+			sx = null;
+			if(Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy) * 1.4) return;   /* 세로 스크롤 방해 금지 */
+			set(Math.max(0, Math.min(wins.length - 1, cur + (dx < 0 ? 1 : -1))), true);
+		}, {passive:true});
+
+		/* 진입 — 한 지점에 겹쳐 있던 화면이 좌·중앙·우로 펼쳐진다 */
+		if('IntersectionObserver' in window){
+			var io = new IntersectionObserver(function(en){
+				en.forEach(function(x){
+					if(x.isIntersecting){ root.classList.add('is-on'); io.unobserve(x.target); }
+				});
+			}, {threshold:0.18});
+			io.observe(root);
+		}else{
+			root.classList.add('is-on');
+		}
+
+		if(reduce) return;                    /* 감소 모션 — 전환은 클릭으로만 */
+		if(window.innerWidth < 761) return;   /* 모바일 — 탭·스와이프로만 */
+		var ticking = false;
+		function update(){
+			ticking = false;
+			if(locked) return;
+			var r = stage.getBoundingClientRect(), vh = window.innerHeight;
+			var p = (vh * 0.75 - r.top) / (r.height + vh * 0.50);
+			if(p < 0) p = 0; if(p > 1) p = 1;
+			if(!armed){
+				if(p < 0.12) return;          /* 펼쳐지는 동안은 기본 배치(A 좌·B 중앙·C 우)를 둔다 */
+				armed = true;
+			}
+			var i = p < 0.36 ? 0 : (p < 0.68 ? 1 : 2);
+			if(i !== cur) paint(i);
+		}
+		function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+		window.addEventListener('scroll', onScroll, {passive:true});
+		window.addEventListener('resize', onScroll, {passive:true});
+		update();
 	}
 
 	/* 스티키 인덱스 — 화면 중앙을 지나는 항목을 현재 항목으로 잡아
@@ -3897,7 +4417,7 @@ $(document).ready(function  () {
 		});
 	}
 
-	/* 무료 시안·제안 — 사이트 곳곳에서 ?type=renewal 로 들어온다.
+	/* 무료 홈페이지 제안 — 사이트 곳곳에서 ?type=renewal 로 들어온다.
 	   파라미터를 읽지 않으면 리뉴얼로 들어와도 신규 제작이 선택된 채로 보인다. */
 	function initProposalType(){
 		var form = document.querySelector('form[data-hao-form="free-proposal"]');
@@ -4445,7 +4965,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initWorkParallax(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initWorkParallax(); initDirections(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

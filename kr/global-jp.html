@@ -1594,6 +1594,261 @@
 	.main-con03-list li .hash-box{margin-top:auto;position:relative;z-index:1;}
 	.main-con03-list li .icon-box{position:absolute;right:3rem;bottom:3rem;margin:0;z-index:1;}
 
+	/* ══ 3 DIRECTIONS — 계약 후 3가지 디자인 방향 ══
+	   SITE PREVIEW 에서 "어떤 구조로 만들지"를 본 직후, "그럼 디자인은?" 에 답하는 자리.
+	   카드 3장으로 만들지 않는다. 실제로 서로 다른 세 화면을 겹쳐 두고
+	   하나씩 앞으로 나오게 한다 — 비교해서 고른다는 행위 자체가 이 섹션의 내용이다.
+	   핀은 걸지 않는다(Industry 가로 팬이 이미 있어 페이지가 스크롤 데모처럼 느껴지면 안 됨). */
+	.hwdir-head{max-width:1000px;}
+	.hwdir-head .hw-lead{max-width:860px;}
+	.hwdir-flow{margin-top:26px;font-size:13.5px;letter-spacing:.16em;font-weight:600;
+		color:rgba(255,255,255,.62);}
+	.hwdir-flow i{font-style:normal;color:var(--main-color);margin:0 .55em;}
+
+	.hwdir{margin-top:48px;}
+	/* 무대 — 가로로 넘치는 화면은 여기서 자른다(페이지 가로 스크롤 금지) */
+	.hwdir__cap{display:flex;justify-content:flex-end;margin-bottom:16px;}
+	.hwdir__demo{font-size:12px;letter-spacing:.06em;
+		font-family:Jost,sans-serif;color:rgba(255,255,255,.44);
+		border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:5px 13px;}
+	/* 좌우 화면이 컨테이너 끝에서 딱 잘리면 오류처럼 보인다 — 가장자리에서 사라지게 한다 */
+	.hwdir__stage{position:relative;aspect-ratio:2.8;overflow:hidden;
+		-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+		mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);}
+
+	.hwdir__win{position:absolute;top:50%;left:50%;width:52%;padding:0;margin:0;border:0;
+		background:none;text-align:left;cursor:pointer;
+		--x:0%; --s:.88; --o:0; --z:1;
+		transform:translate(-50%,-50%) translateX(var(--x)) scale(var(--s));
+		opacity:var(--o); z-index:var(--z);
+		transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .7s ease;}
+	.hwdir__win:focus-visible{outline:2px solid var(--main-color);outline-offset:6px;}
+	/* WORK 의 브라우저 프레임과 같은 언어를 쓴다 — 새 장치를 또 만들지 않는다 */
+	.hwdir__frame{display:block;position:relative;border-radius:10px;overflow:hidden;
+		border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);
+		padding:30px 12px 12px;transition:border-color .45s ease;}
+	.hwdir__frame::before{content:"";position:absolute;left:15px;top:11px;width:4px;height:4px;border-radius:50%;
+		background:rgba(255,255,255,.30);box-shadow:8px 0 0 rgba(255,255,255,.21),16px 0 0 rgba(255,255,255,.14);}
+	.hwdir__tag{position:absolute;right:14px;top:9px;font-size:11px;letter-spacing:.1em;
+		color:rgba(255,255,255,.36);font-family:Jost,sans-serif;}
+	.hwdir__win.is-cur .hwdir__tag{color:var(--main-color);}
+	.hwdir__win.is-cur .hwdir__frame{border-color:rgba(232,56,23,.42);}
+	.hwdir__win:hover .hwdir__frame{border-color:rgba(255,255,255,.30);}
+	.hwdir__screen{display:block;position:relative;overflow:hidden;border-radius:3px;
+		aspect-ratio:16/10;background:#0d1017;}
+
+	/* 진입 전에는 세 화면이 한 지점에 겹쳐 있다 */
+	html.hw-js .hwdir:not(.is-on) .hwdir__win{--x:0%;--s:.86;--o:0;}
+	/* 펼친 뒤 — 활성이 가운데, 나머지는 좌우로 물러난다 */
+	html.hw-js .hwdir.is-on .hwdir__win{--o:.16;--s:.66;--z:1;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"]{--x:-56%;--s:.80;--o:.46;--z:2;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{--x:56%;--s:.80;--o:.46;--z:2;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-2"]{--x:-112%;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="2"]{--x:112%;}
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="0"]{--x:0%;--s:1;--o:1;--z:3;}
+	/* 펼치기는 좌우가 아주 살짝 늦게 — 가운데에서 밀려나는 것처럼 보이게 */
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"],
+	html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{transition-delay:.10s;}
+	/* JS 가 없으면 세 화면을 그냥 세로로 쌓아 보여 준다 */
+	html:not(.hw-js) .hwdir__stage{aspect-ratio:auto;display:grid;gap:26px;}
+	html:not(.hw-js) .hwdir__win{position:static;width:100%;transform:none;opacity:1;}
+
+	/* 네비 + 설명 */
+	.hwdir__panel{margin-top:34px;display:grid;grid-template-columns:300px minmax(0,1fr);
+		gap:22px 48px;align-items:start;}
+	.hwdir__nav{list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.14);}
+	.hwdir__nav li{border-bottom:1px solid rgba(255,255,255,.14);}
+	.hwdir__nav button{display:flex;align-items:baseline;gap:14px;width:100%;padding:13px 2px;
+		background:none;border:0;cursor:pointer;text-align:left;
+		transition:padding .4s cubic-bezier(.16,1,.3,1);}
+	.hwdir__nav .n{font-family:Jost,sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;
+		color:rgba(255,255,255,.34);transition:color .3s ease;}
+	.hwdir__nav .k{font-family:Jost,sans-serif;font-size:15px;font-weight:600;letter-spacing:.1em;
+		color:rgba(255,255,255,.55);transition:color .3s ease;}
+	.hwdir__nav button:hover{padding-left:10px;}
+	.hwdir__nav button:hover .k,.hwdir__nav button:hover .n{color:rgba(255,255,255,.9);}
+	.hwdir__nav li.is-cur button .n,.hwdir__nav li.is-cur button .k{color:var(--main-color);}
+	.hwdir__nav button:focus-visible{outline:2px solid var(--main-color);outline-offset:2px;}
+
+	.hwdir__says{position:relative;min-height:150px;}
+	.hwdir__say{position:absolute;left:0;top:0;right:0;opacity:0;transform:translateY(10px);
+		transition:opacity .45s ease,transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none;}
+	.hwdir__say.is-cur{opacity:1;transform:none;pointer-events:auto;}
+	html:not(.hw-js) .hwdir__says{min-height:0;}
+	html:not(.hw-js) .hwdir__say{position:static;opacity:1;transform:none;margin-bottom:22px;}
+	.hwdir__say h3{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.4;}
+	.hwdir__say p{margin-top:12px;font-size:16.5px;line-height:1.72;color:rgba(255,255,255,.66);
+		max-width:620px;}
+	.hwdir__say ul{margin-top:14px;list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px 10px;}
+	.hwdir__say li{font-size:13px;letter-spacing:.01em;color:rgba(255,255,255,.60);
+		border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:5px 13px;}
+
+	/* 마무리 — 왼쪽은 결론, 오른쪽은 계단형 3항목.
+	   같은 카드 세 장을 만들지 않는다(들여쓰기가 순서를 대신한다). */
+	.hwdir__close{margin-top:74px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+		gap:40px 64px;align-items:start;
+		border-top:1px solid rgba(255,255,255,.14);padding-top:46px;}
+	.hwdir__close-t{font-size:clamp(24px,2.5vw,34px);font-weight:700;color:#fff;line-height:1.45;
+		letter-spacing:-.02em;}
+	.hwdir__close-t .r{color:var(--main-color);}
+	.hwdir__close-d{margin-top:18px;font-size:16.5px;line-height:1.75;color:rgba(255,255,255,.62);}
+	.hwdir__steps{list-style:none;margin:0;padding:0;}
+	.hwdir__steps li{position:relative;padding:20px 0 22px;border-top:1px solid rgba(255,255,255,.12);}
+	.hwdir__steps li:first-child{border-top:0;padding-top:0;}
+	.hwdir__steps li:nth-child(2){margin-left:7%;}
+	.hwdir__steps li:nth-child(3){margin-left:14%;}
+	.hwdir__steps .n{display:block;font-family:Jost,sans-serif;font-size:12px;font-weight:600;
+		letter-spacing:.1em;color:var(--main-color);margin-bottom:8px;}
+	.hwdir__steps b{display:block;font-size:18.5px;font-weight:700;color:#fff;line-height:1.45;
+		letter-spacing:-.01em;}
+	.hwdir__steps em{display:block;margin-top:8px;font-style:normal;font-size:15.5px;line-height:1.7;
+		color:rgba(255,255,255,.60);}
+	.hwdir-note{margin-top:40px;}
+
+	@media all and (max-width:1280px){
+		.hwdir__panel{grid-template-columns:250px minmax(0,1fr);gap:20px 34px;}
+	}
+	@media all and (max-width:1024px){
+		.hwdir__stage{aspect-ratio:2.35;}
+		.hwdir__win{width:62%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="-1"]{--x:-52%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="1"]{--x:52%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="-2"]{--x:-100%;}
+		html.hw-js .hwdir.is-on .hwdir__win[data-slot="2"]{--x:100%;}
+		.hwdir__panel{grid-template-columns:1fr;gap:26px;}
+		.hwdir__nav{display:flex;border-top:0;border-bottom:1px solid rgba(255,255,255,.14);}
+		.hwdir__nav li{flex:1;border-bottom:0;}
+		.hwdir__nav button{padding:11px 2px;}
+		.hwdir__nav button:hover{padding-left:2px;}
+		.hwdir__close{grid-template-columns:1fr;gap:34px;}
+		.hwdir__steps li:nth-child(2),.hwdir__steps li:nth-child(3){margin-left:0;}
+	}
+	/* 모바일 — 억지로 세 화면을 나란히 두지 않는다. 한 장을 크게, 탭·스와이프로 넘긴다. */
+	@media all and (max-width:760px){
+		.hwdir{margin-top:44px;}
+		.hwdir__stage{aspect-ratio:auto;overflow:visible;
+			-webkit-mask-image:none;mask-image:none;}
+		.hwdir__win{position:relative;top:auto;left:auto;width:100%;
+			--x:0% !important;--s:1 !important;--z:1 !important;
+			transform:none;}
+		html.hw-js .hwdir__win{display:none;}
+		html.hw-js .hwdir__win[data-slot="0"]{display:block;--o:1;}
+		html.hw-js .hwdir:not(.is-on) .hwdir__win{--o:1;}
+		.hwdir__frame{padding:26px 9px 9px;}
+		.hwdir__panel{margin-top:22px;}
+		.hwdir__nav .k{font-size:13px;letter-spacing:.06em;}
+		.hwdir__nav .n{font-size:11px;}
+		.hwdir__nav button{flex-direction:column;align-items:flex-start;gap:3px;}
+		.hwdir__says{min-height:0;}
+		.hwdir__say{position:static;opacity:0;height:0;overflow:hidden;transform:none;}
+		.hwdir__say.is-cur{height:auto;overflow:visible;}
+		.hwdir__say h3{font-size:20px;}
+		.hwdir__close{margin-top:60px;padding-top:38px;}
+		.hwdir__steps b{font-size:17px;}
+	}
+	@media (prefers-reduced-motion: reduce){
+		.hwdir__win,.hwdir__say{transition:none !important;}
+		.hwdir__nav button:hover{padding-left:2px;}
+	}
+
+	/* ── 목업 3종 ──
+	   같은 가상 기업(MATERA)을 서로 다른 방향으로 디자인한 화면.
+	   색만 바꾸지 않는다 — 레이아웃·정보 우선순위·타이포·이미지 비율이 실제로 다르다.
+	   화면 안 글자는 장식이므로 aria-hidden 이며, 크기는 컨테이너 폭에 비례한다. */
+	.hwdm{display:block;position:absolute;inset:0;font-size:9px;line-height:1.5;
+		font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif;}
+	@supports (width:1cqw){
+		.hwdir__screen{container-type:inline-size;}
+		.hwdm{font-size:1.28cqw;}
+	}
+	.hwdm span,.hwdm b,.hwdm i,.hwdm em{display:block;}
+	.hwdm .row{display:flex;align-items:center;}
+	.hwdm img{display:block;width:100%;height:100%;object-fit:cover;}
+
+	/* A — 구조·신뢰. 정돈된 그리드, 사실 위주, 여백 넉넉 */
+	.hwdm-a{background:#F2F4F7;color:#131A22;}
+	.hwdm-a .nav{justify-content:space-between;padding:1.3em 2.2em;border-bottom:1px solid #DEE3EA;}
+	.hwdm-a .logo{font-weight:800;letter-spacing:.22em;font-size:1.35em;}
+	.hwdm-a .menu{gap:1.9em;font-size:.95em;color:#4B586A;}
+	.hwdm-a .btn{border:1px solid #131A22;border-radius:2px;padding:.55em 1.2em;font-size:.9em;font-weight:600;}
+	.hwdm-a .hero{display:grid;grid-template-columns:1.02fr .98fr;gap:2.6em;padding:2.2em 2.2em 1.7em;align-items:center;}
+	.hwdm-a .eyebrow{font-size:.92em;letter-spacing:.18em;font-weight:700;color:#B4402B;margin-bottom:1.1em;}
+	.hwdm-a .h1{font-size:3.3em;font-weight:800;line-height:1.24;letter-spacing:-.03em;}
+	.hwdm-a .sub{margin-top:1.2em;font-size:1.08em;line-height:1.7;color:#4B586A;}
+	.hwdm-a .acts{display:flex;gap:.8em;margin-top:1.8em;}
+	.hwdm-a .acts .p{background:#131A22;color:#fff;border-radius:2px;padding:.75em 1.5em;font-size:.96em;font-weight:600;}
+	.hwdm-a .acts .g{border:1px solid #C3CAD4;border-radius:2px;padding:.75em 1.5em;font-size:.96em;color:#4B586A;}
+	.hwdm-a .shot{aspect-ratio:16/10;overflow:hidden;border-radius:2px;}
+	.hwdm-a .specs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #DEE3EA;
+		border-bottom:1px solid #DEE3EA;margin:0 2.2em;}
+	.hwdm-a .specs > span{padding:1.05em 0;border-right:1px solid #DEE3EA;}
+	.hwdm-a .specs > span:last-child{border-right:0;}
+	.hwdm-a .specs i{font-size:.85em;letter-spacing:.12em;color:#7A889B;margin-bottom:.5em;}
+	.hwdm-a .specs b{font-size:1.5em;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+	.hwdm-a .list{padding:.3em 2.2em 0;}
+	.hwdm-a .list .r{display:flex;justify-content:space-between;align-items:center;
+		padding:.85em 0;border-bottom:1px solid #E5E9EF;font-size:1.02em;}
+	.hwdm-a .list .r span:last-child{color:#9AA6B6;font-size:.9em;}
+
+	/* B — 성과·전환. 정보 밀도가 높고 CTA 가 강하다 */
+	.hwdm-b{background:#FFFFFF;color:#16181C;}
+	.hwdm-b .top{justify-content:space-between;background:#16181C;color:#fff;padding:.55em 2em;font-size:.86em;}
+	.hwdm-b .top .r{gap:1.4em;color:rgba(255,255,255,.72);}
+	.hwdm-b .nav{justify-content:space-between;padding:1em 2em;border-bottom:1px solid #ECEDF0;}
+	.hwdm-b .logo{font-weight:800;letter-spacing:.2em;font-size:1.25em;}
+	.hwdm-b .menu{gap:1.4em;font-size:.9em;color:#5A6069;}
+	.hwdm-b .cta-s{background:#E83817;color:#fff;border-radius:3px;padding:.55em 1.1em;font-size:.88em;font-weight:700;}
+	.hwdm-b .hero{display:grid;grid-template-columns:1.5fr 1fr;gap:1.9em;padding:1.9em 2em 1.3em;}
+	.hwdm-b .badge{display:inline-block;background:#FDECE8;color:#C62F12;font-size:.85em;font-weight:700;
+		border-radius:2px;padding:.42em .9em;margin-bottom:1em;letter-spacing:.02em;width:fit-content;}
+	.hwdm-b .h1{font-size:2.35em;font-weight:800;line-height:1.32;letter-spacing:-.03em;}
+	.hwdm-b .pts{margin-top:1.1em;}
+	.hwdm-b .pts span{position:relative;padding-left:1.4em;font-size:1em;line-height:1.85;color:#3D434C;}
+	.hwdm-b .pts span::before{content:"";position:absolute;left:0;top:.72em;width:.62em;height:.62em;
+		border-radius:50%;background:#E83817;}
+	.hwdm-b .acts{display:flex;gap:.7em;margin-top:1.4em;}
+	.hwdm-b .acts .p{background:#E83817;color:#fff;border-radius:3px;padding:.85em 1.7em;font-size:1em;font-weight:700;}
+	.hwdm-b .acts .g{border:1px solid #D6D9DE;border-radius:3px;padding:.85em 1.5em;font-size:1em;color:#3D434C;}
+	.hwdm-b .side{position:relative;}
+	.hwdm-b .shot{aspect-ratio:3/2;overflow:hidden;border-radius:3px;}
+	.hwdm-b .float{position:absolute;left:-1.1em;bottom:-1.1em;background:#fff;border:1px solid #E7E9ED;
+		border-radius:3px;padding:.85em 1.1em;box-shadow:0 .6em 1.6em rgba(0,0,0,.10);}
+	.hwdm-b .float i{font-size:.82em;color:#7C828C;margin-bottom:.35em;}
+	.hwdm-b .float b{font-size:1.35em;font-weight:800;color:#E83817;font-variant-numeric:tabular-nums;}
+	.hwdm-b .nums{display:grid;grid-template-columns:repeat(4,1fr);background:#F6F7F9;margin:0 2em;
+		border-radius:3px;}
+	.hwdm-b .nums > span{padding:1em .9em;}
+	.hwdm-b .nums b{font-size:1.45em;font-weight:800;color:#16181C;font-variant-numeric:tabular-nums;}
+	.hwdm-b .nums i{font-size:.82em;color:#7C828C;margin-top:.3em;}
+	.hwdm-b .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:.9em;padding:1.1em 2em 0;}
+	.hwdm-b .cases > span{border:1px solid #ECEDF0;border-radius:3px;padding:.85em .95em;}
+	.hwdm-b .cases i{font-size:.8em;letter-spacing:.1em;color:#B0B5BC;margin-bottom:.45em;}
+	.hwdm-b .cases b{font-size:.98em;font-weight:700;}
+
+	/* C — 브랜드·몰입. 전면 이미지 + 대형 타이포 + 여백 */
+	.hwdm-c{background:#0A0B0D;color:#fff;}
+	.hwdm-c .bg{position:absolute;inset:0;}
+	/* 원본이 아주 어두워 그대로 두면 화면이 통째로 검게 보인다 — 밝기만 올린다 */
+	.hwdm-c .bg img{filter:brightness(1.75) contrast(1.04);}
+	.hwdm-c .bg::after{content:"";position:absolute;inset:0;
+		background:linear-gradient(102deg,rgba(6,7,9,.80) 0%,rgba(6,7,9,.40) 48%,rgba(6,7,9,.06) 100%);}
+	.hwdm-c .in{position:absolute;inset:0;display:flex;flex-direction:column;
+		justify-content:space-between;padding:1.8em 2.4em 2em;}
+	.hwdm-c .nav{justify-content:space-between;}
+	.hwdm-c .logo{font-weight:300;letter-spacing:.55em;font-size:1.25em;}
+	.hwdm-c .menu{gap:2.2em;font-size:.9em;letter-spacing:.14em;color:rgba(255,255,255,.72);}
+	.hwdm-c .burger{width:1.9em;}
+	.hwdm-c .burger i{height:1px;background:rgba(255,255,255,.7);margin-bottom:.42em;}
+	.hwdm-c .burger i:last-child{width:60%;margin:0;}
+	.hwdm-c .h1{font-size:3.9em;font-weight:300;line-height:1.18;letter-spacing:-.02em;max-width:11em;
+		text-shadow:0 .04em .5em rgba(0,0,0,.45);}
+	.hwdm-c .h1 b{display:inline;font-weight:600;}
+	.hwdm-c .foot{display:flex;justify-content:space-between;align-items:flex-end;}
+	.hwdm-c .cap{font-size:.88em;letter-spacing:.2em;color:rgba(255,255,255,.55);}
+	.hwdm-c .idx{display:flex;gap:1.3em;font-size:.85em;letter-spacing:.14em;color:rgba(255,255,255,.35);}
+	.hwdm-c .idx b{color:#fff;font-weight:500;}
+	.hwdm-c .rule{height:1px;max-width:22em;background:rgba(255,255,255,.24);margin:1.2em 0 1.1em;}
+
 	/* ── HOW WE BUILD · 단계 패널 ──
 	   장식 선아이콘을 걷어내고, 단계마다 그 단계에서 실제로 만드는 것을
 	   구조 그대로 축소해 보여준다(자료 조각 / 사이트맵 / 와이어프레임 / 발행·점검).
@@ -2377,7 +2632,7 @@
 							<ul>
 								<li><a href="renewal.html"><span>홈페이지 리뉴얼</span></a></li>
 								<li><a href="diagnosis.html"><span>현재 홈페이지 진단</span></a></li>
-								<li><a href="free-proposal.html?type=renewal"><span>무료 리뉴얼 시안·제안</span></a></li>
+								<li><a href="free-proposal.html?type=renewal"><span>무료 리뉴얼 제안</span></a></li>
 							</ul>
 						</div>
 					</li>
@@ -2437,7 +2692,7 @@
 						<a href="faq.html">고객지원</a>
 						<div class="gnb-2dep">
 							<ul>
-								<li><a href="free-proposal.html"><span>무료 시안·제안</span></a></li>
+								<li><a href="free-proposal.html"><span>무료 홈페이지 제안</span></a></li>
 								<li><a href="inquiry.html"><span>제작 문의</span></a></li>
 								<li><a href="faq.html"><span>FAQ</span></a></li>
 								<li><a href="notice.html"><span>공지사항</span></a></li>
@@ -2605,7 +2860,7 @@
 		<span class="main-sub-tit font-jost" data-scroll="fade-up" style="display:block;margin-bottom:20px;">Start</span>
 		<h2 data-scroll="fade-up">일본 시장의 관점부터 <br class="m-br">함께 봐요.</h2>
 		<div class="btns" data-scroll="fade-up">
-			<a href="free-proposal.html" class="on">무료 시안·제안받기 →</a>
+			<a href="free-proposal.html" class="on">무료 홈페이지 제안받기 →</a>
 			<a href="inquiry.html">일본 제작 상담</a>
 		</div>
 	</div>
@@ -2937,6 +3192,93 @@ $(document).ready(function  () {
 				{yPercent:-d, scale:s, ease:'none',
 				 scrollTrigger:{trigger:item, start:'top bottom', end:'bottom top', scrub:0.5}});
 		});
+	}
+
+	/* 3 DIRECTIONS — 겹쳐 있던 세 화면이 펼쳐지고, 하나씩 가운데로 나온다.
+	   핀은 걸지 않는다(Industry 가로 팬이 이미 있어 페이지가 스크롤 데모가 되면 안 됨).
+	   무대가 화면을 지나가는 동안의 진행도를 셋으로 나눠 방향이 한 번씩 앞으로 오고,
+	   사용자가 화면이나 번호를 누르면 그때부터는 누른 쪽이 우선한다. */
+	function initDirections(){
+		var root = document.querySelector('.hwdir');
+		if(!root) return;
+		var stage = root.querySelector('.hwdir__stage');
+		var wins  = [].slice.call(root.querySelectorAll('.hwdir__win'));
+		var navs  = [].slice.call(root.querySelectorAll('.hwdir__nav li'));
+		var says  = [].slice.call(root.querySelectorAll('.hwdir__say'));
+		if(!stage || wins.length < 2) return;
+		var cur = 1, armed = false, locked = false;
+
+		function paint(i){
+			cur = i;
+			wins.forEach(function(w,j){
+				/* 순환 배치 — 어느 방향이 활성이든 좌·중앙·우가 항상 채워진다.
+				   단순히 j-i 로 두면 01 에서 왼쪽이, 03 에서 오른쪽이 비어 화면이 기운다. */
+				var n = wins.length;
+				var slot = ((j - i + 1) % n + n) % n - 1;
+				w.setAttribute('data-slot', String(slot));
+				w.setAttribute('aria-pressed', j===i ? 'true' : 'false');
+				w.classList.toggle('is-cur', j===i);
+			});
+			navs.forEach(function(li,j){ li.classList.toggle('is-cur', j===i); });
+			says.forEach(function(s,j){ s.classList.toggle('is-cur', j===i); });
+		}
+		function set(i, byUser){
+			if(byUser) locked = true;
+			if(i !== cur) paint(i);
+		}
+		paint(cur);
+
+		wins.forEach(function(w){
+			w.addEventListener('click', function(){ set(+w.getAttribute('data-dir'), true); });
+		});
+		root.querySelectorAll('.hwdir__nav button').forEach(function(b){
+			b.addEventListener('click', function(){ set(+b.getAttribute('data-go'), true); });
+		});
+		/* 모바일 — 한 장만 보이므로 좌우 스와이프로 넘긴다 */
+		var sx = null, sy = null;
+		stage.addEventListener('touchstart', function(e){
+			var t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+		}, {passive:true});
+		stage.addEventListener('touchend', function(e){
+			if(sx === null) return;
+			var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+			sx = null;
+			if(Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy) * 1.4) return;   /* 세로 스크롤 방해 금지 */
+			set(Math.max(0, Math.min(wins.length - 1, cur + (dx < 0 ? 1 : -1))), true);
+		}, {passive:true});
+
+		/* 진입 — 한 지점에 겹쳐 있던 화면이 좌·중앙·우로 펼쳐진다 */
+		if('IntersectionObserver' in window){
+			var io = new IntersectionObserver(function(en){
+				en.forEach(function(x){
+					if(x.isIntersecting){ root.classList.add('is-on'); io.unobserve(x.target); }
+				});
+			}, {threshold:0.18});
+			io.observe(root);
+		}else{
+			root.classList.add('is-on');
+		}
+
+		if(reduce) return;                    /* 감소 모션 — 전환은 클릭으로만 */
+		if(window.innerWidth < 761) return;   /* 모바일 — 탭·스와이프로만 */
+		var ticking = false;
+		function update(){
+			ticking = false;
+			if(locked) return;
+			var r = stage.getBoundingClientRect(), vh = window.innerHeight;
+			var p = (vh * 0.75 - r.top) / (r.height + vh * 0.50);
+			if(p < 0) p = 0; if(p > 1) p = 1;
+			if(!armed){
+				if(p < 0.12) return;          /* 펼쳐지는 동안은 기본 배치(A 좌·B 중앙·C 우)를 둔다 */
+				armed = true;
+			}
+			var i = p < 0.36 ? 0 : (p < 0.68 ? 1 : 2);
+			if(i !== cur) paint(i);
+		}
+		function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+		window.addEventListener('scroll', onScroll, {passive:true});
+		window.addEventListener('resize', onScroll, {passive:true});
+		update();
 	}
 
 	/* 스티키 인덱스 — 화면 중앙을 지나는 항목을 현재 항목으로 잡아
@@ -3332,7 +3674,7 @@ $(document).ready(function  () {
 		});
 	}
 
-	/* 무료 시안·제안 — 사이트 곳곳에서 ?type=renewal 로 들어온다.
+	/* 무료 홈페이지 제안 — 사이트 곳곳에서 ?type=renewal 로 들어온다.
 	   파라미터를 읽지 않으면 리뉴얼로 들어와도 신규 제작이 선택된 채로 보인다. */
 	function initProposalType(){
 		var form = document.querySelector('form[data-hao-form="free-proposal"]');
@@ -3880,7 +4222,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initWorkParallax(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initBuildStage(); initSeq(); initPlanRail(); initAxesReveal(); initVizPin(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initWorkParallax(); initDirections(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();

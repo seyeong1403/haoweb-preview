@@ -2515,7 +2515,9 @@
 	.hws-row__d{grid-column:2;grid-row:2;font-size:15.5px;line-height:1.6;color:rgba(255,255,255,.58);}
 	.hws-row__go{grid-column:3;grid-row:1 / span 2;font-size:19px;color:rgba(255,255,255,.34);
 		text-align:right;transition:transform .45s cubic-bezier(.16,1,.3,1),color .3s ease;}
-	.main-con07 .hws-rows > li > a:hover{padding-left:14px;}
+	/* ⚠ 레거시 main.css 의 .main-con07-list li a:hover{background:red} 가 새 행 위로 새어
+	   빨간 배경에 빨간 글자가 겹쳐 안 보였다(세영). 호버 배경을 지우고 글자 강조만 남긴다. */
+	.main-con07 .hws-rows > li > a:hover{padding-left:14px;background:transparent !important;}
 	.main-con07 .hws-rows > li > a:hover .hws-row__n{color:var(--main-color);}
 	.main-con07 .hws-rows > li > a:hover .hws-row__t{color:var(--main-color);}
 	.main-con07 .hws-rows > li > a:hover .hws-row__go{color:var(--main-color);transform:translateX(6px);}

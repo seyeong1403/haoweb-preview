@@ -1636,6 +1636,16 @@
 	.main-con03-list li .tit-box{padding-right:56px;}
 	.main-con03-list li .hash-box{margin-top:auto;position:relative;z-index:1;}
 	.main-con03-list li .icon-box{position:absolute;right:3rem;bottom:3rem;margin:0;z-index:1;}
+	/* ── 단계별 이미지 배경 (2026-08-07 세영) ── 각 카드가 그 단계에서 하는 일을 보여준다.
+	   이미지는 어둡지 않아도 되지만, 흰 글자 가독을 위해 스크림 그라디언트를 얹는다. */
+	.hwb-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;
+		transform:scale(1.04);filter:grayscale(.18);
+		transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s ease;}
+	.hwb-bg::after{content:"";position:absolute;inset:0;
+		background:linear-gradient(180deg,rgba(9,11,16,.58) 0%,rgba(9,11,16,.68) 48%,rgba(9,11,16,.90) 100%);}
+	.main-con03-list li:hover .hwb-bg{transform:scale(1.08);filter:grayscale(0);}
+	/* 글자·번호를 이미지 위로 */
+	.main-con03-list li .tit-box,.main-con03-list li .hwb-keys{position:relative;z-index:1;}
 
 	/* ══ 3 DIRECTIONS — 계약 후 3가지 디자인 방향 ══
 	   SITE PREVIEW 에서 "어떤 구조로 만들지"를 본 직후, "그럼 디자인은?" 에 답하는 자리.

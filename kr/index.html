@@ -1636,6 +1636,16 @@
 	.main-con03-list li .tit-box{padding-right:56px;}
 	.main-con03-list li .hash-box{margin-top:auto;position:relative;z-index:1;}
 	.main-con03-list li .icon-box{position:absolute;right:3rem;bottom:3rem;margin:0;z-index:1;}
+	/* ── 단계별 이미지 배경 (2026-08-07 세영) ── 각 카드가 그 단계에서 하는 일을 보여준다.
+	   이미지는 어둡지 않아도 되지만, 흰 글자 가독을 위해 스크림 그라디언트를 얹는다. */
+	.hwb-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;
+		transform:scale(1.04);filter:grayscale(.18);
+		transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s ease;}
+	.hwb-bg::after{content:"";position:absolute;inset:0;
+		background:linear-gradient(180deg,rgba(9,11,16,.58) 0%,rgba(9,11,16,.68) 48%,rgba(9,11,16,.90) 100%);}
+	.main-con03-list li:hover .hwb-bg{transform:scale(1.08);filter:grayscale(0);}
+	/* 글자·번호를 이미지 위로 */
+	.main-con03-list li .tit-box,.main-con03-list li .hwb-keys{position:relative;z-index:1;}
 
 	/* ══ 3 DIRECTIONS — 계약 후 3가지 디자인 방향 ══
 	   SITE PREVIEW 에서 "어떤 구조로 만들지"를 본 직후, "그럼 디자인은?" 에 답하는 자리.
@@ -3206,6 +3216,7 @@
 					<div class="right-con">
 							<ul class="main-con03-list">
 								<li class="item01">
+									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-01.webp)"></span>
 									<div class="tit-box">
 										<strong>사업·고객 <br class="pc-br">이해</strong>
 										<p class="font-jost">Understand</p>
@@ -3218,6 +3229,7 @@
 									</div>
 								</li>
 								<li class="item02">
+									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-02.webp)"></span>
 									<div class="tit-box">
 										<strong>구조·콘텐츠 <br class="pc-br">설계</strong>
 										<p class="font-jost">Structure &amp; Content</p>
@@ -3230,6 +3242,7 @@
 									</div>
 								</li>
 								<li class="item03">
+									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-03.webp)"></span>
 									<div class="tit-box">
 										<strong>디자인과 <br class="pc-br">구축</strong>
 										<p class="font-jost">Design &amp; Build</p>
@@ -3241,6 +3254,7 @@
 									</div>
 								</li>
 								<li class="item04">
+									<span class="hwb-bg" aria-hidden="true" style="background-image:url(../images/photo/hwb-04.webp)"></span>
 									<div class="tit-box">
 										<strong>오픈과 <br class="pc-br">운영</strong>
 										<p class="font-jost">Launch &amp; Operate</p>

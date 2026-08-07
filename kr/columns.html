@@ -2414,8 +2414,13 @@
 	/* 본문 덩어리의 카드가 배경에 묻히지 않도록 표면을 한 단계 올린다 */
 	#content > .hw-psec .hwb__item,
 	#content > .hw-psec .hwf > div,
-	#content > .hw-psec .hw-feat > li,
-	#content > .hw-psec .hws__item{background:var(--card);border-color:var(--line);}
+	#content > .hw-psec .hw-feat > li{background:var(--card);border-color:var(--line);}
+	/* sticky-index 항목(.hws__item)은 좌우 패딩이 0 이라 색 배경과 글자가 딱 붙었다(세영).
+	   좌우 여백을 주고 항목을 카드로 분리해, 색이 바뀌는 면과 내용 사이에 숨을 준다.
+	   이 컴포넌트는 여러 서브페이지에서 쓰이므로 공용 규칙 한 곳에서 고친다. */
+	#content > .hw-psec .hws__list{border-top:0;display:grid;gap:14px;}
+	#content > .hw-psec .hws__item{background:var(--card);border:1px solid var(--line);
+		border-radius:14px;padding:26px clamp(24px,2.4vw,34px);}
 
 	/* ══ 구성 미리보기 결과 — 미니 사이트맵 ══
 	   선택 결과를 번호 목록이 아니라 페이지 구조로 보여 준다.

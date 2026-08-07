@@ -234,6 +234,60 @@
 		.main-tit,.hw-h2{letter-spacing:-.028em !important;}
 	}
 
+	/* ═══════ PLAN — 동일 3열 가격표 → 선택형 구조 (2026-08-07 지시 §5-K) ═══════
+	   하오웹은 정액 가격을 공개하는 사이트가 아니라 SaaS 가격표가 맞지 않는다.
+	   좌측에서 플랜을 고르면 우측에 그 플랜의 실제 제공 범위만 나온다.
+	   콘텐츠(카드 3장)는 그대로 두고 표시 방식만 바꾼다 → JS 실패 시 3장이 그대로 보인다. */
+	.hwp-split{display:grid;grid-template-columns:minmax(0,.34fr) minmax(0,1fr);
+		gap:clamp(28px,3.6vw,64px);align-items:start;margin-top:52px;}
+	.hwp-rail{display:flex;flex-direction:column;gap:2px;
+		border-top:1px solid rgba(255,255,255,.14);}
+	.hwp-rail__i{position:relative;display:block;width:100%;text-align:left;
+		padding:22px 34px 22px 2px;background:none;border:0;cursor:pointer;
+		border-bottom:1px solid rgba(255,255,255,.14);
+		transition:padding-left .45s cubic-bezier(.16,1,.3,1);}
+	.hwp-rail__i em{display:block;font-style:normal;font-size:11.5px;letter-spacing:.14em;
+		font-weight:600;color:rgba(255,255,255,.36);transition:color .3s ease;}
+	.hwp-rail__i b{display:block;margin-top:7px;font-size:clamp(19px,1.6vw,25px);font-weight:700;
+		letter-spacing:-.03em;color:rgba(255,255,255,.55);transition:color .3s ease;}
+	.hwp-rail__rec{position:absolute;right:2px;top:24px;font-style:normal;font-size:11px;
+		font-weight:700;letter-spacing:.04em;color:var(--main-color);}
+	/* 활성 — 붉은 세로선 + 명도 + 들여쓰기 */
+	.hwp-rail__i::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:2px;
+		background:var(--main-color);transform:scaleY(0);transform-origin:50% 50%;
+		transition:transform .45s cubic-bezier(.16,1,.3,1);}
+	.hwp-rail__i.is-on::before{transform:scaleY(1);}
+	.hwp-rail__i.is-on{padding-left:18px;}
+	.hwp-rail__i.is-on em{color:var(--main-color);}
+	.hwp-rail__i.is-on b{color:#fff;}
+	.hwp-rail__i:hover b{color:rgba(255,255,255,.85);}
+	.hwp-rail__i:focus-visible{outline:2px solid var(--main-color);outline-offset:2px;}
+	/* 우측 — 활성 플랜 카드 한 장만. 카드끼리 겹쳐 두고 전환한다 */
+	html.hw-js .hwp-split .hwp-grid{display:grid;grid-template-columns:1fr;}
+	html.hw-js .hwp-split .hwp-card{grid-area:1 / 1;
+		opacity:0;visibility:hidden;transform:translateY(14px);
+		transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1),visibility 0s linear .6s;}
+	html.hw-js .hwp-split .hwp-card.is-on{opacity:1;visibility:visible;transform:none;
+		transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1),visibility 0s;}
+	/* 선택형이 되면 "추천" 배지는 좌측 레일이 대신한다 */
+	html.hw-js .hwp-split .hwp-badge{display:none;}
+	@media all and (max-width:900px){
+		.hwp-split{grid-template-columns:1fr;gap:26px;}
+		.hwp-rail{flex-direction:row;overflow-x:auto;gap:0;border-top:0;
+			border-bottom:1px solid rgba(255,255,255,.14);-webkit-overflow-scrolling:touch;}
+		.hwp-rail__i{width:auto;flex:1 0 auto;padding:14px 18px;border-bottom:0;
+			border-right:1px solid rgba(255,255,255,.10);}
+		.hwp-rail__i.is-on{padding-left:18px;}
+		.hwp-rail__i::before{left:0;right:0;top:auto;bottom:0;width:auto;height:2px;
+			transform:scaleX(0);}
+		.hwp-rail__i.is-on::before{transform:scaleX(1);}
+		.hwp-rail__i b{font-size:17px;margin-top:5px;}
+		.hwp-rail__rec{position:static;display:inline-block;margin-left:7px;}
+	}
+	@media (prefers-reduced-motion: reduce){
+		.hwp-rail__i,.hwp-rail__i::before,html.hw-js .hwp-split .hwp-card{transition:none !important;}
+	}
+
 	/* ═══════ 섹션별 진입 모션 (레퍼런스 이식) ═══════
 	   전 섹션 동일 fade-up 을 쓰지 않는다. 섹션마다 리듬과 방향이 다르다.
 	   근거 — 직접 관측한 것만 옮겼다:
@@ -3219,6 +3273,45 @@ $(document).ready(function  () {
 		});
 	}
 
+	/* PLAN 선택형 — 좌측 레일에서 고른 플랜만 우측에 보인다.
+	   hw-js 가 붙어야 CSS 가 카드를 겹치므로, 스크립트가 죽으면 3장이 그대로 나온다. */
+	function initPlanRail(){
+		var rail = document.querySelector('.hwp-rail');
+		var grid = document.querySelector('.hwp-split .hwp-grid');
+		if(!rail || !grid) return;
+		var btns  = rail.querySelectorAll('.hwp-rail__i');
+		var cards = grid.querySelectorAll('.hwp-card');
+		if(btns.length !== cards.length) return;
+		document.documentElement.classList.add('hw-js');
+		function show(n){
+			for(var i=0;i<btns.length;i++){
+				var on = (i === n);
+				btns[i].classList.toggle('is-on', on);
+				btns[i].setAttribute('aria-selected', on ? 'true' : 'false');
+				cards[i].classList.toggle('is-on', on);
+				cards[i].setAttribute('aria-hidden', on ? 'false' : 'true');
+			}
+		}
+		for(var i=0;i<btns.length;i++){
+			(function(idx){
+				btns[idx].addEventListener('click', function(){ show(idx); });
+				btns[idx].addEventListener('keydown', function(e){
+					/* 좌우 방향키로 탭 이동 — 목록형 컨트롤의 기본 동작 */
+					var d = e.key === 'ArrowRight' ? 1 : (e.key === 'ArrowLeft' ? -1 : 0);
+					if(!d) return;
+					e.preventDefault();
+					var nx = (idx + d + btns.length) % btns.length;
+					show(nx); btns[nx].focus();
+				});
+			})(i);
+		}
+		/* 추천 구성(프리미엄)을 기본 선택으로 */
+		var best = grid.querySelector('.hwp-card--best');
+		var start = 0;
+		for(var j=0;j<cards.length;j++){ if(cards[j] === best){ start = j; break; } }
+		show(start);
+	}
+
 	function initLegacyReveal(){
 		var secs = document.querySelectorAll('.main-con03, .main-con04-box, .main-con07');
 		if(!secs.length) return;
@@ -3338,7 +3431,7 @@ $(document).ready(function  () {
 	if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', revealHero); }
 	else { revealHero(); }
 
-	function boot(){ initHero(); initBuildSeq(); initSeq(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
+	function boot(){ initHero(); initBuildSeq(); initSeq(); initPlanRail(); initSubRhythm(); initSubVisual(); initCursor(); initLegacyReveal(); initTitles(); initTracks(); initCompare(); initFocusLists(); initMedia(); initSticky(); initBento(); initScope(); initOrbs(); initPick(); initForms(); initProposalType(); }
 	if(document.readyState === 'complete'){ boot(); }
 	else { window.addEventListener('load', boot); }
 })();
